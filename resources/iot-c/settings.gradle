@@ -1,0 +1,5 @@
+rootProject.name = 'iot-c'
+
+include 'common'
+include 'collector'
+

@@ -1,0 +1,11 @@
+version: '3.6'
+
+# same as 
+# docker run -p 8080:80 --name nginx nginx
+
+services:
+  nginx:
+    image: 
+      nginx
+    ports:
+      - "8080:80"

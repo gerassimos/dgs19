@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+  postgres10:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: "db-test1"
+      POSTGRES_USER: "db-user1"
+      POSTGRES_PASSWORD: "db-pw1"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - db-data:/var/lib/postgresql/data      
+    networks:
+      - net-db
+
+  pgadmin4:
+    image: dpage/pgadmin4:4.6
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgadmin"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    networks:
+      - net-db
+    ports:
+      - "8080:80"      
+
+volumes:
+  db-data:
+
+networks:
+  net-db:
