@@ -1,5 +1,7 @@
 # dgs19 - Docker Getting Started 
+
 ---
+
 ## Course Description:
 This course will explore Docker from the very basics of installation and function to real world use cases. 
 We will talk about Docker architecture in order to provide a better understanding of how to manage Linux Containers using the Docker CLI. 
