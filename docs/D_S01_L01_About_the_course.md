@@ -22,7 +22,7 @@ class: center, middle
 ## Resources
  - pdf slides
  - Exercises and Hands-on Labs 
- - GitHub repository [dgs19](todo)
+ - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
  - Slack Chat [slack-link](http://microservices-kpr4216.slack.com/)
 
 ---
