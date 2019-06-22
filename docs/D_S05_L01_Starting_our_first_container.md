@@ -128,7 +128,7 @@ CONTAINER ID   IMAGE   COMMAND    CREATED          STATUS                     PO
  - The "docker container run" command always starts a *new* container.
 ---
 ## Container names  
- - From the output of the `docker container ls` command we can see that random names are assigned to the created containers.
+ - From the output of the `docker container ls` command we can see that **random names** are assigned to the created containers.
  - If we do not specify a container name, then the Docker engine will assign a random name from a DB of names of notable hackers or scientists.
  - The container name is required to be unique as it is the container ID.
 ---
