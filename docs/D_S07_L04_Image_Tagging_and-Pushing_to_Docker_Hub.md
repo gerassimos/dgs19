@@ -296,3 +296,9 @@ test2: digest: sha256:c10f4146f30fda9f40946bc114afeb1f4e867877c49283207a08ddbcf1
 > Note:
 > Private repositories allow you to keep container images private, either to your own account or within an organization or team.  
 > [Ref: Private Repositories](https://docs.docker.com/docker-hub/repos/#private-repositories)
+
+---
+
+## Exercise
+ - Ref:
+ - [D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md)

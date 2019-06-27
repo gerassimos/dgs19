@@ -133,7 +133,7 @@ $ docker network inspect my_app_net
 ...
 ```
 > Note: 
->  - The "172.18.0.0/16" subnet is created and the default one is "172.17.0.2/16" 
+>  - The "172.18.0.0/16" subnet is created and the default one is "172.17.0.0/16" 
 >  - All these settings can be changed 
 
 ---
@@ -175,7 +175,7 @@ Options:
 ---
 
 ## Connect a container to a user-defined network (1)
- - We can use the `--network` option to connect a **running** container to a user-defined network.
+ - We can use the `--network` option to connect a container to a user-defined network.
 
 ```terminal
 # docker container run -d --name new_nginx --network my_app_net nginx
