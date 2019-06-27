@@ -23,7 +23,7 @@ class: center, middle
  - pdf slides
  - Exercises and Hands-on Labs 
  - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
- - Slack Chat (Related link will be provided)
+ - Slack Chat [slack-link](http://microservices-kpr4216.slack.com/)
 
 ---
 
@@ -434,7 +434,7 @@ CONTAINER ID   IMAGE   COMMAND    CREATED          STATUS                     PO
  - The "docker container run" command always starts a *new* container.
 ---
 ## Container names  
- - From the output of the `docker container ls` command we can see that random names are assigned to the created containers.
+ - From the output of the `docker container ls` command we can see that **random names** are assigned to the created containers.
  - If we do not specify a container name, then the Docker engine will assign a random name from a DB of names of notable hackers or scientists.
  - The container name is required to be unique as it is the container ID.
 ---
@@ -1438,7 +1438,7 @@ $ docker network inspect my_app_net
 ...
 ```
 > Note: 
->  - The "172.18.0.0/16" subnet is created and the default one is "172.17.0.2/16" 
+>  - The "172.18.0.0/16" subnet is created and the default one is "172.17.0.0/16" 
 >  - All these settings can be changed 
 
 ---
@@ -1480,7 +1480,7 @@ Options:
 ---
 
 ## Connect a container to a user-defined network (1)
- - We can use the `--network` option to connect a **running** container to a user-defined network.
+ - We can use the `--network` option to connect a container to a user-defined network.
 
 ```terminal
 # docker container run -d --name new_nginx --network my_app_net nginx
@@ -2240,7 +2240,12 @@ test2: digest: sha256:c10f4146f30fda9f40946bc114afeb1f4e867877c49283207a08ddbcf1
 > Note:
 > Private repositories allow you to keep container images private, either to your own account or within an organization or team.  
 > [Ref: Private Repositories](https://docs.docker.com/docker-hub/repos/#private-repositories)
-  
+
+---
+
+## Exercise
+ - Ref:
+ - [D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md)  
 ---
 background-image: url(images/containers_legacy_app.jpg)
 background-size: 100% 100%
