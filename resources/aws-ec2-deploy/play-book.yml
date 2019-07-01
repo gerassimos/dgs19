@@ -1,0 +1,16 @@
+-
+  name: ec2 deploy
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: ec2 deploy task
+      ec2:
+        key_name: MyLinux_N.Virginia_keypair
+        instance_type: t2.micro
+        image: ami-0b898040803850657
+        wait: yes
+        group: launch-wizard-1
+        count: 1
+        vpc_subnet_id: subnet-a92ea186
+        assign_public_ip: yes
+        region: us-east-1
