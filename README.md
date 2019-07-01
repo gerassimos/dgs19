@@ -41,4 +41,4 @@ We will talk about Docker architecture in order to provide a better understandin
 - Understand the basics of web and database servers (how they typically communicate, IP's, ports etc.)
 - Have a GitHub and Docker Hub account
 
-
+ttt
