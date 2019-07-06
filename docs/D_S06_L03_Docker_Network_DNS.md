@@ -20,7 +20,7 @@ Understand how containers communicate using dynamic DNS rather than IP addresses
 ## Example 
 ```terminal
 # docker network create my_app_net
-# docker container run -d --name new_nginx --network my_app_net nginx
+# docker container run -d --name web_server --network my_app_net nginx
 # docker container run --network my_app_net alpine ping -c3  web_server
 PING web_server (172.18.0.2): 56 data bytes
 64 bytes from 172.18.0.2: seq=0 ttl=64 time=0.070 ms
