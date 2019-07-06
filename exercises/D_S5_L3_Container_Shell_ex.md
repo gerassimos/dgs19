@@ -5,7 +5,7 @@ class: center, middle
 
 ### Exercise 1
 Create a alpine container. Override the default command to be "ping 8.8.8.8". 
-Press <Ctrl-C> to kill to forground "ping" process. 
+Press `<Ctrl-C>` to kill to forground "ping" process. 
 
 ### Exercise 1  Solution 
 ```console
