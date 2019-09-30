@@ -13,3 +13,8 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 .idea/
+/resources/iot-c/.idea/
+/resources/tmp/
+/dgs19.code-workspace
+/resources/iot-c/collector/build/
+/resources/iot-c/common/build/

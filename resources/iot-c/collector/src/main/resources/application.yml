@@ -1,1 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:192.168.99.100}:${DB_PORT:5432}/${DB_NAME:iotc}
+    username: ${DB_USER:iotc}
+    password: ${DB_PASSWORD:iotc}
+    continue-on-error: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate:
+      ddl-auto: update
+    properties.hibernate.temp.use_jdbc_metadata_defaults : false
 
+
+
+
+
+logging:
+  level:
+    com.gmos.iotc: ${LOG_LEVEL:DEBUG}
