@@ -16,4 +16,4 @@ logging:
     com.gmos.iotc: ${LOG_LEVEL:DEBUG}
 
 server:
-  port: ${TOMCAT_HTTP_PORT:8092}
+  port: ${TOMCAT_HTTP_PORT_V:8092}
