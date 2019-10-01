@@ -10,7 +10,7 @@ class: center, middle
    - back-end (business logic - Rest endpoints)
    - DB
  - Deploy and manage multiple services (multiple containers) can be difficult. This is where **docker-compose** comes in to play
- - Instead of executing a separate *docker run* commands for each service of the application we can use a single `docker-compose up` command deploy the entire application.  
+ - Instead of executing a separate `docker run` commands for each service of the application we can use a single `docker-compose up` command deploy the entire application.  
 
 ---
 
@@ -39,21 +39,23 @@ class: center, middle
 ---
 
 ## Docker Compose - Example (1a)
- - The [docker-compose.yml](https://github.com/gerassimos/dgs19/blob/master/resources/compose-sample-1/docker-compose.yml) of this example is available in the `resources` directory.  
+ - The [docker-compose.yml](https://github.com/gerassimos/dgs19/blob/master/resources/compose-sample-1/docker-compose.yml) of this example is available in the `resources` directory
  
-```yml
-version: '3.6'
-# same as 
-# docker run -p 8080:80 --name nginx nginx
+    ```console
+    version: '3.6'
+    # same as 
+    # docker run -p 8080:80 --name nginx nginx
+    
+    services:
+      nginx:
+        image: 
+          nginx
+        ports:
+          - "8080:80"
+    ```
 
-services:
-  nginx:
-    image: 
-      nginx
-    ports:
-      - "8080:80"
-```
- - To start the services defined in the `docker-compose.yml` file execute the `docker-compose up` command 
+
+ - To start the services defined in the **docker-compose.yml** file execute the `docker-compose up` command 
 
 ---
 
@@ -85,55 +87,55 @@ b0897e090893   host                     host      local
 
 ---
 
-## Docker Compose - Example (2a) 
- - The [docker-compose.yml](https://github.com/gerassimos/dgs19/blob/master/resources/compose-sample-2/docker-compose.yml) of this example is available in the `resources` directory. 
- - Example Part 1
+## Docker Compose - Example 2 notes 
+ - In this example we will see how to use **Docker compose** to replace all the commands used in the [D_S9_L3_Persistent_Data_LAB](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S9_L3_Persistent_Data_LAB.md)
 
-```yml
-version: '3.6'
-
-services:
-  postgres10:
-    image: postgres:10
-    environment:
-      POSTGRES_DB: "db-test1"
-      POSTGRES_USER: "db-user1"
-      POSTGRES_PASSWORD: "db-pw1"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - db-data:/var/lib/postgresql/data      
-    networks:
-      - net-db
-...
-```
----
-
-## Docker Compose - Example (2b) 
- - Example Part 2
- 
-```yml
-  pgadmin4:
-    image: dpage/pgadmin4:4.6
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "pgadmin"
-      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
-    networks:
-      - net-db
-    ports:
-      - "8080:80"      
-
-volumes:
-  db-data:
-
-networks:
-  net-db:
-```
----
-
-## Docker Compose - Example 2 notes (a)
- - With this `docker-compose.yml` file we can achieve the same result as the one of the `Persistent Data LAB`
- - We can replace all the commands used in `Persistent Data LAB` with the `docker-compose up` command in conjunction with this `docker-compose.yml` file 
+ - The [docker-compose.yml](https://github.com/gerassimos/dgs19/blob/master/resources/compose-sample-2/docker-compose.yml) of this example is available in the `resources` directory.
   
+---
+
+## Docker Compose - Example 2 part1 
+ - Example 2 part1
+ 
+    ```console
+    version: '3.6'
+    
+    services:
+      postgres10:
+        image: postgres:10
+        environment:
+          POSTGRES_DB: "db-test1"
+          POSTGRES_USER: "db-user1"
+          POSTGRES_PASSWORD: "db-pw1"
+        volumes:
+          - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+          - db-data:/var/lib/postgresql/data      
+        networks:
+          - net-db
+    ...
+    ```
+---
+
+## Docker Compose - Example 2 part2
+  - Example 2 part2
+  
+    ```console
+      pgadmin4:
+        image: dpage/pgadmin4:4.6
+        environment:
+          PGADMIN_DEFAULT_EMAIL: "pgadmin"
+          PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+        networks:
+          - net-db
+        ports:
+          - "8080:80"      
+    
+    volumes:
+      db-data:
+    
+    networks:
+      net-db:
+    ```
 ---
 
 ## Compose file structure (1)

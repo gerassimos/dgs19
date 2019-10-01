@@ -6,13 +6,13 @@ class: center, middle
 
 ## Docker Compose - Installation
 
- - On desktop systems like Docker Desktop for Mac and Windows, Docker Compose is included as part of those desktop installs
- - Docker Compose is NOT included in the Docker Linux installation packages
+ - On desktop systems like Docker Desktop for Mac and Windows, Docker Compose is **included** as part of those desktop installs
+ - Docker Compose is **NOT included** in the Docker Linux installation packages
  - Docker Compose installation instructions for Linux are available [here](https://docs.docker.com/compose/install/)
 
-> Notes: 
-> `Docker Compose` relies on `Docker Engine` to work, so make sure you have Docker Engine installed before you start using the `Docker Compose` tool.
-> `Docker Compose` is **not** a production-grade tool but is ideal for local development and test
+> Notes:  
+> 1. *Docker Compose* relies on **Docker Engine** to work, so make sure you have Docker Engine installed before you start using the *Docker Compose* tool.
+> 2. *Docker Compose* is **not** a production-grade tool but is ideal for local development and test
 
 ---
 
@@ -25,14 +25,14 @@ $ docker compose down
  - The `docker compose up` => create volumes/networks and start all containers
  - The `docker compose down` => stop and remove all containers, remove all networks
 
->
-> Volumes are **NOT** deleted with the `docker compose down` command 
-> To delete the volumes use the `docker compose down --volumes` command 
+> Notes: 
+> - Volumes are **NOT** deleted with the `docker compose down` command  
+> - To delete the volumes use the `docker compose down --volumes` command 
 
 ---
 
 ## Docker Compose vs other CM tools
- - We can see how `Docker Compose` can replace more complicated CM tools such as Vagrant and other  
+ - We can see how `Docker Compose` can replace more complicated CM tools such as **Vagrant** and others  
  - Avoid the complexity of managing a virtual machine environment with multiple VMs
  - With `Docker Compose` we have easier way to setup the development environment. The steps required to setup the development environment could be:
     1. Checkout the code `git clone <repo>`
@@ -56,15 +56,17 @@ postgres10_1  | 2019-09-30 08:57:05.364 UTC [1] LOG:  database system is ready t
 pgadmin4_1    | NOTE: Configuring authentication for SERVER mode.
 ...
 ```
-> Notes:
-> - From the output of the `docker-compose up` command we can see the networks, the volumes and the containers that are created
-> - From a web browser we can access the <DOCKER_HOST>:8080 to verify the the pgAdmin web application is running and that we can connect to te postgres DB.
 
 ---
 
 ## Docker Compose - Example - Start the Services (2)
+ - From the output of the `docker-compose up` command we can see the networks, the volumes and the containers that are created
+ - From a web browser we can access the <DOCKER_HOST>:8080 to verify the the pgAdmin web application is running and that we can connect to te postgres DB.
+ - After the initial phase the logs of all the containers defined in the `docker-compose.yml` file are displayed
+ 
+---
 
- - After the initial phase the logs of all the containers defined in the `docker-compose.yml` file are displayed 
+## Docker Compose - Example - Start the Services (2)  
  - The command is running in the foreground. We can press `Ctrl-C` to stop all the containers and regain control of the shell prompt 
 
 ```console
@@ -131,7 +133,8 @@ Commands:
 ## Docker Compose - Example - common commands 
  - Some of the most common commands used with `Docker Compose` are:
     1. `docker-compose ps` => List containers
-    2. `docker-compose top` => Display the running processes
+    2. `docker-compose top` => Display the running processes  
+    
 ```console
 # docker-compose ps
 Name           Command                      State      Ports
@@ -143,6 +146,7 @@ postgres10_1   docker-entrypoint.sh postgres   Up      5432/tcp
 # docker-compose top
 ...
 ```
+
 
 ---
 
@@ -213,18 +217,23 @@ TODO
 
 ```
 
+---
+
 ## Docker Compose - Build - Example (2)
  - In the `docker-compose.yml` of this example the `build` option is defined for the `collector` service to specify the build context path for the custom Docker image to build
  
-```yml
-version: '3.6'
-services:
-  collector:
-    build: ./java_collector
-      
-```
->
-> Documentation Reference available (here)[https://docs.docker.com/compose/compose-file/#build]
+    ```console
+    version: '3.6'
+    services:
+      collector:
+        build: ./java_collector
+      image: iot-c
+   ...
+    ```
+> Notes  
+> Documentation Reference available [here](https://docs.docker.com/compose/compose-file/#build)
+
+---
 
 ## Docker Compose - Build - Example (3)
 - The `Dockerfile` must be available in the build context path 
@@ -242,14 +251,14 @@ Dockerfile
 
  - To use a custom Dockerfile name then the build section can be defined as follow:
 
-```yml 
-version: "3.7"
-services:
-  collector:
-    build:
-      context: ./java_collector
-      dockerfile: Dockerfile-alternate
-```
+    ```console
+    version: "3.7"
+    services:
+      collector:
+        build:
+          context: ./java_collector
+          dockerfile: Dockerfile-alternate
+    ```
 
 ---
 
@@ -266,5 +275,11 @@ TODO
 > Notes:
 > The first time the build process will take place to create the custom Docker image for the collector service. After that the custom Docker image will be available in the local cache.
 
+---
+
 ## Docker Compose - Build - Example (5)
  - To force the **re-build** process to recreate the custom Docker image we must use the `docker-compose build` or `docker-compose up --build` command.
+ 
+## LA
+ - Ref:
+ - [D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md) 

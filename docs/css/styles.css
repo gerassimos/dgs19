@@ -49,7 +49,12 @@ li {
 }
 
 .remark-inline-code {
-   background: #F0F0F0;
+   background: #cdcdcd;
+    color: #1f7199;
+    font-weight: bold;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    border-radius: 0.3em;
 }
 
 img[alt="img_width_100"] {
