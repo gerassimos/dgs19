@@ -1,0 +1,21 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "postgres10",
+            "Group": "Servers",
+            "Host": "postgres10",
+            "Port": 5432,
+            "MaintenanceDB": "db-test1",
+            "Username": "db-user1",
+            "Password": "db-pw1",
+            "SSLMode": "prefer",
+            "SSLCert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+            "SSLKey": "<STORAGE_DIR>/.postgresql/postgresql.key",
+            "SSLCompression": 0,
+            "Timeout": 0,
+            "UseSSHTunnel": 0,
+            "TunnelPort": "22",
+            "TunnelAuthentication": 0
+        }
+    }
+}

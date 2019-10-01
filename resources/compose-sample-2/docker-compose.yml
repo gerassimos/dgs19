@@ -18,6 +18,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "pgadmin"
       PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+      PGADMIN_SERVER_JSON_FILE: "/pgadmin4/servers.json"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json:rw
     networks:
       - net-db
     ports:

@@ -1,28 +1,17 @@
-package com.gmos.iotc.collector.domain;
+package com.gmos.iotc.common;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class DeviceDTO {
 
-@Entity
-public class DeviceEntity {
-
-  @Id
-  @GeneratedValue(strategy= GenerationType.AUTO)
   private Long id;
   private String friendlyName;
   private String type;
 
-  public DeviceEntity() {
+  public Long getId() {
+    return id;
   }
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Long getId() {
-    return id;
   }
 
   public String getFriendlyName() {
@@ -43,7 +32,7 @@ public class DeviceEntity {
 
   @Override
   public String toString() {
-    return "DeviceEntity{" +
+    return "DeviceDTO{" +
             "id=" + id +
             ", friendlyName='" + friendlyName + '\'' +
             ", type='" + type + '\'' +

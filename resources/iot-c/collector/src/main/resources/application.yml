@@ -11,9 +11,9 @@ spring:
     properties.hibernate.temp.use_jdbc_metadata_defaults : false
 
 
-
-
-
 logging:
   level:
     com.gmos.iotc: ${LOG_LEVEL:DEBUG}
+
+server:
+  port: ${TOMCAT_HTTP_PORT:8092}
