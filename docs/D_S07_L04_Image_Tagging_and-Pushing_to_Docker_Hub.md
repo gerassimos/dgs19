@@ -88,10 +88,6 @@ docker pull acme-registry:5000/nms-core <== image on private registry
 ---
 
 ## Image TAG (3) - (example nginx)
-![img_width_90](images/D_S7_L4_nginx_image_tag2.jpg)
-
----
-## Image TAG (4) - (example nginx)
  - 1.15.12, mainline, 1, 1.15, latest => all refer to the exact same image  
   
 ```terminal

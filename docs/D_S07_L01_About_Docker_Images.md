@@ -26,9 +26,9 @@ class: center, middle
 
 ## What is in an Image (2) 
  - Inside the image there is not a complete O.S. (No kernel, No kernel modules such as drivers etc)
- - The host provides the kernel. The host kernel is "shared" across all the containers.  
- - Inside the image are just the binaries of your application.
- - The main difference between a container and a VM is that container is more like a process.
+ - The host provides the **kernel**. The host kernel is "shared" across all the containers.  
+ - Inside the image are just the binaries and dependencies required to run our application.
+ - The main difference between a container and a VM is that container is more like a **process**.
  - Images size can be:
    - Small as one file (your app binary), as a java jar binary
    - Big as a full Ubuntu distribution with Apache, PHP and more ...

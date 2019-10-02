@@ -28,9 +28,9 @@ class: center, middle
  - Number of downloads and starts
   
  > Note: 
- > - The Repository name of an official image does not have the "account_name/" as the unofficial image has.
- > - When we publish an image to the docker hub, the repository name will be for example "gerassimos/nginx". The account name "gerassimos" will be part of the repository name.
- > - The "account_name" could be also the name of an organization.
+ > - The Repository name of an **official image** does not have the "account_name/" as the unofficial image has.
+ > - When we publish an image to the docker hub, the repository name will be for example `gerassimos/nginx`. The account name **gerassimos** will be part of the repository name.
+ > - The **account_name** could be also the name of an organization.
 
 ---
 
@@ -54,8 +54,8 @@ https://docs.docker.com/docker-hub/official_images/
  - Image **tag** => information about a specific image version/variant. 
  - A version of an image can have more than one tag
  - Supported **tags** and respective Dockerfile links
-   - 1.15.12, mainline, 1, 1.15, latest => are all versions of the same image 
-   - 1.15.12-alpine, mainline-alpine, 1-alpine, 1.15-alpine, alpine 
+   - 1.17.4, mainline, 1, 1.17, latest => are all versions of the same image 
+   - 1.17.4-alpine, mainline-alpine, 1-alpine, 1.17-alpine, alpine
  - How to use this image
  - Using environment variables and other configuration 
 ---
@@ -114,7 +114,7 @@ nginx       latest    27a188018e18   9 days ago   109MB
   - Go the the linked GitHub repository to see the related "Dockerfile" and understand how the image are built.
 
   - Example: 
-  - https://github.com/nginxinc/docker-nginx/blob/master/mainline/stretch/Dockerfile
+  - https://github.com/nginxinc/docker-nginx/blob/master/mainline/buster/Dockerfile
 
 > Note: 
 > Use the "Dockerfile" of the official images as a reference for best practice.

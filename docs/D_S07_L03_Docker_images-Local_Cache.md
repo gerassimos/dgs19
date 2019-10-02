@@ -55,7 +55,7 @@ cce70737c123: Waiting
 ---
 
 ## docker image history (1)
- - Use the `docker image history` command to show the history of an image.
+ - Use the `docker image history` command to show the **build** history of an image.
  - Show **layers** of changes made on the image.
  ```terminal
  # docker image history nginx
@@ -79,16 +79,16 @@ IMAGE          CREATED       CREATED BY                                      SIZ
  - Every set of changes on the image file system is another layer.
  - Some layers may not change in terms of the file size => metadata (e.g EXPOSE 80 )
  - Every layer has a unique SHA number that identify the changes made.
- - Different images can have common layers => which means that for example:
-   - Two custom images may have the same common base image such as "ubuntu".
-   - These two images will have a common set of layers, all related to the common base image.
+ - Different images can have **common layers** => which means that for example:
+   - Two custom images may have the same common base image such as **ubuntu**.
+   - These two images will have a **common set of layers**, all related to the **common base image**.
 
 ---
 
 ## Image layers - Recap
- - Images are made of RO layers created at build time.
- - Each layer is related to a set of file system changes.
- - When you run a Docker image to create a running container, Docker will create a new RW layer on top of the image.  
+ - Images are made of **RO layers** created at **build time**.
+ - Each layer is related to a **set of file system changes**.
+ - When you run a Docker image to create a running container, Docker will create a new **RW layer** on top of the image.  
   
 <center><img src="images/D_S7_L3_image_layers.jpg" style="width:460px;"/></center>
 
@@ -100,10 +100,10 @@ IMAGE          CREATED       CREATED BY                                      SIZ
 ---
 
 ## Container RW layer (2)
- - The major difference between a container and an image is the top writable layer. 
+ - The major difference between a container and an image is the top **writable layer**. 
  - All writes to the container that add new or modify existing data are stored in this writable layer. 
- - When the container is deleted, the writable layer is also deleted. The underlying image remains unchanged.
- - Because each container has its own writable container layer, and all changes are stored in this container layer, multiple containers can share access to the same underlying image and yet have their own data state. The diagram below shows multiple containers sharing the same Ubuntu 15.04 image.
+ - When the **container is deleted**, the writable layer is also deleted. The underlying image remains unchanged.
+ - Because each container has its own writable container layer, and all changes are stored in this container layer, **multiple containers** can share access to the same underlying image and yet have their own data state. The diagram below shows multiple containers sharing the same Ubuntu 15.04 image.
  - [Ref Container and layers](https://docs.docker.com/storage/storagedriver/#container-and-layers)
  
 ---
@@ -111,7 +111,7 @@ IMAGE          CREATED       CREATED BY                                      SIZ
 ## Storage drivers
  - Docker uses **storage drivers** to manage the contents of the *image layers* and the *writable container layer*. 
  - Each **storage driver** handles the implementation differently, but all drivers use stackable image layers and the **copy-on-write** (CoW) strategy.
- - Docker supports different types of **storage drivers** such as: overlay2, aufs, devicemapper, btrfs etc..
+ - Docker supports different types of **storage drivers** such as: **overlay2**, **aufs**, **devicemapper**, **btrfs** etc..
  - Recommended storage driver for Ubuntu, CentOS and RHEL is **overlay2**
  - [Recommended storage drivers](https://docs.docker.com/storage/storagedriver/select-storage-driver/#docker-engine---community)
 
@@ -119,7 +119,7 @@ IMAGE          CREATED       CREATED BY                                      SIZ
 
 ## docker image inspect (1)
  - Use the `docker image inspect` command to display detailed information of an image.
- - This is the metadata of the image (Remember an image is made up of two parts,  the "binaries & dependencies" and the "metadata").
+ - This is the metadata of the image (Remember an image is made up of two parts,  the **binaries & dependencies** and the **metadata**).
  - Information included: ImageId, RepoTags, ExposePorts, Environment variables, CMD , Architecture, GraphDriver, etc...
   
 ---
@@ -154,5 +154,5 @@ IMAGE          CREATED       CREATED BY                                      SIZ
 
 > Notes
 > - The "GraphDriver" actually refer to the storage driver   
-> - The `docker history` command shows the build history of an image (list of changes #10) which is not the strict list of layers such as the one reported from the `docker image inspect` command (list of changes #3)
+> - The `docker history` command shows the **build** history of an image **(list of changes)** which is not the strict list of layers such as the one reported from the `docker image inspect` command (list of changes #3)
 
