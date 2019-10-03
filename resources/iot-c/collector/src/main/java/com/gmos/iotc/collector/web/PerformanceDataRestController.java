@@ -1,7 +1,6 @@
 package com.gmos.iotc.collector.web;
 
 import com.gmos.iotc.collector.repository.DeviceHdrl;
-import com.gmos.iotc.common.DeviceDTO;
 import com.gmos.iotc.common.PerformanceDataDTO;
 import com.gmos.iotc.common.RestPath;
 import org.slf4j.Logger;
