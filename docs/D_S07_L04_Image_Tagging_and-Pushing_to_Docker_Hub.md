@@ -266,32 +266,34 @@ test1: digest: sha256:c10f4146f30fda9f40946bc114afeb1f4e867877c49283207a08ddbcf1
 
 ## docker image tag (other then *latest*)
 ### The result of this example is a *public* repository **gerassimos/nginx** containing two images:  
-### - latest
-### - test1
+### - gerassimos/nginx:latest
+### - gerassimos/nginx:test1
 
 ---
 
 ## Create a private repository (1)
- - With your regular Docker free account you are entitled to create also one private repository.
- - In this example we will create a **private** repository from the web UI and then we will `push` a custom image.  
+ - With your regular Docker **free** account you are entitled to create also one **private** repository.
+    
+> Note:  
+> Private repositories allow you to keep container images private, either to your own account or within an organization or team.  
+> [Ref: Private Repositories](https://docs.docker.com/docker-hub/repos/#private-repositories)   
  
 ---
+## Create a private repository (2)
+![img_width_90](images/D_S7_L4_nginx_private_repo1.jpg) 
  
- ## Create a private repository (2)
- ![img_width_90](images/D_S7_L4_nginx_private_repo1.jpg)  
+   
   
----
+
   
-## Create a private repository (3)
+
 ```terminal
 # docker image tag nginx gerassimos/private-repo1:test2
 # docker image push gerassimos/private-repo1:test2
 ... 
 test2: digest: sha256:c10f4146f30fda9f40946bc114afeb1f4e867877c49283207a08ddbcf1778790 size: 948
 ```
-> Note:
-> Private repositories allow you to keep container images private, either to your own account or within an organization or team.  
-> [Ref: Private Repositories](https://docs.docker.com/docker-hub/repos/#private-repositories)
+
 
 ---
 
