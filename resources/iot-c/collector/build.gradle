@@ -26,6 +26,7 @@ repositories {
 }
 
 docker {
+	dependsOn build
 	name "${project.group}/${bootJar.baseName}"
 	files bootJar.archivePath
 	buildArgs(['JAR_FILE': "${bootJar.archiveName}", 'IOTC_TAG': "${version}"])
