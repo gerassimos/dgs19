@@ -7,7 +7,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE")
-		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.22.1')
 	}
 }
 
@@ -17,8 +17,11 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 
+def iotcTAG = findProperty('IOTC_TAG') ?: 'latest'
+def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
+
 group = 'com.gmos.iot-c'
-version = '0.0.1'
+version = "${iotcTAG}"
 sourceCompatibility = '11'
 
 repositories {
@@ -27,9 +30,11 @@ repositories {
 
 docker {
 	dependsOn build
-	name "${project.group}/${bootJar.baseName}"
-	files bootJar.archivePath
-	buildArgs(['JAR_FILE': "${bootJar.archiveName}", 'IOTC_TAG': "${version}"])
+	name "iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
+	tag 'tag1', "${dockerUsername}/iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
+	tag 'tag2', "anOtherRepository"
+	files bootJar.archiveFile.get()
+	buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}", 'IOTC_TAG': "${version}"])
 }
 
 dependencies {
@@ -40,4 +45,17 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation(project(":common"))
+	println("iotcTAG ${iotcTAG}")
+	println("version ${version}")
+	println("project.name ${project.name}")
+
+	println("archiveBaseName ${bootJar.archiveBaseName.get()}")
+	println("archiveExtension ${bootJar.archiveExtension.get()}")
+	println("archiveFile jar abs-path ${bootJar.archiveFile.get()}")
+	println("archiveName jar simple-name ${bootJar.archiveName}")
+	println("archiveName jar simple-name ${bootJar.archiveFileName.get()}")
+	println("name1 ${project.name}/${bootJar.baseName}:${iotcTAG}")
+	println("name2 ${project.parent.name}")
+	println("name3 iot-${bootJar.archiveBaseName.get()}:${iotcTAG}")
+
 }

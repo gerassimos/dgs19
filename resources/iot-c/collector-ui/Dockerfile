@@ -5,7 +5,7 @@ ARG IOTC_TAG
 
 # Arbitrary labels applied to the image project
 LABEL dgs19.project="iot-c"
-LABEL iot-c.module="collector"
+LABEL iot-c.module="collector-ui"
 LABEL iot-c.tag="${IOTC_TAG}"
 LABEL jar.file="${JAR_FILE}"
 
