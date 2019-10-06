@@ -19,31 +19,8 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
-  collector:
-    image: gerassimos/iot-collector:0.0.1
-    networks:
-      - iotc-db
-      - iotc-ui
-    environment:
-      LOG_LEVEL: DEBUG
-      DB_HOST: postgres_db
-      DB_USER: ${DB_USER:-iotc}
-      DB_PASSWORD: ${DB_PASSWORD:-iotc}
-    ports:
-      - "8092:8092"
-
-  collector-ui:
-    image: gerassimos/iot-collector-ui:0.0.1
-    networks:
-      - iotc-ui
-    environment:
-      LOG_LEVEL: DEBUG
-    ports:
-      - "8093:8093"
-
 networks:
   iotc-db:
-  iotc-ui:
 
 volumes:
   db-data:
