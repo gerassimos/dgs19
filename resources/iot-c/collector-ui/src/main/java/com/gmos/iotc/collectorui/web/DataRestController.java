@@ -1,6 +1,7 @@
 package com.gmos.iotc.collectorui.web;
 
 
+import com.gmos.iotc.collectorui.service.DataHdrl;
 import com.gmos.iotc.common.ChartDataDTO;
 import com.gmos.iotc.common.PerformanceDataDTO;
 import com.gmos.iotc.common.RestPath;
@@ -17,14 +18,17 @@ import java.util.List;
 public class DataRestController {
 
   private Logger logger = LoggerFactory.getLogger(DataRestController.class);
+  private final DataHdrl dataHdrl;
 
-  public DataRestController() {
-
+  public DataRestController(DataHdrl dataHdrl) {
+    this.dataHdrl = dataHdrl;
   }
 
   @GetMapping("/getData")
   public List<ChartDataDTO> getData() {
     logger.info("Get Request getData");
+    long deviceId=1L;
+    dataHdrl.getData(deviceId);
     List<ChartDataDTO> result = new ArrayList<>();
 
 
