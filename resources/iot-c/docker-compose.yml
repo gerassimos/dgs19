@@ -20,7 +20,7 @@ services:
       - db-data:/var/lib/postgresql/data
 
   collector:
-    image: gerassimos/iot-collector:0.0.1
+    image: dgs19/iot-collector:0.0.1
     networks:
       - iotc-db
       - iotc-ui
@@ -33,7 +33,7 @@ services:
       - "8092:8092"
 
   collector-ui:
-    image: gerassimos/iot-collector-ui:0.0.1
+    image: dgs19/iot-collector-ui:0.0.1
     networks:
       - iotc-ui
     environment:
