@@ -1,6 +1,15 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
 logging:
   level:
     com.gmos.iotc: ${LOG_LEVEL:DEBUG}
 
 server:
   port: ${TOMCAT_HTTP_PORT_V:8093}
+
+iot-collector-ui:
+  collector-host-name: ${COLLECTOR_HOST_NAME:192.168.99.100}
+  collector-host-port: ${COLLECTOR_HOST_PORT:8092}

@@ -12,6 +12,7 @@ public class PerformanceDataEntity {
   private Long deviceId;
   private Timestamp timestamp;
   private Double temperature;
+  private Double humidity;
 
   public PerformanceDataEntity() {
   }
@@ -45,6 +46,14 @@ public class PerformanceDataEntity {
     this.temperature = temperature;
   }
 
+  public Double getHumidity() {
+    return humidity;
+  }
+
+  public void setHumidity(Double humidity) {
+    this.humidity = humidity;
+  }
+
   @Override
   public String toString() {
     return "PerformanceDataEntity{" +
@@ -52,6 +61,7 @@ public class PerformanceDataEntity {
             ", deviceId=" + deviceId +
             ", timestamp=" + timestamp +
             ", temperature=" + temperature +
+            ", humidity=" + humidity +
             '}';
   }
 }

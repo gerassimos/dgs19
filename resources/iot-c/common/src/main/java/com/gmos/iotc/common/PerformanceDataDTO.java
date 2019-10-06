@@ -1,12 +1,16 @@
 package com.gmos.iotc.common;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class PerformanceDataDTO {
   private Long id;
   private Long deviceId;
   private Timestamp timestamp;
+  private String timeStr;
   private Double temperature;
+  private Double humidity;
 
   public Long getId() {
     return id;
@@ -40,6 +44,19 @@ public class PerformanceDataDTO {
     this.temperature = temperature;
   }
 
+  public Double getHumidity() {
+    return humidity;
+  }
+
+  public void setHumidity(Double humidity) {
+    this.humidity = humidity;
+  }
+
+  public String getTimeStr() {
+    timeStr = new SimpleDateFormat("HH.mm.ss").format(new Date(timestamp.getTime()));
+    return timeStr;
+  }
+
   @Override
   public String toString() {
     return "PerformanceDataDTO{" +
@@ -47,6 +64,7 @@ public class PerformanceDataDTO {
             ", deviceId=" + deviceId +
             ", timestamp=" + timestamp +
             ", temperature=" + temperature +
+            ", humidity=" + humidity +
             '}';
   }
 }

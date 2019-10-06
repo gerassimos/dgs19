@@ -25,21 +25,10 @@ public class DataRestController {
   }
 
   @GetMapping("/getData")
-  public List<ChartDataDTO> getData() {
-    logger.info("Get Request getData");
+  public List<PerformanceDataDTO> getData() {
+    logger.debug("Get Request getData");
     long deviceId=1L;
-    dataHdrl.getData(deviceId);
-    List<ChartDataDTO> result = new ArrayList<>();
-
-
-    for (int i=0 ; i<3 ; i++){
-      ChartDataDTO chartDataDTO = new ChartDataDTO();
-      chartDataDTO.setYear("" + (2000+i) );
-      chartDataDTO.setExpenses(10+i);
-      chartDataDTO.setSales(20+i);
-      result.add(chartDataDTO);
-    }
-
+    List<PerformanceDataDTO> result = dataHdrl.getData(deviceId);
     return result;
   }
 }

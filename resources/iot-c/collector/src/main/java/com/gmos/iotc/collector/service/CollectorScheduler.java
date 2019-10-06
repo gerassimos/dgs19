@@ -7,6 +7,7 @@ import com.gmos.iotc.collector.repository.DeviceRepository;
 import com.gmos.iotc.collector.repository.PerformanceDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,45 +17,55 @@ import java.util.List;
 @Component
 public class CollectorScheduler {
   private Logger logger = LoggerFactory.getLogger(CollectorScheduler.class);
+  private boolean isCollectionInProgress;
   private final DeviceRepository deviceRepository;
   private final PerformanceDataRepository performanceDataRepository;
 
-  private static final String DEVICE_NAME = "test device 01";
+  private static final String DEVICE_NAME = "TEMP-HUM sensor";
 
   public CollectorScheduler(DeviceRepository deviceRepository,
                             PerformanceDataRepository performanceDataRepository) {
     this.deviceRepository = deviceRepository;
     this.performanceDataRepository = performanceDataRepository;
+    this.isCollectionInProgress = false;
     initDBWithDummyData();
 //    testDBDummyData();
-    scheduleCollectionTasks();
+
   }
 
+  @Scheduled(cron = "*/10 * * * * *")
   private void scheduleCollectionTasks(){
+    if(isCollectionInProgress){
+      // Detect overlaps
+      // we need to run the entire collection logic on an new thread in order to
+      // detect overlap of schedule executions and raise and alarm
+      // to detect overlaps:
+      // we need to detect the case where the previous scheduled collection is still in progress
+      // when the actual (current) scheduled collection starts
+      logger.error("Collision detected. Avoid start of new collection");
 
-    new Thread(() -> {
-      try {
-        // START loop
-        while (true){
-          logger.debug("collecting performance data... :" );
-          collectPerfDummy();
-          deleteOldPerformanceDataForMaintenance();
-          Thread.sleep(60000); // 1 min
-        }}catch (Exception e){
-        logger.error(e.getMessage() +" - "+ e.getCause() );
-      }
-    }).start();
+    }
+    else {
+      new Thread(new Runnable() {
+        @Override
+        public void run() {
+          runAllCollectorTasksAsync();
+        }
+      }).start();
+    }
   }
 
-  private void testDBDummyData() {
-    List<DeviceEntity> deviceEntityList = (List<DeviceEntity>) deviceRepository.findAll();
-    for (DeviceEntity deviceEntity :deviceEntityList){
-      logger.debug("testDBDummyData DeviceEntity: " + deviceEntity);
-      List<PerformanceDataEntity>  performanceDataEntityList= performanceDataRepository.findByDeviceId(deviceEntity.getId());
-      for (PerformanceDataEntity performanceDataEntity : performanceDataEntityList){
-        logger.debug("testDBDummyData performanceDataEntity: " + performanceDataEntity);
-      }
+  private void runAllCollectorTasksAsync(){
+    logger.info("START all collection tasks");
+    isCollectionInProgress = true;
+    try {
+      collectPerfDummy();
+      deleteOldPerformanceDataForMaintenance();
     }
+    catch (Exception e){
+      logger.error("Failed to runAllCollectorTasksAsync " + e.getCause() + " "+ e.getMessage());
+    }
+    isCollectionInProgress = false;
   }
 
   // init DB with dummy data
@@ -73,24 +84,23 @@ public class CollectorScheduler {
 
   private void collectPerfDummy(){
     DeviceEntity deviceEntity = deviceRepository.findByFriendlyName(DEVICE_NAME).get(0);
+    logger.debug("collecting performance data for "+deviceEntity.getFriendlyName() + " with id: " +deviceEntity.getId());
     long nowTimestampLong = System.currentTimeMillis();
-    // Add data back in time one hour
-    for (int i=0; i < 60 ; i++){
-      long timestampLong = nowTimestampLong - (i * 1000L);
-      Timestamp timestamp = new Timestamp(timestampLong);
-      PerformanceDataEntity performanceData = new PerformanceDataEntity();
-      performanceData.setDeviceId(deviceEntity.getId());
-      performanceData.setTimestamp(timestamp);
-      double randomDouble = 10.0 * Math.random();
-      performanceData.setTemperature(randomDouble);
-      performanceDataRepository.save(performanceData);
-    }
-  }
+    long scheduleStartTimeMillis = System.currentTimeMillis();
+    long scheduleStartTimeMillisRoundedtoSec = 1000 * (scheduleStartTimeMillis  /1000); // rounded to seconds
+    Timestamp timestamp = new Timestamp(scheduleStartTimeMillisRoundedtoSec );
 
-  // collect Performance Data From Devices
-  private void collectPerformanceDataFromDevices(){
+    PerformanceDataEntity performanceData = new PerformanceDataEntity();
+    performanceData.setDeviceId(deviceEntity.getId());
+    performanceData.setTimestamp(timestamp);
+    double randomDoubleTemp = 10.0 * Math.random();
+    double randomDoubleHum = 15.0 * Math.random();
+    performanceData.setTemperature(randomDoubleTemp);
+    performanceData.setHumidity(randomDoubleHum);
+    performanceDataRepository.save(performanceData);
 
   }
+
 
   // delete Performance Data for maintenance
   // Data retention
@@ -102,8 +112,9 @@ public class CollectorScheduler {
       if (deviceEntityList.size() > 0){
         DeviceEntity deviceEntity = deviceEntityList.get(0);
         long now = System.currentTimeMillis();
-        long back1Min = now - 1000L *60L;
-        Timestamp timestamp = new Timestamp(back1Min);
+//        long back1Min = now - 1000L *60L;
+        long back2Min = now - 1000L *60L*2L;
+        Timestamp timestamp = new Timestamp(back2Min);
         long recordDeleted = performanceDataRepository.deleteByDeviceIdAndTimestampIsLessThanEqual(deviceEntity.getId(), timestamp);
         logger.debug("Delete Performance Data for maintenance. Record Deleted:" + recordDeleted);
       }

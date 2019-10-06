@@ -1,6 +1,8 @@
 package com.gmos.iotc.collectorui.service;
 
+import com.gmos.iotc.collectorui.config.IoTConfig;
 import com.gmos.iotc.common.PerformanceDataDTO;
+import com.gmos.iotc.common.RestPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,14 +24,16 @@ public class DataHdrl {
 
   private final RestTemplate restTemplate;
   private Logger logger = LoggerFactory.getLogger(DataHdrl.class);
+  private final IoTConfig ioTConfig;
 
-  public DataHdrl(RestTemplateBuilder restTemplateBuilder) {
+  public DataHdrl(RestTemplateBuilder restTemplateBuilder,IoTConfig ioTConfig) {
     this.restTemplate = restTemplateBuilder.setConnectTimeout(Duration.ofSeconds(10))
             .setReadTimeout(Duration.ofSeconds(10)).build();
+    this.ioTConfig = ioTConfig;
   }
 
-  public void getData(long deviceId){
-    logger.debug("getData for deviceId: "+ deviceId);
+  public List<PerformanceDataDTO> getData(long deviceId){
+    logger.info("getData for deviceId: "+ deviceId);
     //Ref :
     //https://www.baeldung.com/spring-rest-template-list
     //This sends a request to the specified URI using the GET verb and converts the response body
@@ -43,7 +47,10 @@ public class DataHdrl {
     //https://www.baeldung.com/spring-rest-template-list
     //3.1. Using ParameterizedTypeReference
     String urlStr = UriComponentsBuilder.newInstance().
-            scheme("http").host("localhost" ).port(8092).path("/device/performance").
+            scheme("http")
+            .host(ioTConfig.getCollectorHostName() )
+            .port(ioTConfig.getCollectorHostPort())
+            .path(RestPath.DEVICE_PERFORMANCE).
             queryParam("deviceId", deviceId).
         build().toUriString();
 
@@ -56,8 +63,6 @@ public class DataHdrl {
             null,
             new ParameterizedTypeReference<List<PerformanceDataDTO>>(){});
     List<PerformanceDataDTO> performanceDataDTOList = response.getBody();
-    for (PerformanceDataDTO performanceDataDTO :performanceDataDTOList){
-      System.out.println("performanceDataDTO: " + performanceDataDTO.toString());
-    }
+    return performanceDataDTOList;
   }
 }

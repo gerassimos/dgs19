@@ -42,6 +42,7 @@ public class DeviceHdrl {
       performanceDataDTO.setId(performanceDataEntity.getId());
       performanceDataDTO.setTimestamp(performanceDataEntity.getTimestamp());
       performanceDataDTO.setTemperature(performanceDataEntity.getTemperature());
+      performanceDataDTO.setHumidity(performanceDataEntity.getHumidity());
       performanceDataDTO.setDeviceId(performanceDataEntity.getDeviceId());
       result.add(performanceDataDTO);
     }

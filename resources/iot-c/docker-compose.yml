@@ -38,6 +38,8 @@ services:
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
+      COLLECTOR_HOST_NAME: collector
+      COLLECTOR_HOST_PORT: 8092
     ports:
       - "8093:8093"
 
