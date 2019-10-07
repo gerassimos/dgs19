@@ -8,8 +8,8 @@ services:
       POSTGRES_USER: ${DB_USER:-iotc}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-iotc}
       POSTGRES_DB: ${DB_NAME:-iotc}
-    ports:
-      - "5432:5432"
+#    ports:
+#      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-iotc} || exit false"]
       interval: 10s
@@ -27,10 +27,12 @@ services:
     environment:
       LOG_LEVEL: DEBUG
       DB_HOST: postgres_db
-      DB_USER: ${DB_USER:-iotc}
-      DB_PASSWORD: ${DB_PASSWORD:-iotc}
-    ports:
-      - "8092:8092"
+#      DB_PORT: 5432
+#      DB_NAME: ${DB_USER:-iotc}
+#      DB_USER: ${DB_USER:-iotc}
+#      DB_PASSWORD: ${DB_PASSWORD:-iotc}
+#    ports:
+#      - "8092:8092"
 
   collector-ui:
     image: dgs19/iot-collector-ui:0.0.1
@@ -39,9 +41,9 @@ services:
     environment:
       LOG_LEVEL: DEBUG
       COLLECTOR_HOST_NAME: collector
-      COLLECTOR_HOST_PORT: 8092
+#      COLLECTOR_HOST_PORT: 8092
     ports:
-      - "8093:8093"
+      - "80:8093"
 
 networks:
   iotc-db:

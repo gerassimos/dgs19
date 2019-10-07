@@ -282,4 +282,8 @@ TODO
  
 ## LA
  - Ref:
- - [D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md) 
+ - [D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md)
+ 
+## LAB
+ - Ref:
+ - D_S10_L02_Docker_Compose_Basic_Commands_LAB.md  
