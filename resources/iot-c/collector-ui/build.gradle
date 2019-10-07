@@ -21,7 +21,7 @@ def iotcTAG = findProperty('IOTC_TAG') ?: 'latest'
 def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
 
 group = 'com.gmos.iot-c'
-version = '0.0.1-SNAPSHOT'
+version = "${iotcTAG}"
 sourceCompatibility = '11'
 
 repositories {
