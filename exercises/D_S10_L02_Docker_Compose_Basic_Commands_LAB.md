@@ -54,10 +54,65 @@ class: center, middle
 ## Solution
  - The `docker-compose.yml` file:
  ```yml
+version: '3.6'
+services:
+  postgres_db:
+    image: postgres:10
+    networks:
+      - iotc-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-iotc}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-iotc}
+      POSTGRES_DB: ${DB_NAME:-iotc}
+#    ports:
+#      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-iotc} || exit false"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  collector:
+    image: dgs19/iot-collector:0.0.1
+    networks:
+      - iotc-db
+      - iotc-ui
+    environment:
+      LOG_LEVEL: DEBUG
+      DB_HOST: postgres_db
+#      DB_PORT: 5432
+#      DB_NAME: ${DB_USER:-iotc}
+#      DB_USER: ${DB_USER:-iotc}
+#      DB_PASSWORD: ${DB_PASSWORD:-iotc}
+#    ports:
+#      - "8092:8092"
+
+  collector-ui:
+    image: dgs19/iot-collector-ui:0.0.1
+    networks:
+      - iotc-ui
+    environment:
+      LOG_LEVEL: DEBUG
+      COLLECTOR_HOST_NAME: collector
+#      COLLECTOR_HOST_PORT: 8092
+    ports:
+      - "80:8093"
+
+networks:
+  iotc-db:
+  iotc-ui:
+
+volumes:
+  db-data:
+
  ```
  - To deploy the application:
  ```console
- # docker-compose up
+# docker-compose up
+...
  ```
  - From a Web browser access the URL http://<DOCKER_HOST>
 ![](../docs/images/D_S10_L02_collector-ui_web_page.png) 
