@@ -61,7 +61,7 @@ pgadmin4_1    | NOTE: Configuring authentication for SERVER mode.
 
 ## Docker Compose - Example - Start the Services (2)
  - From the output of the `docker-compose up` command we can see the networks, the volumes and the containers that are created
- - From a web browser we can access the <DOCKER_HOST>:8080 to verify the the pgAdmin web application is running and that we can connect to te postgres DB.
+ - From a web browser we can access the `<DOCKER_HOST>:8080` to verify the the pgAdmin web application is running and that we can connect to te postgres DB.
  - After the initial phase the logs of all the containers defined in the `docker-compose.yml` file are displayed
  
 ---
@@ -200,90 +200,51 @@ Removing volume compose-sample-2_db-data
 
 ---
 
-## Docker Compose - Build
+## Docker Compose - Build (1)
+ - `Docker Compose` can be used also to **build** our custom Docker images
  - I have seen how to build a custom Docker image using a `Dockerfile` 
  - Now will see hot to use the `Docker compose` and the `Dockerfile` together to **build** and run our custom Docker images
 
 ---
 
-## Docker Compose - Build - Example (1)
- - In the following example we are going to use the files that are available in the `resources/compose-sample-3` directory.
- - Use the `ls -la` command to list all files in the `compose-sample-3` directory.
- 
+## Docker Compose - Build (2)
+ - In the following example we see the `build` section of a `docker-compose.yml` file: 
+ ```console
+ version: "3.7"
+ services:
+       webapp:
+         build:
+           context: ./dir
+           dockerfile: Dockerfile-alternate
+...
+ ```
 
-```console
-cd 
-TODO
-
-```
-
----
-
-## Docker Compose - Build - Example (2)
- - In the `docker-compose.yml` of this example the `build` option is defined for the `collector` service to specify the build context path for the custom Docker image to build
- 
-    ```console
-    version: '3.6'
-    services:
-      collector:
-        build: ./java_collector
-      image: iot-c
-   ...
-    ```
 > Notes  
-> Documentation Reference available [here](https://docs.docker.com/compose/compose-file/#build)
-
----
-
-## Docker Compose - Build - Example (3)
-- The `Dockerfile` must be available in the build context path 
-
-```console
-# ls resources/compose-sample-3/java_collector
-...
-Dockerfile
-
-```
-
----
-
-## Docker Compose - Build - Example (4)
-
- - To use a custom Dockerfile name then the build section can be defined as follow:
-
-    ```console
-    version: "3.7"
-    services:
-      collector:
-        build:
-          context: ./java_collector
-          dockerfile: Dockerfile-alternate
-    ```
-
----
-
-
-## Docker Compose - Build - Example (5)
- - Use the `docker-compose up` to **build** and **start** the services defined in the compose file 
-
-```console
-# docker-compose up 
-TODO
-...
-```
-
-> Notes:
-> The first time the build process will take place to create the custom Docker image for the collector service. After that the custom Docker image will be available in the local cache.
-
----
-
-## Docker Compose - Build - Example (5)
- - To force the **re-build** process to recreate the custom Docker image we must use the `docker-compose build` or `docker-compose up --build` command.
+> - `context:` =>  Is the relative path of the Docker build context  
+> - `dockerfile:` =>  Is the name of the Docker File to use for the build process (optional needed only if != default name )  
+> - The `docker-compose.yml` file,  `Dockerfile` and the files related to the build context must be located on the same directory
  
-## LA
- - Ref:
- - [D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md)
+---
+
+## Docker Compose - Build (3)
+ - Use the `docker-compose up` to **build** and **start** the services defined in the compose file 
+ - Use the `docker-compose build` to **build** all the custom Docker images defined in the compose file
+ 
+
+> Notes:  
+> - The first time the build process will take place to create the custom Docker images.  
+> - After that the custom Docker images will be available in the local cache.  
+> - The build process will take place again only if the local cache is invalidated  
+
+---
+
+## Docker Compose - Build (4)
+ - To force the **re-build** process to recreate the custom Docker image we must use the `docker-compose build` or `docker-compose up --build` command.
+
+> Notes  
+> - Documentation Reference available [here](https://docs.docker.com/compose/compose-file/#build)  
+---
  
 ## LAB
  - Ref:
- - D_S10_L02_Docker_Compose_Basic_Commands_LAB.md  
+ - [D_S10_L02_Docker_Compose_Basic_Commands_LAB.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S10_L02_Docker_Compose_Basic_Commands_LAB.md)  
