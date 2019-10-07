@@ -21,5 +21,5 @@ RUN rm collector/src/main/java/BuildDependencies.java
 RUN ./gradlew :collector:build
 
 FROM adoptopenjdk:11.0.4_11-jdk-hotspot-bionic
-COPY --from=builder /src/collector/build/libs/collector-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=builder /src/collector/build/libs/collector-latest.jar /app.jar
 CMD ["java", "-jar", "/app.jar"]
