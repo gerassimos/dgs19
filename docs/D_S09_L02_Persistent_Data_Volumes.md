@@ -115,13 +115,13 @@ local               b256cc6cc11f6392d44db73f1b24e2925e7063dcc479701a5e6ef2a6a1a4
 ...
 ```
 
-> Note: From the output of the `docker volume inspect` command we cannot see which container is using this volume. 
+> Note: From the output of the `docker volume inspect` command we **cannot** see which container is using this volume. 
 
 ---
 
 ## Example - mysql (6)
  - On a linux host we could actually navigate to the volume location (/var/lib/docker/volumes/b25.../_data") and access the files that have been created from the container.
- - On a Windows/MAC host running Docker toolbox we "cannot" do this because the file system of linux VM running the Docker daemon is not accessible (Note: This actually is NOT completely true).
+ - On a Windows/MAC host running Docker toolbox we **cannot** do this because the file system of linux VM running the Docker daemon is not accessible (Note: This actually is NOT completely true).
 
 ---
 
@@ -213,7 +213,7 @@ local               mysql-db
 docker container rm -f mysql # <== The "-f" option \
     is used to force the removal of a running container
 
-docker container run -d -e MYSQL_ALLOW_EMPTY_PASSWORD=true --name mysql2 -v mysql-db:/var/lib/mysql  mysql:5.7
+docker container run -v mysql-db:/var/lib/mysql -d -e MYSQL_ALLOW_EMPTY_PASSWORD=true --name mysql2 mysql:5.7
 ```
 
 ---

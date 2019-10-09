@@ -38,11 +38,16 @@ Step 3/9 : ENV NGINX_VERSION 1.15.12-1~stretch
 
  - Each **Step** corresponds to a line in the **Dockerfile**.
  - Each **Step** will create an image layer that we can later refer to it by the hash number e.g. `---> c08899734c03`.
- - The image with all the related layers are stored to the local cache.  
- - The next time that the build process takes place, before actually executing every single step, it will search in the local cache if any related image layer already exists.
+ - The image with all the related layers are stored to the **local cache**.  
+ 
+
+
+---
+## docker build - example (1c) - local cache
+ - The next time that the build process takes place, before actually executing every single step, it will search in the **local cache** if any related image layer already exists.
  - During the build process the "Docker engine" will understand for which layers of the image is possible to use the build cache and when the build cache cannot be used because: 
-   - there are changes in the Dockerfile or 
-   - there are changes in the files that are included in the image.
+   1. there are changes in the Dockerfile or 
+   2. there are changes in the files that are included in the image.
  - During the build process we can see from the output `---> Using cache` when the cached is used. 
 
 ---
@@ -84,7 +89,7 @@ Removing intermediate container 705cb071e800
 ---
 
 ## Dockerfile - order of the commands 
- - The order of the instructions specified in the **Dockefile** is important.
+ - The **order** of the instructions specified in the **Dockefile** is important.
  - Instructions that usually will cause a layer to change should be placed at the end of the **Dockefile**. 
  - For example, a command that adds our application code should be placed at the end of the **Dockefile** file, since it is the one that changes more often.
  - Instructions that usually build the same layer should be placed on the top.

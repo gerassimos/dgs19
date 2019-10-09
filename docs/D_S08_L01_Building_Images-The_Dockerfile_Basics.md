@@ -14,7 +14,7 @@ class: center, middle
 ---
 ## Dockerfile
  - The **Dockerfile** is a recipe for creating a Docker image.
- - It contains the instructions on how to build a Docker image.  
+ - It contains the **instructions** on how to build a Docker image.  
  - All official images on Docker Hub are created from Dockerfiles.
  - It is similar to a shell script.
  - The default file name is **Dockerfile** but you can use custom name as well by specifying the `--file` option.

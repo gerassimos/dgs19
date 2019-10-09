@@ -6,9 +6,9 @@ class: center, middle
 ## Bind Mounting - Overview
  
  - When we use a bind mount, a file or directory on the host machine is mounted into a container. 
- - The file or directory is referenced by its full or relative path on the host machine. 
+ - The file or directory is referenced by the **absolute** or **relative** path on the host machine. 
  - By contrast, when a volume is used, a new directory is created within Docker’s storage directory on the host machine and Docker manages this directory.
- - It maps a host file or directory to a container file or directory.
+ - It maps an existing file or directory on the host to a container file or directory.
  - Basically just two locations pointing to the same file(s).
  - If you are bind mounting a file that already exist on both the host and the container file system, then the host file "wins".
  - A Bind mount **cannot** be used in a Dockerfile.
