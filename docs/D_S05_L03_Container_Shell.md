@@ -287,7 +287,7 @@ CONTAINER ID   IMAGE   COMMAND                  CREATED             STATUS      
 ---
 
 ## docker container exec - example mysql (4)
- - Docker use Linux namespaces to provide isolation for running processes
+ - Docker use Linux **namespaces** to provide isolation for running processes
  - A process might have the apparent PID 1 inside a container, but if we examine it from the host system, it would have an ordinary PID
 
 ```console
@@ -326,8 +326,8 @@ alpine      latest     5cb3aa00f899   4 weeks ago    5.53MB
 ---
 
 ## Alpine Linux (2)
-- The Alpine Linux distribution comes with its own package manager "apk".
-- The "bash" shell is not available in the alpine image. 
+- The Alpine Linux distribution comes with its own package manager `apk`.
+- The `bash` shell is not available in the alpine image. 
 
 ```console
 # docker container run -it alpine bash

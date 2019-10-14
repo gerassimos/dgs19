@@ -19,24 +19,15 @@ class: center, middle
 ## Docker Compose - Common commands 
  - The most common commands are:
 ```console
-$ docker compose up
-$ docker compose down
+$ docker-compose up
+$ docker-compose down
 ``` 
- - The `docker compose up` => create volumes/networks and start all containers
- - The `docker compose down` => stop and remove all containers, remove all networks
+ - The `docker-compose up` => create volumes/networks and start all containers
+ - The `docker-compose down` => stop and remove all containers, remove all networks
 
 > Notes: 
-> - Volumes are **NOT** deleted with the `docker compose down` command  
-> - To delete the volumes use the `docker compose down --volumes` command 
-
----
-
-## Docker Compose vs other CM tools
- - We can see how `Docker Compose` can replace more complicated CM tools such as **Vagrant** and others  
- - Avoid the complexity of managing a virtual machine environment with multiple VMs
- - With `Docker Compose` we have easier way to setup the development environment. The steps required to setup the development environment could be:
-    1. Checkout the code `git clone <repo>`
-    2. Use the `docker-compose up` to start all services required for the development
+> - Volumes are **NOT** deleted with the `docker-compose down` command  
+> - To delete the volumes use the `docker-compose down --volumes` command 
 
 ---
 
@@ -243,6 +234,15 @@ Removing volume compose-sample-2_db-data
 
 > Notes  
 > - Documentation Reference available [here](https://docs.docker.com/compose/compose-file/#build)  
+---
+
+## Docker Compose vs other CM tools
+ - We can see how `Docker Compose` can replace more complicated CM tools such as **Vagrant** and others  
+ - Avoid the complexity of managing a virtual machine environment with multiple VMs
+ - With `Docker Compose` we have easier way to setup the development environment. The steps required to setup the development environment could be:
+    1. Checkout the code `git clone <repo>`
+    2. Use the `docker-compose up` to start all services required for the development
+
 ---
  
 ## LAB
