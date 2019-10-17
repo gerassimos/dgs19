@@ -61,8 +61,8 @@ Many settings (such as network settings and others) are configured with specific
 ### The default `docker0` virtual network 
  - By default, when a container is started, a virtual network interface `eth0` is created inside the container, connected to the **docker0** virtual network.
 ### NAT firewall
- - Outbound traffic (eg. access to the Internet) from the container goes through a NAT firewall.
- - Inbound traffic from external systems goes through the port forwarding rules that are defined with the `--publish` CLI option. 
+ - **Outbound traffic** (eg. access to the Internet) from the container goes through a NAT firewall.
+ - **Inbound traffic** from external systems goes through the **port forwarding rules** that are defined with the `--publish` CLI option. 
   
 ---
   
@@ -126,7 +126,7 @@ docker container run --publish 80:80 --name web_server -d nginx
 
 ## Network topology (3c) - multiple virtual networks
  - In this example the Apache "httpd" container is started using the `--publish 8080:80` option. This will open port 8080 on the "physical" network interface of the Docker host and will forward any traffic request receive on port 8080 to the container virtual interface on port 80.
- - The container #1 from docker0 can communicate with the Apache "httpd" container through port 80 of the physical network interface.
+ - The container #1 from docker0 can communicate with the Apache "httpd" container through port 8080 of the physical network interface.
  - On the physical network it is not possible to use a port for more than one service.
  - In this example port 80 is already occupied from the port forwarding rule defined for the nginx container. So, the Apache "httpd" container cannot use this port and it uses port 8080 instead.
  - It is the best practice to create a dedicated virtual network to connect containers related to a specific application or service. 
@@ -229,7 +229,7 @@ feaf47c89978  nginx  "nginx -g 'daemon of…" About a minute ago   5 minutes ago
 
 ## Container's IP address (1)
  - By default when a container is created is connected to the default `docker0` network.  
- - These means also that a virtual network interface is created inside the container `eth0` and an IP address is assigned to it automatically through an internal DHCP service running on the Docker daemon.
+ - These means also that a virtual network interface is created inside the container `eth0` and an IP address is assigned to it **automatically** through an internal **DHCP service** running on the Docker daemon.
 
 
 ---

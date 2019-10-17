@@ -66,11 +66,11 @@ docker network inspect bridge
 
 
 ## Network driver - host (example) (1)
-- The host network `--network host` is a special network that skips the virtual networking of Docker and attaches the container directly to the host interface.
-- If you use the host network driver for a container, that container’s network stack is not isolated from the Docker host. 
-- In this case, there NO protection from the NAT firewall that seats in the front of the virtual networks.
+- The host network `--network host` is a special network that skips the virtual networking of Docker and attaches the container directly to the **host interface**.
+- If you use the host network driver for a container, that container’s network stack is **not isolated** from the Docker host. 
+- In this case, there **NO protection** from the NAT firewall that seats in the front of the virtual networks.
 - For instance, if you run a container which binds to port 80 and you use host networking, the container’s application will be available on port 80 on the host’s IP address.
-- There is better network performance, since there are not any virtual layers present. 
+- There is **better network performance**, since there are not any virtual layers present. 
 - There are special applications that require access to the physical network interface. 
 
 ---
