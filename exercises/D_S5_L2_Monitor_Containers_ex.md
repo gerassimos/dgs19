@@ -8,7 +8,7 @@ class: center, middle
 1. Create two containers, mysql and nginx as follow:  
 ```terminal  
 # docker container run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql
-# docker container run -d --name nginx nginx sha1sum /dev/zero =>
+# docker container run -d --name nginx nginx sha1sum /dev/zero
 ``` 
 2. Note that in case of nginx, we used /dev/zero => (this is a small hack to make the main process use ~100% of the CPU).
 3. Display the running processes of each container.
