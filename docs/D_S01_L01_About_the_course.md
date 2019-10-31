@@ -1,5 +1,8 @@
-background-image: url(images/intro_first_slide.png)
-background-size: 100% 100%
+class: center, middle
+# Docker for Microservices
+# 
+### Gerassimos Mitropoulos
+### DevOps Engineer 
 ---
 class: center, middle
 # Section 1 - About the course
@@ -23,7 +26,7 @@ class: center, middle
  - pdf slides
  - Exercises and Hands-on Labs 
  - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
- - Slack Chat [slack-link](http://microservices-kpr4216.slack.com/)
+ - Slack Chat [slack-link](https://softcom-intdevops.slack.com/)
 
 ---
 
