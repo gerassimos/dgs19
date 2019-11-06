@@ -25,7 +25,8 @@ class: center, middle
 - Docker Compose: The Multi-Container Tool
 - Introduction to Container Orchestration (Kubernetes and Docker Swarm)
 - Other Resources
---
+
+---
 
 ## Resources
  - pdf slides
