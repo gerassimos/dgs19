@@ -21,7 +21,7 @@ class: center, middle
 
 ---
 
-## Syllabus ((part 2)
+## Syllabus (part 2)
 - Docker Compose: The Multi-Container Tool
 - Introduction to Container Orchestration (Kubernetes and Docker Swarm)
 - Other Resources
