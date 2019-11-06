@@ -32,6 +32,7 @@ We will talk about Docker architecture in order to provide a better understandin
 - Tag images and push them to Docker Hub
 - Use Docker Compose to deploy Microservices
 - Explore the Most Common Use Cases for Docker
+- What is container orchestration
 
 ---
 ## Prerequisites:

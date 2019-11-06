@@ -66,3 +66,22 @@ class: center, middle
  - GitHub account
  - Docker Hub account 
 
+---
+ 
+ ## PC requirements (1)
+ ### VT-x enabled 
+  > This is a virtualization technology that should be enabled from the BIOS, if it is not already enabled
+ 
+ ### Minimum Hardware
+  - CPU: i3
+  - Ram: 4Gb
+  - HD: 20Gb free space
+
+---
+
+ ## PC requirements (2)
+ ### Recommended Hardware
+ - CPU: i5
+ - Ram: 8Gb
+ - HD: 20Gb free space
+

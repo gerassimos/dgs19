@@ -28,26 +28,29 @@ class: center, middle
 
 ---
 
+## Core Objectives:
+- Introduce and Understand Linux Containers
+- The basis of how Docker works
+- How to install the Docker Community Edition
+- How to manage image, containers, networks and volumes
+- Build images using a Dockerfile
+- Tag images and push them to Docker Hub
+- Use Docker Compose to deploy Microservices
+- Explore the Most Common Use Cases for Docker
+- Understand what is container orchestration
+
+---
+## Prerequisites:
+- No paid software required
+- PC (Mac/Windows/Linux) with local admin access to install Docker
+- Linux basics such as shell terminal, ssh and package managers
+- Understand the basics of web and database servers (how they typically communicate, IP's, ports etc.)
+- Have a GitHub and Docker Hub account
+
+---
+
 ## Resources
  - pdf slides
  - Exercises and Hands-on Labs 
  - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
  - Slack Chat [slack-link](https://softcom-intdevops.slack.com/)
-
----
-
-## PC requirements (1)
-### VT-x enabled 
- > This is a virtualization technology that should be enabled from the BIOS, if it is not already enabled
-
-### Minimum Hardware
- - CPU: i3
- - Ram: 4Gb
- - HD: 20Gb free space
----
-
-## PC requirements (2)
-### Recommended Hardware
-- CPU: i5
-- Ram: 8Gb
-- HD: 20Gb free space
