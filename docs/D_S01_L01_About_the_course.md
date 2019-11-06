@@ -8,7 +8,7 @@ class: center, middle
 # Section 1 - About the course
 ---
 
-## Syllabus
+## Syllabus (part 1)
 - About the course
 - Introduction to Docker
 - Installation of Docker and other tools
@@ -18,10 +18,14 @@ class: center, middle
 - Container Images - Docker Hub Registry
 - Build Images - The Dockerfile Basics
 - Persistent Data and Volumes
+
+---
+
+## Syllabus ((part 2)
 - Docker Compose: The Multi-Container Tool
 - Introduction to Container Orchestration (Kubernetes and Docker Swarm)
 - Other Resources
----
+--
 
 ## Resources
  - pdf slides
