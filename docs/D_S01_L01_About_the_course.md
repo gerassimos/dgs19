@@ -53,4 +53,4 @@ class: center, middle
  - pdf slides
  - Exercises and Hands-on Labs 
  - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
- - Slack Chat [slack-link](https://softcom-intdevops.slack.com/)
+ - Slack Chat [slack-link](https://softcom-intworkspace.slack.com/)
