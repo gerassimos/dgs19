@@ -19,6 +19,7 @@ We will talk about Docker architecture in order to provide a better understandin
 - Build Images - The Dockerfile Basics
 - Persistent Data and Volumes
 - Docker Compose: The Multi-Container Tool
+- Introduction to Container Orchestration (Kubernetes and Docker Swarm)
 - Other Resources
 
 ---

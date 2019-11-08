@@ -37,7 +37,7 @@ class: center, middle
 - Tag images and push them to Docker Hub
 - Use Docker Compose to deploy Microservices
 - Explore the Most Common Use Cases for Docker
-- Understand what is container orchestration
+- Understand what is container orchestration solution
 
 ---
 ## Prerequisites:
