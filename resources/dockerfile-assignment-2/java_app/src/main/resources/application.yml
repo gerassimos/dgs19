@@ -1,0 +1,12 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  level:
+    com.dgs19.java_app: ${LOG_LEVEL:DEBUG}
+
+server:
+  port: ${TOMCAT_HTTP_PORT_V:8090}
+

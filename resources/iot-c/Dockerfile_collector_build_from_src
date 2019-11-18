@@ -6,9 +6,9 @@ COPY gradle /src/gradle
 WORKDIR /src
 RUN ./gradlew --version
 
-# download the dependenices ONLY
-# Copy a dymmy java class to and build
-# The perpose is to download the dependenices (jars)
+# download the dependencies ONLY
+# Copy a dummy java class to and build
+# The purpose is to download the dependencies (jars)
 COPY *.gradle gradle.* gradlew /src/
 COPY collector/build.gradle /src/collector/build.gradle
 COPY common/build.gradle /src/common/build.gradle
