@@ -101,3 +101,4 @@ fc4c9f8e7dac: Pushing [==========================>]  3.584kB
 ## LAB
  - Ref
  - D_S8_L3_Extend_Official_Images_lab.md
+ - D_S8_L3_Dockerize_a_Spring_Boot_application.md

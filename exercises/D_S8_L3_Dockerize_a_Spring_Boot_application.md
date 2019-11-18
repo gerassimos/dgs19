@@ -36,7 +36,12 @@ class: center, middle
     - containing only the jre binary (not javac) 
     - containing only the "result" jar file (not the sources code)
     - java options such as XmX can be set from env variables    
- 
+
+
+## Reference for memory settings of Dockerized java applications 
+ - [Java inside docker: What you must know to not FAIL](https://developers.redhat.com/blog/2017/03/14/java-inside-docker/)
+ - [Java and Docker, the limitations](https://royvanrijn.com/blog/2018/05/java-and-docker-memory-limits/)
+       
 ## Solution
 
 ### step 1
