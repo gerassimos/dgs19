@@ -97,5 +97,5 @@ Commands:
  - Both commands will display the same information. 
  - The `docker info` command is the old way to display system information.
  - The `docker system info` is the new way to display system information which make use of the new management format:   
-### `docker <command> <sub-command>`.
+### `docker <mng-command> <command>`.
 

@@ -19,7 +19,7 @@ class: center, middle
  - We can have many containers, all based on the same image. 
 ---
 ## Registries
- - We get all images from registries "repositories". 
+ - We get all images from **registries** => *repositories*. 
  - Registries are kind of what GitHub is to source code. 
  - The default registry is `Docker Hub` but we could also setup a private registry   
  - https://hub.docker.com/

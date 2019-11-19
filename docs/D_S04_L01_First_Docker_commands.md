@@ -110,7 +110,7 @@ Commands:
 ## Docker command format 
 
  - New format:
-### `docker <command> <sub-command> [options]`
+### `docker <mng-command> <command> [options]`
 
  - Old format (still working):
 ### `docker <command> [options]`
@@ -137,7 +137,7 @@ Commands:
 # docker version
 # docker info
 # docker <Enter> => CLI documentation 
-# docker <command> <sub-command>
+# docker <mng-command> <command>
 # docker container run
 # docker run
 ```
