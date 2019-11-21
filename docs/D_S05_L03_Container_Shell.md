@@ -111,7 +111,7 @@ CONTAINER ID   IMAGE   COMMAND  ... STATUS         PORTS       NAMES
 ## Example (4b)
  - The **default** command for an nginx container is to run the nginx program itself. We changed that default program to actually be `bash`, giving us the shell prompt. 
  - When we exited the shell, the container stopped. 
- - Because the main application (PID=1 "default command") running inside the container is `bash`, exiting the bash shell will stop the main `bash` process ((PID=1). 
+ - Because the main application **(PID=1 "default command")** running inside the container is `bash`, exiting the bash shell will stop the main `bash` process ((PID=1). 
 
 ---
 

@@ -23,7 +23,7 @@ class: center, middle
 
 
 ## Dockerfile example
- - The [Dockerfile](../resources/dockerfile-sample-1/Dockerfile) of this example is available in the `resources` directory:  
+ - The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-1/Dockerfile) of this example is available in the `resources` directory:  
  (`resources/dockerfile-sample-1/Dockerfile`)
  
 ---
@@ -41,4 +41,4 @@ class: center, middle
 
 ## Dockerfile - On line documentation
 
-### [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+### [docker docs/Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
