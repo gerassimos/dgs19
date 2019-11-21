@@ -31,9 +31,9 @@ class: center, middle
 ## package manager
  - The base linux distribution defined in the **FROM** section of the *Dockerfile* determines the **package manager** that we can use to install additional software.
  - For example: 
-   - **apt-get** is used from *Ubuntu* or *Debian* base images
-   - **yum** is used from *CenOS* or *Fedora* base images
-   - *apk* is used from *Alpine* base image
+   - `apt-get` is used from **Ubuntu** or **Debian** base images
+   - `yum` is used from **CentOS** or **Fedora** base images
+   - `apk` is used from **Alpine** base image
 
 > The base images usually have a minimal set of packages installed, many tools such as `curl` could be missing.
 
@@ -42,3 +42,4 @@ class: center, middle
 ## Dockerfile - On line documentation
 
 ### [docker docs/Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+![img_width_90](images/D_S08_L01_docker docs_Dockerfile_reference.PNG)
