@@ -19,7 +19,7 @@ index.html
 ---
 
 ## docker build example - extend nginx image (2)
-### The [Dockerfile](../resources/dockerfile-sample-3/Dockerfile) of this example
+### The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-3/Dockerfile) of this example
 
 ---
 
