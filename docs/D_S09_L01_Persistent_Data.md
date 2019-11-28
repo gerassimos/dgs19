@@ -38,6 +38,8 @@ class: center, middle
     - This is known as **separation of concerns**  
  - Docker provides us with two solutions to preserve *unique data*:
    1. **Data Volumes**
+     - anonymous volumes
+     - named volumes      
    2. **Bind Mounts**
 
 ---
@@ -53,7 +55,7 @@ class: center, middle
 ---
 
 ## Bind Mounts
- - A bind mount is a **file** or **folder** located in the user's workspace.
+ - A bind mount is a **file** or **folder** located in the **user's workspace**.
  - A bind mount is a file or folder available on the Docker host filesystem, mounted into a running container. 
  - The main difference a *bind mount* has from a *volume* is that since it can exist anywhere on the host filesystem, processes outside of Docker can also modify it.
  - Bind mounts have limited functionality compared to volumes.
@@ -62,8 +64,29 @@ class: center, middle
 
 ---
 
-## Volumes
-![](images/D_S9_L1_volumes.jpg)
+## Different Types of Volumes
+ - **host volume**
+```terminal
+docker run -v /path/on/host:/path/in/container ...
+```
+ - **anonymous volume**
+```dockerfile
+FROM debian
+...
+VOLUME /path/to/data-dir
+...
+```
+ - **named volume**
+```terminal
+docker volume create somevolumename
+docker run -v name:/path/in/container ...
+```
+
+---
+
+## Different Types of Volumes (2)
+ - Ref: [link](https://success.docker.com/article/different-types-of-volumes)
+
 
 ---
 

@@ -201,7 +201,7 @@ local               mysql-db
 ]
 ```
 > Note:  
-> The name volume is created at a specific "predictable" location `/var/lib/docker/volumes/mysql-db/_data`.
+> The name volume is created at a specific **predictable** location `/var/lib/docker/volumes/mysql-db/_data`.
 
 ---
 
