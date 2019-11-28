@@ -49,9 +49,9 @@ class: center, middle
   - Detailed instructions are available in the `resources/dockerfile-assignment-2/java_app/Dockerfile` .
   
   - The Solution **Dockerfiles** are available at:
-    0. `resources/dockerfile-assignment-2/java_app/Dockerfile_v0`
-    1. `resources/dockerfile-assignment-2/java_app/Dockerfile_v1`
-    2. `resources/dockerfile-assignment-2/java_app/Dockerfile_v2`
+    0. `resources/dockerfile-assignment-2/java_app/Solution_v0.Dockerfile`
+    1. `resources/dockerfile-assignment-2/java_app/Solution_v1.Dockerfile`
+    2. `resources/dockerfile-assignment-2/java_app/Solution_v2.Dockerfile`
 
  - Ref:.
  - Official java Docker image:
