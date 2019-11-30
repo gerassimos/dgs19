@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<style>
+
+
+    body {
+        font-family: "lato", sans-serif;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    h2 {
+        font-size: 26px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    h2 small {
+        font-size: 0.5em;
+    }
+
+    .responsive-table li {
+        border-radius: 3px;
+        padding: 25px 30px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+    .responsive-table .table-header {
+        background-color: #95a5a6;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+    .responsive-table .table-row {
+        background-color: #ffffff;
+        box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    }
+    .responsive-table .col-1 {
+        flex-basis: 10%;
+    }
+    .responsive-table .col-2 {
+        flex-basis: 40%;
+    }
+    .responsive-table .col-3 {
+        flex-basis: 25%;
+    }
+    .responsive-table .col-4 {
+        flex-basis: 25%;
+    }
+    @media all and (max-width: 767px) {
+        .responsive-table .table-header {
+            display: none;
+        }
+        .responsive-table li {
+            display: block;
+        }
+        .responsive-table .col {
+            flex-basis: 100%;
+        }
+        .responsive-table .col {
+            display: flex;
+            padding: 10px 0;
+        }
+        .responsive-table .col:before {
+            color: #6c7a89;
+            padding-right: 10px;
+            content: attr(data-label);
+            flex-basis: 50%;
+            text-align: right;
+        }
+    }
+
+</style>
+</head>
+<body>
+
+
+<div class="container">
+    <h1>Responsive Tables Using LI <small>Triggers on 767px</small></h1>
+
+    <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2>
+    <h3>Responsive Tables Using LI <small>Triggers on 767px</small></h3>
+<div>asas</div>
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">Job Id</div>
+            <div class="col col-2">Customer Name</div>
+            <div class="col col-3">Amount Due</div>
+            <div class="col col-4">Payment Status</div>
+        </li>
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">42235</div>
+            <div class="col col-2" data-label="Customer Name">John Doe</div>
+            <div class="col col-3" data-label="Amount">$350</div>
+            <div class="col col-4" data-label="Payment Status">Pending</div>
+        </li>
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">42442</div>
+            <div class="col col-2" data-label="Customer Name">Jennifer Smith</div>
+            <div class="col col-3" data-label="Amount">$220</div>
+            <div class="col col-4" data-label="Payment Status">Pending</div>
+        </li>
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">42257</div>
+            <div class="col col-2" data-label="Customer Name">John Smith</div>
+            <div class="col col-3" data-label="Amount">$341</div>
+            <div class="col col-4" data-label="Payment Status">Pending</div>
+        </li>
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">11</div>
+            <div class="col col-2" data-label="Customer Name">02</div>
+            <div class="col col-3" data-label="Amount">$115</div>
+            <div class="col col-4" data-label="Payment Status">
+                <a href="web_D_S11_L02_Introduction_to_Kubernetes.html">D_S11_L02_Introduction_to_Kubernetes</a>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
