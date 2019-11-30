@@ -191,6 +191,25 @@ Removing volume compose-sample-2_db-data
 
 ---
 
+## ## Docker Compose - Example [cmd summary] 
+```console
+# cd resources/compose-sample-2/
+# docker-compose up
+* access the <DOCKER_HOST>:8080
+* Ctrl-C
+# docker-compose up -d
+# docker-compose logs -f
+# docker-compose --help
+# docker-compose ps
+# docker-compose top
+# docker container ls
+# docker network ls
+# docker volume ls
+# docker-compose down -- Note By default volumes are not removed
+# docker-compose down -v 
+```
+---
+
 ## Docker Compose - Build (1)
  - `Docker Compose` can be used also to **build** our custom Docker images
  - I have seen how to build a custom Docker image using a `Dockerfile` 

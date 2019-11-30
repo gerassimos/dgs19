@@ -9,19 +9,20 @@ class: center, middle
  - Kubernetes is used to manage the **multi-node cluster** and the **deployment of containers**
  - Released by Google in 2015. It's now maintained by an open source community that Google is a part of
  - Runs on top of Docker (usually). 
-    - The Default container runtime* is Docker
+    - The Default [container runtime] is Docker
     - Other container runtime can be used instead such as *containerd* and *lxd*  
  - Provides a set of API, CLI tools to manage containers across servers
     - One of the main CLI tool used to manage Kubernetes is **kubectl** (kube control)
->
-> [Ref](https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/) 
-> A container runtime is software that executes containers and manages container images on **a node**
 
 ---
 
 ## Options for running Kubernetes (1)
+ ### 1. Cloud provider
+ ### 2. Vendor *Distribution*
+ ### 3. Manual Installation from packages
+ 
  - Kubernetes is **complex**, and **difficult** to set up and **configure**. 
- - Therefore, the best approach, is to use a solution that includes Kubernetes as a supported, maintained **component**
+ - Therefore, the best approach, is to use a solution that includes Kubernetes as a supported, maintained **component**    
 
 ---
 
