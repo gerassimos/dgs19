@@ -63,11 +63,16 @@
 
 ### Section 1
  1. [About the course](web_D_S01_L01_About_the_course.html)  
+  
 ### Section 2 
- 2. [Introduction to Docker](web_D_S02_L01_Introduction_to_Docker.html)  
+ 1. [Introduction to Docker](web_D_S02_L01_Introduction_to_Docker.html)  
+  
 ### Section 3 
- 3. [Installation of Docker](web_D_S03_L01_Installation_of_Docker.html)  
-### Section 4 
+ 1. [Installation of Docker](web_D_S03_L01_Installation_of_Docker.html)  
+  
+### Section 4
+ 1. [First Docker commands](web_D_S04_L01_First_Docker_commands.html)
+  
 ---
  
 ### Section 5
