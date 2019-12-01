@@ -36,6 +36,14 @@ We will talk about Docker architecture in order to provide a better understandin
 - What is container orchestration
 
 ---
+## Course Slides:
+ - [Slides](https://gerassimos.github.io/dgs19/index.html)
+
+---
+## Course Exercises:
+ - [Exercises](https://github.com/gerassimos/dgs19/tree/master/exercises)
+
+---
 ## Prerequisites:
 - No paid software required
 - PC (Mac/Windows/Linux) with local admin access to install Docker
@@ -45,13 +53,5 @@ We will talk about Docker architecture in order to provide a better understandin
 
 ---
 
-[markdown][docs/index.md]
-test with include
-#include "docs/index.md"
-
----
- 
  - If you found this repository to be helpful, you can say "like" by clicking the "Star" button. Thanks :)
-![](docs/images/GithubClickStart.png)
-
---- 
+![](docs/images/GithubClickStart.png) 
