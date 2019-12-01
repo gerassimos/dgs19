@@ -44,6 +44,12 @@ We will talk about Docker architecture in order to provide a better understandin
 - Have a GitHub and Docker Hub account
 
 ---
+
+[markdown][docs/index.md]
+test with include
+#include "docs/index.md"
+
+---
  
  - If you found this repository to be helpful, you can say "like" by clicking the "Star" button. Thanks :)
 ![](docs/images/GithubClickStart.png)
