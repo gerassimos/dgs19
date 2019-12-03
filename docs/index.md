@@ -1,38 +1,59 @@
 ## Table of Contents
 
- - Section 1
+ - Section 1 - About the course
    1. [About the course](web_D_S01_L01_About_the_course.html)  
- - Section 2 
+ - Section 2 - Introduction to Docker
    1. [Introduction to Docker](web_D_S02_L01_Introduction_to_Docker.html)  
- - Section 3 
+ - Section 3 - Installation of Docker
    1. [Installation of Docker](web_D_S03_L01_Installation_of_Docker.html)  
- - Section 4
+ - Section 4 - Command line structure - System Verification
    1. [First Docker commands](web_D_S04_L01_First_Docker_commands.html)
- - Section 5
+ - Section 5 - Containers lifecycle
    1. [Starting our first container](web_D_S05_L01_Starting_our_first_container.html)
    1. [Monitor_Containers](web_D_S05_L02_Monitor_Containers.html)
    1. [Container Shell](web_D_S05_L03_Container_Shell.html)
- - Section 6
+ - Section 6 - Docker Network Concepts
    1. [Docker Network Concepts](web_D_S06_L01_Docker_Network_Concepts.html)
    1. [Docker Network CLI commands](web_D_S06_L02_Docker_Network_CLI_commands.html)
    1. [Docker Network DNS](web_D_S06_L03_Docker_Network_DNS.html)
- - Section 7
+ - Section 7 - Container Images - Docker Hub Registry
    1. [The Docker Hub Registry](web_D_S07_L02_The_Docker_Hub_Registry.html)
    1. [Docker images - Local Cache](web_D_S07_L03_Docker_images-Local_Cache.html)
    1. [Image Tagging and Pushing to Docker Hub](web_D_S07_L04_Image_Tagging_and-Pushing_to_Docker_Hub.html)
- - Section 8
+ - Section 8 - Build Images - The Dockerfile Basics 
    1. [Building Images - The Dockerfile Basics](web_D_S08_L01_Building_Images-The_Dockerfile_Basics.html)
    1. [Build Docker Images](web_D_S08_L02_Build_Docker_Images.html)
    1. [Extend Official Images](web_D_S08_L03_Extend_Official_Images.html)
- - Section 9
+ - Section 9 - Persistent Data and Volumes
    1. [Persistent Data](web_D_S09_L01_Persistent_Data.html)
    1. [Persistent Data Volumes](web_D_S09_L02_Persistent_Data_Volumes.html)
    1. [Persistent Data-Bind Mounting](web_D_S09_L03_Persistent_Data-Bind_Mounting.html)
- - Section 10
+ - Section 10 - Docker Compose
    1. [Docker Compose Introduction](web_D_S10_L01_Docker_Compose_Introduction.html)
    1. [Docker Compose Basic Commands](web_D_S10_L02_Docker_Compose_Basic_Commands.html)
- - Section 11
+ - Section 11 - Introduction to Container Orchestration
    1. [Introduction to Container Orchestration](web_D_S11_L01_Introduction_to_Container_Orchestration.html)
    1. [Introduction to Kubernetes](web_D_S11_L02_Introduction_to_Kubernetes.html)
+
+---
+
+## Exercises - LAB 
+ - Section 4 - Command line structure - System Verification  
+   1. [First Docker commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S4_L1_First_Docker_commands_ex.md)
+ - Section 5 - Containers lifecycle  
+   1. [Starting our first container](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L1_Starting_our_first_container_lab.md)
+   1. [Monitor Containers](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L2_Monitor_Containers_ex.md)
+   1. [Container Shell](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L3_Container_Shell_ex.md)
+ - Section 6 - Docker Network Concepts   
+   1. [Docker Network CLI commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S6_L2_Docker_Network_CLI_commands_ex.md)
+   1. [Docker Network DNS](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S6_L3_Docker_Network_DNS_lab.md)
+ - Section 7 - Container Images - Docker Hub Registry   
+   1. [Image Tagging and Pushing to Docker Hub](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S7_L4_Image_Tagging_and-Pushing_to_Docker_Hub_ex.md)
+ - Section 8 - Build Images - The Dockerfile Basics   
+   1. [Dockerize a Spring Boot application](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S8_L3_Dockerize_a_Spring_Boot_application.md)
+ - Section 9 - Persistent Data and Volumes   
+   1. [Persistent Data](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S9_L3_Persistent_Data_LAB.md)
+ - Section 10 - Docker Compose   
+   1. [Docker Compose Basic Commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S10_L02_Docker_Compose_Basic_Commands_LAB.md)
 
 ---
