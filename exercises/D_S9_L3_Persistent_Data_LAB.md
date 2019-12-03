@@ -4,23 +4,28 @@ class: center, middle
 ---
 
 ## Objective:
- In this LAB you are going to use a named volume and a bind mount to setup a postgres DB with the following configuration:
+ - In this LAB you are going to deploy a multi-container application compose from 2 services (**postgres DB** and **pgadmin**)
+ - A named volume and a bind mount will be used to setup a postgres DB
+  
+## Configuration/Setup instructions:
+
  - postgres image: postgres:10 (official image)
  - DB name: "db-test1"
  - DB user: "db-user1"
  - DB password: "db-pw1"
  - Named volume: "db-data" to preserve the DB data after the container is deleted
- - Bind mount: `init.sql:/docker-entrypoint-initdb.d/init.sql` to init the DB 
- - init.sql: init sql script to create a table "person" with the following columns: 
+ - Bind mount: `init.sql:/docker-entrypoint-initdb.d/init.sql` to init the DB
+ - The `init.sql` file is available under the `resources/volume-lab-1` directory 
+ - init.sql: This script is used to create a table "person" with the following columns: 
    - ID [int] 
    - last_name [text] 
    - first_name [text]
- - container "DNS" name: "postgres10"
+ - container "DNS" name: `postgres10`
  - virtual bridge network: `net-db`
- - Setup a second container "pgadmin" (DB web client) to access the postgres DB
- - Use the minimal configuration possible for the second "pgadmin" container
+ - Setup a second container `pgadmin` (DB web client) to access the postgres DB
+ - Use the minimal configuration possible for the second `pgadmin` container
  - The postgres container should not be accessible from the Docker host
- - The "pgadmin" container should be accessible from the Docker host port 8080
+ - The `pgadmin` container should be accessible from the Docker host port 8080
 
 ## Key points:
  - From the official documentation of the postgres Docker image find:
