@@ -1,4 +1,4 @@
-name: Java CI
+name: build java app
 
 on: [push]
 
@@ -13,5 +13,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11.0.3
-    - name: Build with Gradle
-      run: cd resources/dockerfile-assignment-2/java_app/ && ./gradlew build
+#    - name: Build with Gradle
+#      run: cd resources/dockerfile-assignment-2/java_app/ && ./gradlew build
+    - name: Build with Docker
+      run: |
+        docker version
+        cd resources/dockerfile-assignment-2/java_app/
+        docker build -t java_app -f Solution_v2.Dockerfile .
