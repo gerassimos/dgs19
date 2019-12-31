@@ -1,0 +1,8 @@
+version: '3.6'
+services:
+  ansible-alpine:
+    container_name: ansible-alpine
+    image: ansible-alpine
+    build: .
+    volumes:  
+      - ./books:/opt/books

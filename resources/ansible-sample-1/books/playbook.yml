@@ -1,0 +1,7 @@
+-
+    name: fapi first playbook
+    hosts: "{{ FAPI_HOSTS }}"
+    roles:
+      - role: deploy_dev
+
+  
