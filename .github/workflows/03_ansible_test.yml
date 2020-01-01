@@ -9,5 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/ansible
-  #      env:
-  #        VAULT_PASS: ${{ secrets.VAULT_PASS }}
+        env:
+          VAULT_PASS: ${{ secrets.ANSIBLE_VAULT_PASS }}
+          SERVER_KEY_ID_RSA: ${{ secrets.DEV_SERVER_1_KEY_ID_RSA }}
