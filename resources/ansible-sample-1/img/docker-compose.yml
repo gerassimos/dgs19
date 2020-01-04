@@ -14,3 +14,7 @@ services:
       FAPI_HOSTS: "devservers"
       VAULT_PASS: "${VAULT_PASS}"
       SERVER_KEY_ID_RSA: "${SERVER_KEY_ID_RSA}"
+    # entrypoint: 
+    #   - tail 
+    #   - -f 
+    #   - /dev/null
