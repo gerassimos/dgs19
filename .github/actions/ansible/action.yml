@@ -2,4 +2,4 @@ name: 'Ansible'
 description: 'Runs an Ansible playbook'
 runs:
   using: 'docker'
-  image: 'docker://dgs19/iot-collector:0.0.1'
+  image: 'docker://dgs19/ansible-alpine:latest'
