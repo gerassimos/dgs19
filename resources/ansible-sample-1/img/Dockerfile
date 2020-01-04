@@ -5,4 +5,8 @@ RUN pip3 install --upgrade paramiko
 
 RUN apk add openssh
 
-CMD tail -f /dev/null
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+# CMD tail -f /dev/null

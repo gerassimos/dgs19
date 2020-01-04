@@ -9,8 +9,8 @@ chmod 0600 ~/.ssh/id_rsa
 echo "GITHUB_SHA $GITHUB_SHA"
 
 export ANSIBLE_HOST_KEY_CHECKING=False
-export FAPI_HOSTS="devservers"
+
 ansible-playbook --vault-password-file ~/vault-pw.txt \
- -i resources/ansible-sample-1/books/inventory.ini \
+ -i $INVENTORY_PATH \
  -e FAPI_HOSTS=$FAPI_HOSTS \
- resources/ansible-sample-1/books/playbook.yml
+ $PLAYBOOK_PATH

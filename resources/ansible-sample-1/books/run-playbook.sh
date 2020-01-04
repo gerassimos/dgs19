@@ -10,6 +10,6 @@
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 export FAPI_HOSTS="devservers"
-ansible-playbook --vault-password-file vault-pw.txt -i inventory.ini \
+ansible-playbook --vault-password-file ~/vault-pw.txt -i inventory.ini \
  -e FAPI_HOSTS=$FAPI_HOSTS \
  playbook.yml

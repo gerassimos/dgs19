@@ -3,6 +3,14 @@ services:
   ansible-alpine:
     container_name: ansible-alpine
     image: ansible-alpine
-    build: ..
+    build: .
     volumes:  
-      - ../books:/opt/books
+      - ../books:/books
+    # NOTE 
+    # VAULT_PASS and SERVER_KEY_ID_RSA must be set as env variables from the bash terminal
+    environment:
+      INVENTORY_PATH: "/books/inventory.ini"
+      PLAYBOOK_PATH: "/books/playbook.yml"
+      FAPI_HOSTS: "devservers"
+      VAULT_PASS: "${VAULT_PASS}"
+      SERVER_KEY_ID_RSA: "${SERVER_KEY_ID_RSA}"
