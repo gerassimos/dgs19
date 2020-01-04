@@ -3,6 +3,6 @@ services:
   ansible-alpine:
     container_name: ansible-alpine
     image: ansible-alpine
-    build: .
+    build: ..
     volumes:  
-      - ./books:/opt/books
+      - ../books:/opt/books
