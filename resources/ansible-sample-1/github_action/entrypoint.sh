@@ -7,7 +7,8 @@ mv ~/id_rsa ~/.ssh/id_rsa
 chmod 0600 ~/.ssh/id_rsa
 
 echo "GITHUB_SHA $GITHUB_SHA"
-echo "my key $(cat ~/id_rsa)"
+echo "my key $(cat ~/.ssh/id_rsa)"
+echo "id $(id)"
 ping -c3 54.198.46.177
 
 export ANSIBLE_HOST_KEY_CHECKING=False
