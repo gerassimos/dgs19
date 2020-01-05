@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: execute ansible playbook
-      - uses: .resources/ansible-sample-1/github_action
+        uses: .resources/ansible-sample-1/github_action
         env:
           VAULT_PASS: ${{ secrets.ANSIBLE_VAULT_PASS }}
           SERVER_KEY_ID_RSA: ${{ secrets.DEV_SERVER_1_KEY_ID_RSA }}
