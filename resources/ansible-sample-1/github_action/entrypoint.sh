@@ -21,7 +21,7 @@ ping -c3 54.198.46.177
 ping -c3 8.8.8.8
 ping -c3 srv1.gm76-dev.com
 
-export ANSIBLE_HOST_KEY_CHECKING=False
+# export ANSIBLE_HOST_KEY_CHECKING=False
 
 ansible-playbook --vault-password-file ~/vault-pw.txt \
  -i $INVENTORY_PATH \
