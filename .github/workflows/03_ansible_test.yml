@@ -1,6 +1,11 @@
 name: test ansible custom action
 
-on: push
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - master         # Push events on master branch
+      - 'release*'     # Push events to branches matching refs/heads/release_01
 
 jobs:
 
