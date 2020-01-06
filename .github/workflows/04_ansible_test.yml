@@ -1,10 +1,11 @@
 name: test 2 ansible custom action
 
 on:
-  paths:
-    - '.github/workflows/04_ansible_test.yml'
-    - 'resources/ansible-sample-1/**'    
+
   push:
+    paths:
+      - '.github/workflows/04_ansible_test.yml'
+      - 'resources/ansible-sample-1/**'        
     # Sequence of patterns matched against refs/heads
     branches:    
       - master         # Push events on master branch
