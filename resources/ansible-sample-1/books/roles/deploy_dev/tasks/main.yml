@@ -2,4 +2,4 @@
   name: test task1
   shell: |
     # comment 
-    echo "ansible test $(date)" > ansible_test_.txt
+    echo "ansible test dgs19 $(date)" > ansible_test_.txt
