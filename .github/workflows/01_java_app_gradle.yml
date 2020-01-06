@@ -2,6 +2,9 @@ name: build java app
 
 on:
   push:
+    paths:
+      - '.github/workflows/01_java_app_gradle.yml'
+      - 'resources/dockerfile-assignment-2/java_app/**'
     # Sequence of patterns matched against refs/heads
     branches:    
       - master         # Push events on master branch
