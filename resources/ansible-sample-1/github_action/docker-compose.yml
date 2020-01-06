@@ -2,7 +2,7 @@ version: '3.6'
 services:
   ansible-alpine:
     container_name: ansible-alpine
-    image: dgs19/ansible-alpine:latest
+    image: dgs19/ansible-alpine:${TAG_SUFFIX:-latest}
     build: .
     volumes:  
       - ../books:/books

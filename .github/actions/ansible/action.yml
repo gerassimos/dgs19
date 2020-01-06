@@ -2,4 +2,4 @@ name: 'Ansible'
 description: 'Runs an Ansible playbook'
 runs:
   using: 'docker'
-  image: 'docker://dgs19/ansible-alpine:latest'
+  image: 'docker://dgs19/ansible-alpine:20.01.06'
