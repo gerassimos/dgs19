@@ -1,6 +1,9 @@
 name: test 2 ansible custom action
 
 on:
+  paths:
+    - '.github/workflows/04_ansible_test.yml'
+    - 'resources/ansible-sample-1/**'    
   push:
     # Sequence of patterns matched against refs/heads
     branches:    
