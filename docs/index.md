@@ -1,4 +1,4 @@
-## Table of Contents
+# Table of Contents
 
  - Section 1 - About the course
    1. [About the course](web_D_S01_L01_About_the_course.html)  
@@ -37,7 +37,7 @@
 
 ---
 
-## Exercises - LAB 
+# Exercises - LAB 
  - Section 4 - Command line structure - System Verification  
    1. [First Docker commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S4_L1_First_Docker_commands_ex.md)
  - Section 5 - Containers lifecycle  
