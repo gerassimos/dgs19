@@ -38,7 +38,7 @@ Server:
 >  - From the output of the `docker version` command we can see the client and the server version.
 >  - Remember that Docker is a client server application. 
 >  - Ideally client and server versions should be the same but they don't have to be.
->  - We refer to Docker server also as Docker engine or Docker daemon. 
+>  - We refer to Docker server also as **Docker engine** or **Docker daemon**. 
 >  - The fact that I did get returned information from the server validates that I can talk to the server and that it's working properly.
 
 

@@ -1,5 +1,3 @@
-#page1
-
 ## Table of Contents
 
  - Section 1 - About the course
@@ -38,7 +36,6 @@
    1. [Introduction to Kubernetes](web_D_S11_L02_Introduction_to_Kubernetes.html)
 
 ---
-#page2
 
 ## Exercises - LAB 
  - Section 4 - Command line structure - System Verification  
@@ -60,3 +57,12 @@
    1. [Docker Compose Basic Commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S10_L02_Docker_Compose_Basic_Commands_LAB.md)
 
 ---
+
+## Resources  
+ - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
+   1. [Code samples and other resources](https://github.com/gerassimos/dgs19/tree/master/resources)
+   1. [pdf slides](https://github.com/gerassimos/dgs19/tree/master/pdf)
+   1. [Exercises and Hands-on Labs](https://github.com/gerassimos/dgs19/tree/master/exercises)
+ - Slack Chat [slack-link](https://softcom-intworkspace.slack.com/)
+ - Linux VMs running Docker
+   1. The dgs19 repository is available under the `/home/ec2-user/dgs19` directory
