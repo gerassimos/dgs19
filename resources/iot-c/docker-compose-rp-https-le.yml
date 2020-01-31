@@ -85,7 +85,8 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.collector-ui.rule=Host(`collector-ui.iotc.srv1.gm76-dev.com`)"
+        # - "traefik.http.routers.collector-ui.rule=Host(`collector-ui.iotc.srv1.gm76-dev.com`)"
+        - "traefik.http.routers.collector-ui.rule=Host(`gm76-dev.com`)"
         - "traefik.http.routers.collector-ui.entrypoints=websecure"
         - "traefik.http.routers.collector-ui.tls.certresolver=letsencryptresolver"
         - "traefik.http.services.collector-ui.loadbalancer.server.port=8093"
