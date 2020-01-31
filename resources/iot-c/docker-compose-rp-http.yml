@@ -1,0 +1,91 @@
+version: '3.6'
+
+services:
+
+  reverse-proxy:
+    # The official v2.0 Traefik docker image
+    image: traefik:v2.0
+    # Enables the web UI and tells Traefik to listen to docker
+    networks:
+      - traefik-public
+    command:
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=traefik-public"
+      - "--entrypoints.web.address=:80"
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres_db:
+    image: postgres:10
+    networks:
+      - iotc-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-iotc}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-iotc}
+      POSTGRES_DB: ${DB_NAME:-iotc}
+    #    ports:
+    #      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-iotc} || exit false"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  collector:
+    image: dgs19/iot-collector:0.0.1
+    networks:
+      - iotc-db
+      - iotc-ui
+      - traefik-public
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.collector.rule=Host(`collector.iotc.dgs19`)"
+        - "traefik.http.routers.collector.entrypoints=web"
+        - "traefik.http.services.collector.loadbalancer.server.port=8092"
+    environment:
+      LOG_LEVEL: DEBUG
+      DB_HOST: postgres_db
+  #      DB_PORT: 5432
+  #      DB_NAME: ${DB_USER:-iotc}
+  #      DB_USER: ${DB_USER:-iotc}
+  #      DB_PASSWORD: ${DB_PASSWORD:-iotc}
+    ports:
+      - "8092:8092"
+
+  collector-ui:
+    image: dgs19/iot-collector-ui:0.0.1
+    networks:
+      - iotc-ui
+
+    environment:
+      LOG_LEVEL: DEBUG
+      COLLECTOR_HOST_NAME: collector
+    #      COLLECTOR_HOST_PORT: 8092
+    ports:
+      - "8093:8093"
+
+networks:
+  iotc-db:
+  iotc-ui:
+  traefik-public:
+    external: true
+
+
+volumes:
+  db-data:
