@@ -26,6 +26,7 @@ services:
     ports:
       # The HTTP port
       - "80:80"
+      - "443:443"  
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
@@ -62,10 +63,10 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.helloworld.rule=Host(`collector.iotc.srv1.gm76-dev.com`)"
-        - "traefik.http.routers.helloworld.entrypoints=websecure"
-        - "traefik.http.routers.helloworld.tls.certresolver=letsencryptresolver"
-        - "traefik.http.services.helloworld.loadbalancer.server.port=8092"
+        - "traefik.http.routers.collector.rule=Host(`collector.iotc.srv1.gm76-dev.com`)"
+        - "traefik.http.routers.collector.entrypoints=websecure"
+        - "traefik.http.routers.collector.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.collector.loadbalancer.server.port=8092"
     environment:
       LOG_LEVEL: DEBUG
       DB_HOST: postgres_db
@@ -80,7 +81,14 @@ services:
     image: dgs19/iot-collector-ui:0.0.1
     networks:
       - iotc-ui
-
+      - traefik-public
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.collector-ui.rule=Host(`collector-ui.iotc.srv1.gm76-dev.com`)"
+        - "traefik.http.routers.collector-ui.entrypoints=websecure"
+        - "traefik.http.routers.collector-ui.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.collector-ui.loadbalancer.server.port=8093"
     environment:
       LOG_LEVEL: DEBUG
       COLLECTOR_HOST_NAME: collector
