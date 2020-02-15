@@ -21,7 +21,7 @@ jobs:
         run: docker pull dgs19/iot-collector:latest
 
       - name: scan with trivy
-        uses: homoluctus/gitrivy@v1.0.0
+        uses: homoluctus/gitrivy@v1
         with:
           image: dgs19/iot-collector:latest
 
