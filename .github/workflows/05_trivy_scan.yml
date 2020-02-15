@@ -1,0 +1,27 @@
+name: Vulnerability Scan
+
+on:
+
+  push:
+    paths:
+      - '.github/workflows/05_trivy_scan.yml'
+      - 'resources/iot-c/**'        
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - master         # Push events on master branch
+      - 'release*'     # Push events to branches matching refs/heads/release_01
+
+jobs:
+
+  scan:
+    name: Docker image Vulnerability Scan
+    runs-on: ubuntu-18.04
+    steps:
+      # - name: Pull docker image
+      #   run: docker pull sample
+
+      - name: scan with trivy
+        uses: homoluctus/gitrivy@v1.0.0
+        with:
+          image: dgs19/iot-collector:latest
+
