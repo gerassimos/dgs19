@@ -20,8 +20,9 @@ jobs:
       - name: Pull docker image
         run: docker pull dgs19/iot-collector:latest
 
-      - name: scan with trivy
+      - name: Vulnerability scan with trivy
         uses: homoluctus/gitrivy@v2
         with:
+          issue: false
           image: dgs19/iot-collector:latest
 
