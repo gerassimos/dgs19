@@ -15,13 +15,13 @@ jobs:
 
   scan:
     name: Docker image Vulnerability Scan
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Pull docker image
         run: docker pull dgs19/iot-collector:latest
 
       - name: scan with trivy
-        uses: homoluctus/gitrivy@v1
+        uses: homoluctus/gitrivy@v2
         with:
           image: dgs19/iot-collector:latest
 
