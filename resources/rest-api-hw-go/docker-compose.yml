@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  rest-api-hw-go:
+    image: rest-api-hw-go:latest
+    container_name: rest-api-hw-go
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Dockerfile.build --> is wworking
+      # dockerfile: Dockerfile.build
+    ports: 
+      - 8080:8080 
+

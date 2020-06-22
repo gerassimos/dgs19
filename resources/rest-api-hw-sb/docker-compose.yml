@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  rest-api-hw-sb:
+    image: rest-api-hw-sb:latest
+    container_name: rest-api-hw-sb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 8090:8090 
+

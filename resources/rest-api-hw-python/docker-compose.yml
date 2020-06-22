@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  rest-api-hw-sb:
+    image: rest-api-hw-python:latest
+    container_name: rest-api-hw-python
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 8100:5000
+
