@@ -1,0 +1,60 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "100m"
+    max-file: "3"
+
+x-deploy:
+  &default-deploy
+  replicas: 1
+  update_config:
+    parallelism: 1
+    delay: 10s
+  restart_policy:
+    condition: on-failure
+    max_attempts: 5
+
+
+services:
+  
+
+  db-backup:
+    image: prodrigestivill/postgres-backup-local:10
+    networks:
+      - net-db
+    deploy:
+      << : *default-deploy
+      restart_policy:
+        condition: any
+        max_attempts: 5
+    environment:
+      - POSTGRES_HOST=timescaledb
+      - POSTGRES_DB=db1
+      - POSTGRES_USER=db1
+      - POSTGRES_PASSWORD=db1
+      - POSTGRES_EXTRA_OPTS=-Fc
+        #CRON Expression Format
+        # * * * * * *
+        # Seconds | Minutes | Hours | Day of month | Month | Day of week
+      - SCHEDULE=0 0 0 * * * # every day at 0:00
+#      - SCHEDULE=0 * * * * * # every minute
+#      - SCHEDULE=@daily # This is also a valid entry
+      - BACKUP_KEEP_DAYS=1
+      - BACKUP_KEEP_WEEKS=1
+      - BACKUP_KEEP_MONTHS=1
+    volumes:
+      - db-backup:/backups
+    logging: *default-logging
+  
+
+volumes:
+  db-data:
+  db-backup:
+
+networks:
+  net-db:
+
+

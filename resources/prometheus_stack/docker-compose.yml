@@ -1,0 +1,72 @@
+version: '3.6'
+
+services:
+
+    prometheus:
+        image: prom/prometheus:v2.20.1
+        container_name: prometheus
+        volumes:
+            - ./prometheus:/etc/prometheus
+            - prometheus_data:/prometheus
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+            - '--web.console.libraries=/etc/prometheus/console_libraries'
+            - '--web.console.templates=/etc/prometheus/consoles'
+            - '--storage.tsdb.retention.time=15d'
+            - '--web.enable-lifecycle'
+            - '--web.enable-admin-api'
+        ports:
+            - "9090:9090"
+
+    nodeexporter:
+        image: prom/node-exporter:v1.0.1
+        container_name: nodeexporter 
+        volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro 
+            - /:/rootfs:ro 
+            - /tmp:/tmp:ro 
+        command:
+            # - '--collector.textfile.directory=/tmp'
+            - '--path.procfs=/host/proc'
+            - '--path.sysfs=/host/sys'
+            - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'
+        ports:
+            - "9100:9100"
+
+    cadvisor:
+        image: gcr.io/cadvisor/cadvisor:v0.37.0
+        container_name: cadvisor
+        volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:rw
+        - /sys:/sys:ro
+        - /var/lib/docker:/var/lib/docker:ro
+        - /cgroup:/cgroup:ro
+        ports:
+            - "8080:8080"
+
+    grafana:
+        image: grafana/grafana:7.1.5
+        container_name: grafana
+        volumes:
+            - grafana_data:/var/lib/grafana 
+            - ./grafana/provisioning:/etc/grafana/provisioning
+        ports:
+            - "3000:3000"
+
+    alertmanager:
+        image: prom/alertmanager:v0.21.0
+        container_name: alertmanager
+        volumes:
+            - ./alertmanager:/etc/alertmanager
+        command:
+            - '--config.file=/etc/alertmanager/config.yml'
+            - '--storage.path=/alertmanager'
+        ports:
+            - "9093:9093"
+
+volumes:
+    prometheus_data:
+    grafana_data:
