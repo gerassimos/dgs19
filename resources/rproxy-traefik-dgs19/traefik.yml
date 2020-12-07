@@ -1,0 +1,23 @@
+
+# Dynamic configuration
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /run/secrets/traefik_proxy_ssl_crt
+        keyFile: /run/secrets/traefik_proxy_ssl_key
+        # certFile: /ssl/rproxy.crt
+        # keyFile: /ssl/rproxy.key
+
+# Ref:
+# https://doc.traefik.io/traefik/https/tls/#client-authentication-mtls 
+
+  options:
+    default:
+      clientAuth:
+        # in PEM format. each file can contain multiple CAs.
+        caFiles:
+           # - /ssl/ca.crt
+          - /run/secrets/traefik_proxy_ssl_ca
+        clientAuthType: RequireAndVerifyClientCert

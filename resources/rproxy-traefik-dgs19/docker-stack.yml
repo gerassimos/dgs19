@@ -1,0 +1,90 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "${RPROXY_LOG_SIZE:-10m}"
+    max-file: "${RPROXY_LOG_MAX_FILES:-3}"
+
+x-deploy:
+  &default-deploy
+  replicas: 1
+  update_config:
+    parallelism: 1
+    delay: 10s
+  restart_policy:
+    condition: on-failure
+    max_attempts: 5
+
+services:
+
+  traefik:
+    image: traefik:v2.3.2
+    command:
+      # - "--log.level=DEBUG"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=rproxy_net-traefik"
+      - "--providers.file.directory=/configuration/"
+      - "--providers.file.watch=true"
+      # - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # - "--api.insecure=true"    
+    secrets:
+      - traefik_proxy_ssl_key
+      - traefik_proxy_ssl_crt
+      - traefik_proxy_ssl_ca
+    configs:
+      - source: traefik_proxy_dynamic_config
+        target: /configuration/traefik.yml
+     
+    networks:
+      - net-traefik
+    deploy: *default-deploy
+    ports:
+    # - "8091:80"
+      - "8093:443"
+    # The Web UI (enabled by --api.insecure=true)
+    # - "8082:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # - ./traefik.yml:/configuration/traefik.yml
+      # - ./ssl:/ssl
+    logging: *default-logging
+
+  my-web-app:
+    image: nginx
+    networks:
+      - net-traefik
+    deploy:
+      << : *default-deploy
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.my-web-app.rule=Host(`my-web-app.local.swarm`)"
+        - "traefik.http.routers.my-web-app.entrypoints=websecure"
+        # https://doc.traefik.io/traefik/routing/routers/#tls_1
+        # By default, a router with a TLS section will terminate the TLS connections, meaning that it will send decrypted data to the services
+        - "traefik.http.routers.my-web-app.tls=true"
+        - "traefik.http.services.my-web-app.loadbalancer.server.port=80"
+    logging: *default-logging
+
+networks:
+  net-traefik:
+
+secrets:
+  traefik_proxy_ssl_ca:
+    external: true
+    name: proxy_ssl_ca_${RPROXY_TAG}
+  traefik_proxy_ssl_key:
+    external: true
+    name: proxy_ssl_key_${RPROXY_TAG}
+  traefik_proxy_ssl_crt:
+    external: true
+    name: proxy_ssl_crt_${RPROXY_TAG}
+
+configs:
+  traefik_proxy_dynamic_config:
+    external: true
+    name: proxy_dynamic_config_${RPROXY_TAG}
