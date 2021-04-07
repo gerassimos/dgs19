@@ -31,7 +31,7 @@ We will talk about Docker architecture in order to provide a better understandin
 - How to manage image, containers, networks and volumes
 - Build images using a Dockerfile
 - Tag images and push them to Docker Hub
-- Use Docker Compose to deploy Microservices
+- Use Docker Compose to deploy multiple containers
 - Explore the Most Common Use Cases for Docker
 - What is container orchestration
 
