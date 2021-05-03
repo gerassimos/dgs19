@@ -43,14 +43,14 @@ class: center, middle
 ## Prerequisites:
 - No paid software required
 - PC (Mac/Windows/Linux) with local admin access to install Docker
-- Linux basics such as shell terminal, ssh and package managers
+- Linux basics such as shell terminal, text editing from the command (vim, nano)
 - Understand the basics of web and database servers (how they typically communicate, IP's, ports etc.)
 - Have a GitHub and Docker Hub account
 
 ---
 
 ## Resources
- - pdf slides
+ - slides (pdf/html)
  - Exercises and Hands-on Labs 
  - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
- - Slack Chat [slack-link](https://softcom-intworkspace.slack.com/)
+ 
