@@ -23,6 +23,9 @@ class: center, middle
  - Layer 1 Physical layer (wired Ethernet 802.3, wireless WLAN 802.11, MAC address)
   
 ---
+## Switching
+![img_width_100](images/D_S6_L1_network_topology_switch.png)
+---
 
 ## IPv4 address (1)
   - host part
