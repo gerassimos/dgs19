@@ -75,11 +75,11 @@ Start all containers in detached mode (-d).
 
 Set the following port mapping and custom names:
 
-|container  |host port   |container port| name     |
-|-----------|------------|--------------|----------|
-|nginx      |80          |80            |proxy     |
-|httpd      |8080        |80            |webserver |
-|mysql      |3306        |3306          |db        | 
+|Docker Image|host port   |container port|name      |
+|------------|------------|--------------|----------|
+|nginx       |80          |80            |proxy     |
+|httpd       |8080        |80            |webserver |
+|mysql       |3306        |3306          |db        | 
  
 Use the "--env" option to the environment variable MYSQL_RANDOM_ROOT_PASSWORD=yes in the mysql container. 
 Do not worry, we will go through the (--env) option in next lectures.

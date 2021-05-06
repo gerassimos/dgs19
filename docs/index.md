@@ -63,6 +63,3 @@
    1. [Code samples and other resources](https://github.com/gerassimos/dgs19/tree/master/resources)
    1. [pdf slides](https://github.com/gerassimos/dgs19/tree/master/pdf)
    1. [Exercises and Hands-on Labs](https://github.com/gerassimos/dgs19/tree/master/exercises)
- - Slack Chat [slack-link](https://softcom-intworkspace.slack.com/)
- - Linux VMs running Docker
-   1. The dgs19 repository is available under the `/home/ec2-user/dgs19` directory

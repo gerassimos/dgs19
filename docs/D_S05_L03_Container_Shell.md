@@ -41,8 +41,8 @@ root@27056e1170d7:/#
 > - The "-name" option is used to set the name of the container.
 > - After the image name, the `bash` argument is used to specify the COMMAND to execute inside the container. This will **override** the image default CMD.
 > - The `bash` command will provide a shell prompt from which we can execute linux commands inside the container.
-> - `nginx` default CMD [Dockerfile](https://github.com/nginxinc/docker-nginx/blob/master/stable/stretch/Dockerfile)  
-
+> - `nginx` default CMD [Dockerfile](https://github.com/nginxinc/docker-nginx/blob/master/stable/debian/Dockerfile)  
+                                     
 ```dockerfile
 CMD ["nginx", "-g", "daemon off;"]
 ```

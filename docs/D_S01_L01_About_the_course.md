@@ -1,5 +1,5 @@
 class: center, middle
-# Docker for Microservices
+# Docker Getting Started
 # 
 ### Gerassimos Mitropoulos
 ### DevOps Engineer 

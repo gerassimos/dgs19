@@ -197,7 +197,7 @@ Error response from daemon: You cannot remove a running container 3edc68a4502908
 ```
 
 > - We got an error.  
-> - The first two conatainers were safely deleted. 
+> - The first two containers were safely deleted. 
 > - We cannot remove (delete) the third one for safety reasons.  
 > - Docker will not allow to remove a container that is still running. 
 ---
@@ -213,16 +213,20 @@ Error response from daemon: You cannot remove a running container 3edc68a4502908
 ---
 
 ## docker container run - review (1)
-![docker_run](images/D_S5_L1_docker_run_r1.jpg)
+![img_width_100](images/D_S5_L1_docker_run_simple.png)  
+
+---
+## docker container run - review (2a)
+![img_width_100](images/D_S5_L1_docker_run_my-cmd.png)  
 
 ---
 
-## docker container run - review (2)
+## docker container run - summary 
  1. It looks for that image locally in image cache. It doesn't find anything.
  2. Then it looks in remote image repository (by default to Docker Hub).
  3. It downloads the latest version (nginx:latest by default).
  4. It creates new container based on that image and prepares to start.
- 5. It gives a virtual IP to the conatainer on a private network inside docker engine.
+ 5. It gives a virtual IP to the container on a private network inside docker engine.
  6. It opens up the port 80 on host and forwards to port 80 in container.
  7. It starts the container by using the CMD in the image Dockerfile.
 
