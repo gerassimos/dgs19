@@ -11,7 +11,7 @@
  - Section 5 - Containers lifecycle
    1. [Starting our first container](web_D_S05_L01_Starting_our_first_container.html)
    1. [Monitor_Containers](web_D_S05_L02_Monitor_Containers.html)
-   1. [Container Shell](web_D_S05_L03_Container_Shell.html)
+   1. [Container Shell](web_D_S05_L02_Container_Shell.html)
  - Section 6 - Docker Networking Basics
    1. [Docker Network Concepts](web_D_S06_L01_Docker_Network_Concepts.html)
    1. [Docker Network CLI commands](web_D_S06_L02_Docker_Network_CLI_commands.html)

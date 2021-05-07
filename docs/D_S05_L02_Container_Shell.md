@@ -366,4 +366,4 @@ fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/main/x86_64/APKINDEX.tar.gz
 
 ## Exercise
  - Ref:
- - D_S5_L3_Container_Shell_ex.md
+ - [D_S5_L2_Container_Shell_ex.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L2_Container_Shell_ex.md)
