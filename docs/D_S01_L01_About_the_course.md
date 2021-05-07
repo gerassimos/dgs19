@@ -50,7 +50,7 @@ class: center, middle
 ---
 
 ## Resources
- - slides (pdf/html)
- - Exercises and Hands-on Labs 
+ - [Slides](https://gerassimos.github.io/dgs19/index.html)
+ - [Exercises and Hands-on Labs](https://github.com/gerassimos/dgs19/tree/master/exercises)
  - GitHub repository [dgs19](https://github.com/gerassimos/dgs19)
  
