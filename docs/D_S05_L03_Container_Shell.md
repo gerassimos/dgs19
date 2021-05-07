@@ -3,9 +3,10 @@ class: center, middle
 ## 3 - Container Shell
 ---
 ## Overview - Getting a Shell Inside Containers
- 1. `docker container run -it` => start new container interactively
- 2. `docker container exec -it` => run additional command in existing container
- 3. Default shell CMD of different Linux distributions in containers
+ 1. `docker container run -it <image> bash` => Start new container interactively and override default CMD to bash/sh
+ 1. Use Docker images such as **ubuntu** or **alpine** where the default `CMD` is **bash/sh** 
+ 1. `docker exec -it <container> bash` => Get access on existing running container by running bash command 
+ 
 ---
 
 ## Start new container interactively
@@ -97,14 +98,11 @@ exit
 
 ```console
 # docker container ls -a
-CONTAINER ID   IMAGE   COMMAND  ... STATUS         PORTS       NAMES
-27056e1170d7   nginx   "bash"   ... Exited (0)…                proxy
-515d82f84f9e   mysql   "…"      ... Up 2 minutes   3306/tcp…   mysql
-1b76d91c5f77   nginx   "nginx…" ... Up 3 minutes   80/tcp      nginx
+CONTAINER ID   IMAGE   COMMAND                ... STATUS      PORTS   NAMES
+27056e1170d7   nginx   "/docker-entrypoint.…" ... Exited (0)…         proxy
 ```
 
 > After exiting the bash shell, the container "proxy" is not running.  Why ?
-
 
 ---
 
@@ -160,7 +158,7 @@ Setting up curl (7.58.0-2ubuntu3.6) ...
 
 ---
 
-## typical operations (2b)  
+## typical operations (2)  
  - In this example, the ubuntu running container has a curl installed and we can use it as we would do on a local machine.  
 
 ```console 
@@ -192,8 +190,6 @@ exit
 ```console
 # docker container ls
 CONTAINER ID   IMAGE   COMMAND  ... STATUS          PORTS      NAMES
-515d82f84f9e   mysql   "…"      ... Up 26 minutes   3306/tcp…  mysql
-1b76d91c5f77   nginx   "nginx…" ... Up 27 minutes   80/tcp     nginx
 ```
 
 > ubuntu container is not running since we exited from the bash shell **the default application**. 
@@ -208,25 +204,32 @@ CONTAINER ID   IMAGE   COMMAND  ... STATUS          PORTS      NAMES
 CONTAINER ID  IMAGE   COMMAND     ... STATUS          PORTS       NAMES
 1da52b3057f6  ubuntu  "/bin/bash" ... Exited (0)…                 ubuntu
 27056e1170d7  nginx   "bash"      ... Exited (0)…                 proxy
-515d82f84f9e  mysql   "…"         ... Up 29 minutes   3306/tcp…   mysql
-1b76d91c5f77  nginx   "nginx…"    ... Up 30 minutes   80/tcp      nginx
 ```
 
-> If we start the specific ubuntu container (`ID="1da52b3057f6"`) again, then this container will have curl tool installed on it. But if we create a new container from the ubuntu image (docker container run ubuntu), that different container will not have the curl tool installed on.
+> If we start the specific ubuntu container (`ID="1da52b3057f6"`) again, then this container will have `curl` tool installed on it.  
+> But if we execute again `docker container run ubuntu` this will create a new "ubuntu" container where the `curl` tool is not available
 ---
 
-## docker container exec 
- - Use the `docker container exec` command to get shell prompt of a running container 
- - In the following examples we have two running containers mysql and nginx:
+## docker container exec (1)
+ - In this example we create two containers mysql and nginx with `docker container run` command in *detach* mode
+ - These is no shell terminal attached on this containers and they are running the "default" `CMD`  
+ ```console
+docker container run -d --name nginx -p 80:80 nginx
+docker container run -d -p 3306:3306 --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+```
 
+---
+
+## docker container exec (2)
+ - Now we have two running containers mysql and nginx:
  ```console
 # docker container ls
 CONTAINER ID   IMAGE   COMMAND                  CREATED             STATUS              PORTS                 NAMES
 515d82f84f9e   mysql   "docker-entrypoint.s…"   About an hour ago   Up About an hour    3306/tcp, 33060/tcp   mysql
 1b76d91c5f77   nginx   "nginx -g 'daemon of…"   About an hour ago   Up About an hour    80/tcp                nginx
 ```
-
-> The "docker container exec" command can be used to execute any command inside a container.
+ - We can use the `docker container exec -it <container> bash` command to get **shell prompt** of a running container
+ - The `docker container exec` command can be used to execute **any command** inside a container.
 
 ---
 
@@ -305,28 +308,32 @@ root       493  0.0  0.1  36624  1528 ?        Rs   10:06   0:00 ps aux
 ``` 
 
 ---
-
 ## Alpine Linux (1)
+ - In this example we will use the **alpine** Docker image to test the shell access in a container in a similar way as we did with ubuntu   
  - Alpine is a Linux distribution designed to be very small in size. It's actually only 5MB.
-
-```console 
-# docker pull alpine
-# docker image ls
-REPOSITORY  TAG        IMAGE ID       CREATED        SIZE
-mysql       latest     7bb2586065cd   12 days ago    477MB
-nginx       latest     2bcb04bdb83f   12 days ago    109MB
-ubuntu      latest     94e814e2efa8   3 weeks ago    88.9MB
-alpine      latest     5cb3aa00f899   4 weeks ago    5.53MB
-```
-
-> - We used the "docker pull" command to download the latest alpine image from the docker.hub registry.  
-> - We used the "docker image ls" to list all images available in the local cache.
-> - Do not worry, we will cover Docker images in depth in the next section.
+ - We will use two new commands `docker pull` and `docker image ls` to download the list the Docker images before we execute the `docker run` command  
 
 ---
 
 ## Alpine Linux (2)
-- The Alpine Linux distribution comes with its own package manager `apk`.
+ - We use the `docker pull` command to download the latest alpine image from the docker.hub registry.  
+ - We use the `docker image ls` to list all images available in the **local cache**.  
+
+```console 
+# docker pull alpine
+Using default tag: latest
+...
+Status: Downloaded newer image for alpine:latest
+
+# docker image ls
+REPOSITORY  TAG        IMAGE ID       CREATED        SIZE
+alpine      latest     5cb3aa00f899   4 weeks ago    5.53MB
+```
+> Do not worry, we will cover Docker images in depth in the next sections.
+
+---
+
+## Alpine Linux (3)
 - The `bash` shell is not available in the alpine image. 
 
 ```console
@@ -341,14 +348,20 @@ Result:
 
 ---
 
-## Alpine shell
- - Use the `sh` command to get access to the alpine shell.
+## Alpine Linux (4)
+ - Use the `sh` command to get access to the **alpine** shell.
+ - The **alpine** Linux distribution comes with its own package manager `apk`. 
 
 ```console
 # docker container run -it alpine sh
 / #
+/ # apk add curl
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/main/x86_64/APKINDEX.tar.gz
+...
+/ # curl www.google.com
 ```
 
+> Note again that the `curl` tool is not available in the alpine image to keep the image small.  
 ---
 
 ## Exercise

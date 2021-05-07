@@ -254,4 +254,4 @@ docker container rm --force webhost
 
 ## Exercise
  - Ref:
- - D_S5_L1_Starting_our_first_container_lab.md
+ - [D_S5_L1_Starting_our_first_container_lab.md](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L1_Starting_our_first_container_lab.md)
