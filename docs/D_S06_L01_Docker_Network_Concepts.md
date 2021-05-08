@@ -21,6 +21,17 @@ class: center, middle
  - Layer 3 Transport (TCP/port and UDP/port) 
  - Layer 2 Network layer (IP address, ICMP control protocol `ping`)
  - Layer 1 Physical layer (wired Ethernet 802.3, wireless WLAN 802.11, MAC address)
+ 
+---
+  
+## OSI model - 7 layer network model 
+ - Layer 7  Application layer
+ - Layer 6  Presentation layer
+ - Layer 5  Session layer
+ - Layer 4  Transport layer
+ - Layer 3  Network layer
+ - Layer 2  Data link layer
+ - Layer 1  Physical layer
   
 ---
 ## Switching
@@ -45,30 +56,42 @@ class: center, middle
 <img src="images/D_S6_L1_IPv4_Network_example.PNG"  style="height:450px;"/>
 
 ---
-
-## Docker Networks Defaults (1) 
-### Batteries Included, But Removable
-Many settings (such as network settings and others) are configured with specific default values from Docker but it is very easy to change them, for example: 
- - We can change the default bridge virtual network `docker0`.
- - We can change the default network `driver` of a custom virtual network.
- - etc...  
+## Docker Networks Defaults (1)
+ - All networking concepts that are applicable for a physical server are also applicable for a Docker container.
+ - Inside each Docker container will be a virtual network interface `eth0` that is connected to a virtual switch ("docker0" o "bridge")
+ - On each container an **IP address** will be automatically assign via a **DHCP** server 
+ - There is not an actual dedicated DHCP server but the Docker daemon is acting as an DHCP server
+ - So all containers created within a host are **connected** on the same virtual network and can talk to each other.
+ - What has been describe above is not always the case there are multiple other valid network setups that can be used.
  
-> Note1:  
-> Do not worry if you do not understand what is a network `driver` yet.  We will cover the available network drivers in next lectures.
->
-> Note2:  
-> Some times the `docker0` virtual network is called `bridge` network, but **do not confuse** `bridge` is also the driver (network type) used by default for the Docker's virtual network.
+---
+## Docker Networks Defaults (2)
+ - It is common to create **multiple** virtual networks (virtual switches), and attach a container to one or more virtual networks
+ - From the host point of view each a virtual network is just a "regular" **network interface** of type `bridge`
+ - The `bridge` network interface on the host behaves like a **network switch** from the container point of view
+ - The containers connected on the same virtual network can reference each other using the container name **(DNS name)**
+ - Docker has a build in **DNS server**
+ 
+---
+## Docker Networks Defaults (3) 
+ - There many ways to setup the virtual networks used by the Docker containers 
+ - Docker's networking subsystem is pluggable, using drivers. 
+ - Several drivers exist and provide core networking functionality.
+ - The default network driver is `bridge`. 
+ - If we don't specify a driver, the `bridge` is used when a virtual network is created 
 
 ---
-## Docker Networks Defaults (2) 
-### The default `docker0` virtual network 
- - By default, when a container is started, a virtual network interface `eth0` is created inside the container, connected to the **docker0** virtual network.
-### NAT firewall
- - **Outbound traffic** (eg. access to the Internet) from the container goes through a NAT firewall.
- - **Inbound traffic** from external systems goes through the **port forwarding rules** that are defined with the `--publish` CLI option. 
-  
+## Docker Networks Defaults (4)
+ - From the container’s point of view, it has: 
+   - a **network interface** with an **IP address** 
+   - a **gateway**
+   - a **routing table** 
+   - **DNS services**, 
+   - and other networking details
+
+> Ref: [Container networking](https://docs.docker.com/config/containers/container-networking/)  
+>
 ---
-  
 
 ## Network topology (1) - bridge network - diagram
 <p style="text-align: center;">
