@@ -148,11 +148,4 @@ IMAGE          CREATED       CREATED BY                                      SIZ
 ...
 ```
 
----
-
-## docker image inspect (3) 
-
-> Notes
-> - The "GraphDriver" actually refer to the storage driver   
-> - The `docker history` command shows the **build** history of an image **(list of changes)** which is not the strict list of layers such as the one reported from the `docker image inspect` command (list of changes #3)
 

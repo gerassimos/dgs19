@@ -114,13 +114,9 @@ nginx       latest    27a188018e18   9 days ago   109MB
   - Go the the linked GitHub repository to see the related "Dockerfile" and understand how the image are built.
 
   - Example: 
-  - https://github.com/nginxinc/docker-nginx/blob/master/mainline/buster/Dockerfile
+  - https://github.com/nginxinc/docker-nginx/blob/master/stable/debian/Dockerfile
 
 > Note: 
 > Use the "Dockerfile" of the official images as a reference for best practice.
 
----
 
-## Create your custom Nginx version
- - This is very similar to the model of GitHub, where they allow you to store open source software and you can fork other people's software.  
- - The same thing goes here.  You can use other people's images and make them your own.

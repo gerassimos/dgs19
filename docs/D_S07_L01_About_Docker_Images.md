@@ -16,12 +16,12 @@ class: center, middle
 ## What is in an Image (1)
  - Application binaries and dependencies (e.g app.jar + JRE:8)
  - **Metadata** about the image data (such as ports, volumes etc...)
-  
- - Official Definition: Docker images are the basis of containers. An Image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime. 
- - Ref: https://docs.docker.com/glossary/?term=image
- 
+
+<br>
+<br>
 > - A container is created by running a Docker image. 
 > - An image is used to create a container as a java class is used to create an object instance
+> - Ref: https://docs.docker.com/glossary/?term=image
   
 ---
 

@@ -4,16 +4,16 @@ class: center, middle
 
 ---
 ## Overview
-Understand how containers communicate using dynamic DNS rather than IP addresses.
+ - Understand how containers communicate using dynamic **DNS**docker container run -d --name web_server --network my_app_net nginx rather than IP addresses.
 
 ---
 
 ## Docker Networks: DNS
 - The Docker daemon implements an **embedded DNS server** which provides built-in service discovery for any container created.
 - Docker uses the **container name** as the **DNS name**.
-- DNS is a very important service, because we cannot rely on the IP address of the containers, since they are dynamic.
+- DNS is a very important service, because **we cannot rely** on the IP address of the containers, since they are dynamic.
 - After a container is created, we should no rely on the container IP address because it can be changed (e.x. in case the container is restarted due to a failure). 
-- Static IPs and using IPs for talking to containers is an anti-patern.
+- Static IPs and using IPs for talking to containers is an **anti-patern**.
 - Avoid using IP addresses. Use only container names.
 ---
 

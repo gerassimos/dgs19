@@ -12,6 +12,7 @@ class: center, middle
 
 ## Networking Concepts
  - TCP/IP model
+ - OSI model
  - IPv4 address
   
 ---
@@ -61,8 +62,7 @@ class: center, middle
  - Inside each Docker container will be a virtual network interface `eth0` that is connected to a virtual switch ("docker0" o "bridge")
  - On each container an **IP address** will be automatically assign via a **DHCP** server 
  - There is not an actual dedicated DHCP server but the Docker daemon is acting as an DHCP server
- - So all containers created within a host are **connected** on the same virtual network and can talk to each other.
- - What has been describe above is not always the case there are multiple other valid network setups that can be used.
+ - What has been describe above is **not** always the case there are multiple other valid network setups that can be used.
  
 ---
 ## Docker Networks Defaults (2)
@@ -75,10 +75,10 @@ class: center, middle
 ---
 ## Docker Networks Defaults (3) 
  - There many ways to setup the virtual networks used by the Docker containers 
- - Docker's networking subsystem is pluggable, using drivers. 
+ - Docker's networking subsystem is pluggable, using **drivers**. 
  - Several drivers exist and provide core networking functionality.
  - The default network driver is `bridge`. 
- - If we don't specify a driver, the `bridge` is used when a virtual network is created 
+ - If we don't specify a driver, the `bridge` is used when a virtual network is created.
 
 ---
 ## Docker Networks Defaults (4)
@@ -196,22 +196,22 @@ Docker networking subsystem is pluggable using **drivers**. Remember that batter
 ## Network driver - host (1)
  - Host network `--network=host`
  - It is also possible for a container to be connected directly to the physical network of the host with use of the `--network host` option.
- - In this case, the virtual network is not used at all and there is no isolation between the host machine and the container.     
- - In general, it is  recommended not to use this type of network driver for security reasons, since in thiw case there is no network isolation.
+ - In this case, the virtual network is **not used** at all and there is **no isolation** between the host machine and the container.     
+ - In general, it is **NOT recommended** to use this type of network driver for security reasons, since in this case there is no network isolation.
  - For instance, if we run a container that runs a web server on port 80 using host networking, the web server is available on port 80 of the host machine.
 
 ---
 
  ## Network driver - host (2)
  - Example:
-    - This could be the case of a special application such as a *redis cluster* where the containers that are part of the cluster require access to the physical network interface to work properly.
+    - This could be the case of a special application such as a **redis cluster** where the containers that are part of the cluster require access to the physical network interface to work properly.
     - Ref: https://slidr.io/parisk/stateful-applications-on-docker-swarm#19 
 
 ---
 
 ## Network driver - none  
  - Network disable `--network=none`
- - We can also completely isolate a running container by disabling the networking stack with use of the `--network none` option 
+ - We can also **completely isolate** a running container by disabling the networking stack with use of the `--network none` option 
  - Example:
    - This could be the case of a container executing operations only on the local file system, where there is no need for network access.
 
@@ -226,7 +226,7 @@ Docker networking subsystem is pluggable using **drivers**. Remember that batter
 ---
 
 ## Network driver - overlay (2)
-- Enable swarm container to communicate with each other over virtual networks that are spanning across multiple Docker systems in a Swarm cluster. 
+- Enable containers to communicate with each other over virtual networks that are **spanning across multiple hosts** in a Swarm cluster. 
 
 ---
 
@@ -234,11 +234,15 @@ Docker networking subsystem is pluggable using **drivers**. Remember that batter
  - Use the `docker container port <container id|name>` to list port mappings (port forwarding rules): 
 
 ```terminal
-# docker container run -p 80:80 --name web_server -d nginx
+# docker container run -p 8080:80 --name web_server -d nginx
 
 # docker container port web_server
-80/tcp -> 0.0.0.0:80
+80/tcp -> 0.0.0.0:8080
 ```
+
+
+ - `80/tcp -> 0.0.0.0:8080` => [container-port]/tcp -> [host-ip]:[host-port]
+ - 0.0.0.0 => means all network interfaces 
 
 ---
 ## docker container port (2)
@@ -248,38 +252,27 @@ Docker networking subsystem is pluggable using **drivers**. Remember that batter
 ```terminal
 # docker ps
 CONTAINER ID  IMAGE  COMMAND                CREATED              STATUS         PORTS               NAMES
-feaf47c89978  nginx  "nginx -g 'daemon of…" About a minute ago   5 minutes ago  0.0.0.0:80->80/tcp  web_server
+feaf47c89978  nginx  "nginx -g 'daemon of…" About a minute ago   5 minutes ago  0.0.0.0:8080->80/tcp  web_server
 ```  
 
 ---
 
 ## Container's IP address (1)
- - By default when a container is created is connected to the default `docker0` network.  
- - These means also that a virtual network interface is created inside the container `eth0` and an IP address is assigned to it **automatically** through an internal **DHCP service** running on the Docker daemon.
+ - By default when a container is created is connected to the default `docker0` network of type `bridge`.
+ - Sometimes the default `docker0` virtual network is named **bridge** instead.
+ - A virtual network interface `eth0` is created inside the container and an IP address is assigned to it **automatically** through an internal **DHCP service** running on the Docker daemon.
 
 
 ---
 
 ## Container's IP address (2)
  - It is possible to display the IP address assigned to a container using the `docker inspect` command and format the output of the command by using the `--format` option.
- 
+ - The `--format` option will format the output using the given Go template [Ref](https://docs.docker.com/engine/reference/commandline/inspect/)
 ```terminal
 # docker container inspect --format '{{.NetworkSettings.IPAddress}}' web_server
 172.17.0.2
 ```
 > Note:  
 > It is also possible to get into the container terminal and use the `ifconfig` or `ip a` command to display the IP address(es) of the container.
----
 
-## Docker Host's IP address (1)
-<p style="text-align: center;">
-<img src="images/D_S6_L1_docker_host_ip.jpg" alt="img_width_90">
-</p>
 
----
-
-## Docker Host's IP address (2)
- - In case of the "Docker Toolbox":
-   - The IP address of the Docker host network interface is displayed on the startup screen of the "Docker Quickstart terminal"
- - In case of Docker running natively on the linux system:   
-   - You can display the IP address(es) of the Docker host network interface(es) using the `ip a` command
