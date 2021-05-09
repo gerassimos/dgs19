@@ -17,8 +17,9 @@
    1. [Docker Network CLI commands](web_D_S06_L02_Docker_Network_CLI_commands.html)
    1. [Docker Network DNS](web_D_S06_L03_Docker_Network_DNS.html)
  - Section 7 - Container Images - Docker Hub Registry
-   1. [The Docker Hub Registry](web_D_S07_L02_The_Docker_Hub_Registry.html)
+   1. [Storage in Docker](web_D_S07_L01_Storage_in_Docker.html)
    1. [Docker images - Local Cache](web_D_S07_L03_Docker_images-Local_Cache.html)
+   1. [The Docker Hub Registry](web_D_S07_L02_The_Docker_Hub_Registry.html)
    1. [Image Tagging and Pushing to Docker Hub](web_D_S07_L04_Image_Tagging_and-Pushing_to_Docker_Hub.html)
  - Section 8 - Build Images - The Dockerfile Basics 
    1. [Building Images - The Dockerfile Basics](web_D_S08_L01_Building_Images-The_Dockerfile_Basics.html)
