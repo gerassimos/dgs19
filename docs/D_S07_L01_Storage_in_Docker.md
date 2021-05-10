@@ -98,6 +98,13 @@ volumes
 
 ---
 ## Storage drivers
+ - Docker uses **storage drivers** to manage the **RO layers** of a Docker image and the **RW layer** of a container
+ - Docker uses **volume drivers** to manage the persistent data of an application (Docker volumes)
+ 
+<center><img src="images/D_S07_storage_volume drivers.png" style="width:560px;"/></center>
+
+---
+## Storage drivers
  - Docker uses **storage drivers** to manage the contents of the *image layers* and the *writable container layer*. 
  - Each **storage driver** handles the implementation differently, but all drivers use stackable image layers and the **copy-on-write** (CoW) strategy.
  - Docker supports different types of **storage drivers** such as: **overlay2**, **aufs**, **devicemapper**, **btrfs** etc..
@@ -106,5 +113,7 @@ volumes
 
 ---
 
-## References
- - [Storage in Docker](https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/master/docs/08-Storage/03-Storage-in-Docker.md)
+## Kubernetes CSI - Container Storage Interface
+ - Kubernetes use CSI (Container Storage Interface)
+ - Kubernetes CSI ~ Docker Volume drivers
+<center><img src="images/kubernetes-csi-logo.png" style="width:460px;"/></center>
