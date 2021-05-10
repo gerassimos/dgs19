@@ -10,9 +10,12 @@
 ---
 
 ## Key points:
- - Get help form cli (--help) and from  on line docs.docker.com
- - Start a three-containers application composed from *nginx*, *mysql* and a *httpd*.
- - Run all of them --detach (or -d), name them with --name
+ - Find how to set an environment variable when we create a container with `docker run`, 
+   - Use help pages form cli `docker container run --help` and/or 
+   - Use help from the on line documentation [docs.docker.com](https://docs.docker.com/reference/)  
+ - Start a three-containers application composed from *nginx*, *mysql* and a *httpd*  
+ - Run all of them in detach mode `--detach` (or -d), name them with --name
+ - Set custom names `--name` for each container, nginx->proxy,  httpd->webserver, mysql->db  
  - *nginx* should listen on 80:80, *httpd* on 8080:80, *mysql* on 3306:3306
  - When running mysql, use the --env option (or -e) to pass in MYSQL_RANDOM_ROOT_PASSWORD=yes
  - Use docker container logs on mysql to find the random password created on startup
@@ -50,7 +53,7 @@ Ref:
  - https://docs.docker.com/engine/reference/run/  
  - https://docs.docker.com/engine/reference/run/#env-environment-variables 
 
-From the online documentation we can see that we can set any environment variable in the container by using one or more -e flags. If the operator names an environment variable without specifying a value, then the current value of the named variable is propagated into the container’s environment.
+From the online documentation we can see that we can set any environment variable in the container by using one or more -e flags.
 Example:
 
 ```console
@@ -70,7 +73,7 @@ https://hub.docker.com/_/mysql
 
 ### Step2
 Start a three-containers application composed from *nginx*, *mysql* and a *httpd*. 
-Note that there is no need to set up these three different containers with application data.
+Note for this exercise these containers are not actually connected, it is just a simulation. 
 Start all containers in detached mode (-d).
 
 Set the following port mapping and custom names:
@@ -82,7 +85,7 @@ Set the following port mapping and custom names:
 |mysql       |3306        |3306          |db        | 
  
 Use the "--env" option to the environment variable MYSQL_RANDOM_ROOT_PASSWORD=yes in the mysql container. 
-Do not worry, we will go through the (--env) option in next lectures.
+
 ```console
 # docker container run -d --name proxy -p 80:80 nginx
 # docker container run -d --name webserver -p 8080:80 httpd

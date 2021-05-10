@@ -10,11 +10,11 @@ class: center, middle
 # docker container run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql
 # docker container run -d --name nginx nginx sha1sum /dev/zero
 ``` 
-2. Note that in case of nginx, we used /dev/zero => (this is a small hack to make the main process use ~100% of the CPU).
-3. Display the running processes of each container.
-4. Display the most CPU intensive processes running on the host system.
-5. Display a single view (Disable streaming) of containers resource usage statistics.
-6. Find the "IPAddress" of the nginx container from the output of the "docker container inspect" command.
+> Note that in case of nginx, we used /dev/zero => (this is a small hack to make the main process use ~100% of the CPU).
+2. Display the running processes of each container.
+3. Display the most CPU intensive processes running on the host system.
+4. Display a single view (Disable streaming) of containers resource usage statistics.
+5. Find the "IPAddress" of the nginx container from the output of the "docker container inspect" command.
 ---
 
 ### Exercise 1 Solution
@@ -37,7 +37,6 @@ polkitd             5080                5067                0                   
 UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
 root                5211                5198                91                  10:47               ?                   00:00:58            sha1sum /dev/zero
 ```
-Press `<Ctrl-C>` to exit from the real time view of the statistics.
 
 3. Display the most CPU intensive processes running on the host system:
 ```terminal  
@@ -51,7 +50,7 @@ Press `<Ctrl-C>` to exit from the real time view of the statistics.
 Press `<Ctrl-C>` to exit from the real time view of the statistics.
 *Note that the first PID, reported from the "top" command which is also the most CPU intensive process, is the same as the one reported from the "docker container top nginx" command*. 
 
-4. Display a single view of containers resource usage statistics: 
+4. Display a single view (Disable streaming) of containers resource usage statistics: 
 With the use of the CLI help documentation we can see that the "--no-stream" option can be used to disable the streaming of statistics
 ```terminal
 # docker stats --help
