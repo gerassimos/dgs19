@@ -43,8 +43,8 @@
    1. [First Docker commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S4_L1_First_Docker_commands_ex.md)
  - Section 5 - Containers lifecycle  
    1. [Starting our first container](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L1_Starting_our_first_container_lab.md)
-   1. [Monitor Containers](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L2_Monitor_Containers_ex.md)
-   1. [Container Shell](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L3_Container_Shell_ex.md)
+   1. [Container Shell](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L2_Container_Shell_ex.md)
+   1. [Monitor Containers](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S5_L3_Monitor_Containers_ex.md)
  - Section 6 - Docker Network Concepts   
    1. [Docker Network CLI commands](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S6_L2_Docker_Network_CLI_commands_ex.md)
    1. [Docker Network DNS](https://github.com/gerassimos/dgs19/blob/master/exercises/D_S6_L3_Docker_Network_DNS_lab.md)
