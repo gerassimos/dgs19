@@ -32,9 +32,6 @@
  - Section 10 - Docker Compose
    1. [Docker Compose Introduction](web_D_S10_L01_Docker_Compose_Introduction.html)
    1. [Docker Compose Basic Commands](web_D_S10_L02_Docker_Compose_Basic_Commands.html)
- - Section 11 - Introduction to Container Orchestration
-   1. [Introduction to Container Orchestration](web_D_S11_L01_Introduction_to_Container_Orchestration.html)
-   1. [Introduction to Kubernetes](web_D_S11_L02_Introduction_to_Kubernetes.html)
 
 ---
 
