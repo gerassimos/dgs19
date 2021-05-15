@@ -10,8 +10,9 @@ Section 8 - Build Images - The Dockerfile Basics
 
 class: center, middle
 # Section 8 - Build Images - The Dockerfile Basics
-## 1 Building Images - The Dockerfile Basics
+## Building Images - The Dockerfile Basics
 ---
+
 ## Dockerfile
  - The **Dockerfile** is a recipe for creating a Docker image.
  - It contains the **instructions** on how to build a Docker image.  
@@ -21,10 +22,140 @@ class: center, middle
  
 ---
 
+## docker build
+ - Use the `docker build` command to build an image from a **Dockerfile** and a **context**.
+ - Usage:  docker build [OPTIONS] PATH 
+ - The most common option is `-t` to specify a **Name** and optionally a tag in the *name:tag* format.
+ - The `PATH` argument defines the **context** of the build, it is usually set to "." (current working directory) and by default will search for a file named **Dockerfile**.
+   
+---
 
-## Dockerfile example
- - The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-1/Dockerfile) of this example is available in the `resources` directory:  
- (`resources/dockerfile-sample-1/Dockerfile`)
+## docker build example - extend nginx image (1)
+- In the following example we are going to use the files that are available in the `resources/dockerfile-sample-1` directory to build a custom Docker image.
+ 
+```terminal
+cd resources/dockerfile-sample-1
+# ls 
+Dockerfile 
+index.html
+```
+> There are 2 files available:
+>  - The **Dockerfile** which contains the instructions on how to build our custom image.
+>  - The **index.html** file that will be copied in the custom image.
+
+---
+
+## docker build example - extend nginx image (2)
+### The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-3/Dockerfile) of this example
+
+---
+
+## docker build example - extend nginx image (3)
+ - Execute the `docker build` command to build our custom Docker image based on nginx:
+```terminal
+# docker build -t nginx-with-custom-html .
+Sending build context to Docker daemon  3.584kB
+Step 1/3 : FROM nginx:latest
+ ---> 27a188018e18
+Step 2/3 : WORKDIR /usr/share/nginx/html
+ ---> Using cache
+ ---> ac75a6485581
+Step 3/3 : COPY index.html index.html
+ ---> 617ee5012490
+```
+
+---
+
+## docker build example - extend nginx image (3b)
+- Execute the `docker image ls` command to view the custom image that we have just created:
+```terminal
+# docker image ls
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
+nginx-with-custom-html     latest              617ee5012490        5 minutes ago       109MB
+nginx                      1.15                27a188018e18        12 days ago         109MB
+nginx                      1.15.12             27a188018e18        12 days ago         109MB
+nginx                      latest              27a188018e18        12 days ago         109MB
+...
+```
+ - By default the created image will be tagged as **latest**, since we did not specify any `TAG`
+ 
+---
+## docker build example - extend nginx image (4)
+ - Execute the `docker container run` command to create a container from our custom image:
+```terminal
+# docker container run -p 80:80 --rm nginx-with-custom-html
+```
+![img_width_90](images/D_S8_L3_nginx_custom_html.jpg)
+
+---
+## docker build example - extend nginx image (6)
+ - Finally upload the custom image to the Docker Hub registry:  
+ 
+```terminal
+# docker image tag nginx-with-custom-html:latest gerassimos/nginx-with-custom-html:latest
+
+# docker image ls
+REPOSITORY                          TAG                 IMAGE ID            CREATED             SIZE
+gerassimos/nginx-with-custom-html   latest              617ee5012490        12 minutes ago      109MB
+nginx-with-custom-html              latest              617ee5012490        12 minutes ago      109MB
+...
+
+# docker push gerassimos/nginx-with-custom-html:latest
+7f31d0f5f5ee: Pushing [================>]  4.096kB
+fc4c9f8e7dac: Pushing [==========================>]  3.584kB
+912ed487215b: Preparing
+5dacd731af1b: Preparing
+```
+
+---
+## docker build - image layer (1) 
+
+ - Each **Step** corresponds to a line in the **Dockerfile**.
+ - Each **Step** will create an image layer that we can later refer to it by the hash number e.g. `---> c08899734c03`.
+ - The image with all the related layers are stored to the **local cache**.  
+ 
+
+
+---
+## docker build - image layer (2)
+ - The next time that the build process takes place, before actually executing every single step, it will search in the **local cache** if any related image layer already exists.
+   
+```terminal
+# docker build -t custom_nginx .
+Sending build context to Docker daemon  6.144kB
+Step 1/9 : FROM debian:stretch-slim
+ ---> 2b343cb3b772
+Step 2/9 : LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
+ ---> Using cache
+ ---> 5f2b304a6651
+Step 3/9 : ENV NGINX_VERSION 1.15.12-1~stretch
+ ---> Using cache
+ ---> 1c30445c11d2
+Step 4/9 : ENV NJS_VERSION   1.15.12.0.3.1-1~stretch
+ ---> Using cache
+ ---> 21c13a34ef99
+...
+```
+---
+ 
+## docker build - image layer (3)
+ - During the build process the "Docker engine" will understand for which layers of the image is possible to use the build cache and when the build cache cannot be used because: 
+   1. there are changes in the Dockerfile or 
+   2. there are changes in the files that are included in the image.
+ - During the build process we can see from the output `---> Using cache` when the cached is used. 
+ 
+---
+
+## docker build - image layer (4) 
+ - The **order** of the instructions specified in the **Dockefile** is important.
+ - Instructions that usually will cause a layer to change should be placed at the end of the **Dockefile**. 
+ - For example, a command that adds our application code should be placed at the end of the **Dockefile** file, since it is the one that changes more often.
+ - Instructions that usually build the same layer should be placed on the top.
+  
+---
+## Dockerfile production example
+ - The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-2/Dockerfile) of this example is available in the `resources` directory:  
+ (`resources/dockerfile-sample-2/Dockerfile`)
  
 ---
  
@@ -43,3 +174,9 @@ class: center, middle
 
 ### [docker docs/Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
 ![img_width_90](images/D_S08_L01_docker docs_Dockerfile_reference.PNG)
+
+---
+
+## LAB
+ - Ref
+ - D_S8_L3_Dockerize_a_Spring_Boot_application.md
