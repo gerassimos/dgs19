@@ -26,22 +26,14 @@ RUN apt-get update && apt-get --no-install-recommends -y install \
 # Multiple linux commands are executed on a single RUN line to create a single layer of changes
 # The last linux command is used to delete cache data and make the image as small as possible
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
-# This is a shell command that will create two symbolic links to the stdout and stderr 
-# This is to propagate all log messages of nginx to the container log 
-# Docker daemon is responsible for handling the containers logs 
-# There are also deferent kind of logging driver that can used to handle containers logs 
-
-
 EXPOSE 80
 # expose these ports on the docker virtual network
 # By default no TCP/UDP port is open from the container
 # We still need to use -p to open/forward these ports on host
 
 COPY my-sh-app.sh app
-# To copy a file from the Host to the Docker Image
+# To copy a file from the Host (docker client) to the Docker Image
+# Here we copy the "binary" of our application to the Docker Image
 # When we issue a docker build command, the current working directory is called the build context.
 # Ref:
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#understand-build-context
