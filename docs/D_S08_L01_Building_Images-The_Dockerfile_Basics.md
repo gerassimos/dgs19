@@ -45,23 +45,25 @@ index.html
 
 ---
 
-## docker build example - extend nginx image (2)
-### The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-3/Dockerfile) of this example
-
----
-
 ## docker build example - extend nginx image (3)
  - Execute the `docker build` command to build our custom Docker image based on nginx:
 ```terminal
 # docker build -t nginx-with-custom-html .
 Sending build context to Docker daemon  3.584kB
 Step 1/3 : FROM nginx:latest
- ---> 27a188018e18
+latest: Pulling from library/nginx
+... 
+Digest: sha256:df13abe416e37eb3db4722840dd479b00ba193ac6606e7902331dcea50f4f1f2
+Status: Downloaded newer image for nginx:latest
+ ---> f0b8a9a54136
 Step 2/3 : WORKDIR /usr/share/nginx/html
- ---> Using cache
- ---> ac75a6485581
+ ---> Running in 7300b213f34c
+Removing intermediate container 7300b213f34c
+ ---> 3b6516f97aa2
 Step 3/3 : COPY index.html index.html
- ---> 617ee5012490
+ ---> 1951328eb0d9
+Successfully built 1951328eb0d9
+Successfully tagged nginx-with-custom-html:latest
 ```
 
 ---
@@ -70,11 +72,9 @@ Step 3/3 : COPY index.html index.html
 - Execute the `docker image ls` command to view the custom image that we have just created:
 ```terminal
 # docker image ls
-REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
-nginx-with-custom-html     latest              617ee5012490        5 minutes ago       109MB
-nginx                      1.15                27a188018e18        12 days ago         109MB
-nginx                      1.15.12             27a188018e18        12 days ago         109MB
-nginx                      latest              27a188018e18        12 days ago         109MB
+REPOSITORY               TAG       IMAGE ID       CREATED          SIZE
+nginx-with-custom-html   latest    1951328eb0d9   27 seconds ago   133MB
+nginx                    latest    f0b8a9a54136   3 days ago       133MB
 ...
 ```
  - By default the created image will be tagged as **latest**, since we did not specify any `TAG`
@@ -95,9 +95,10 @@ nginx                      latest              27a188018e18        12 days ago  
 # docker image tag nginx-with-custom-html:latest gerassimos/nginx-with-custom-html:latest
 
 # docker image ls
-REPOSITORY                          TAG                 IMAGE ID            CREATED             SIZE
-gerassimos/nginx-with-custom-html   latest              617ee5012490        12 minutes ago      109MB
-nginx-with-custom-html              latest              617ee5012490        12 minutes ago      109MB
+REPOSITORY                          TAG       IMAGE ID       CREATED         SIZE
+gerassimos/nginx-with-custom-html   latest    1951328eb0d9   3 minutes ago   133MB
+nginx-with-custom-html              latest    1951328eb0d9   3 minutes ago   133MB
+nginx                               latest    f0b8a9a54136   3 days ago      133MB
 ...
 
 # docker push gerassimos/nginx-with-custom-html:latest
@@ -121,19 +122,18 @@ fc4c9f8e7dac: Pushing [==========================>]  3.584kB
  - The next time that the build process takes place, before actually executing every single step, it will search in the **local cache** if any related image layer already exists.
    
 ```terminal
-# docker build -t custom_nginx .
-Sending build context to Docker daemon  6.144kB
-Step 1/9 : FROM debian:stretch-slim
- ---> 2b343cb3b772
-Step 2/9 : LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
+# docker build -t nginx-with-custom-html .
+Sending build context to Docker daemon  3.584kB
+Step 1/3 : FROM nginx:latest
+ ---> f0b8a9a54136
+Step 2/3 : WORKDIR /usr/share/nginx/html
  ---> Using cache
- ---> 5f2b304a6651
-Step 3/9 : ENV NGINX_VERSION 1.15.12-1~stretch
+ ---> 3b6516f97aa2
+Step 3/3 : COPY index.html index.html
  ---> Using cache
- ---> 1c30445c11d2
-Step 4/9 : ENV NJS_VERSION   1.15.12.0.3.1-1~stretch
- ---> Using cache
- ---> 21c13a34ef99
+ ---> 1951328eb0d9
+Successfully built 1951328eb0d9
+Successfully tagged nginx-with-custom-html:latest
 ...
 ```
 ---
