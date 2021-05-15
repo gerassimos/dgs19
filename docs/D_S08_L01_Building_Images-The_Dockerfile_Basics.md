@@ -31,7 +31,7 @@ class: center, middle
 ---
 
 ## docker build example - extend nginx image (1)
-- In the following example we are going to use the files that are available in the `resources/dockerfile-sample-1` directory to build a custom Docker image.
+- In the following example we are going to use the files that are available in the [resources/dockerfile-sample-1](https://github.com/gerassimos/dgs19/tree/master/resources/dockerfile-sample-1) directory to build a custom Docker image.
  
 ```terminal
 cd resources/dockerfile-sample-1
@@ -40,8 +40,8 @@ Dockerfile
 index.html
 ```
 > There are 2 files available:
->  - The **Dockerfile** which contains the instructions on how to build our custom image.
->  - The **index.html** file that will be copied in the custom image.
+>  - The [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-1/Dockerfile) which contains the instructions on how to build our custom image.
+>  - The [index.html](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-sample-1/index.html) file that will be copied in the custom image.
 
 ---
 
