@@ -23,8 +23,6 @@
    1. [Image Tagging and Pushing to Docker Hub](web_D_S07_L04_Image_Tagging_and-Pushing_to_Docker_Hub.html)
  - Section 8 - Build Images - The Dockerfile Basics 
    1. [Building Images - The Dockerfile Basics](web_D_S08_L01_Building_Images-The_Dockerfile_Basics.html)
-   1. [Build Docker Images](web_D_S08_L02_Build_Docker_Images.html)
-   1. [Extend Official Images](web_D_S08_L03_Extend_Official_Images.html)
  - Section 9 - Persistent Data and Volumes
    1. [Persistent Data](web_D_S09_L01_Persistent_Data.html)
    1. [Persistent Data Volumes](web_D_S09_L02_Persistent_Data_Volumes.html)
