@@ -19,7 +19,7 @@ class: center, middle
     - Upload `push` the image to the Docker Hub registry.
     - Delete the local image and run it again using the image available on Docker Hub.
  - Note that it is not common to get a correct Dockerfile on the first time. So, this will be an iterative process, i.e. build and test over and over, until you get the desired result. 
- - For this LAB use as starting point the `resources/dockerfile-assignment-2/java_app/Dockerfile` file from the GitHub repository. In this file you will find detailed instructions on how to build the image.
+ - For this LAB use as starting point the [Dockerfile](https://github.com/gerassimos/dgs19/blob/master/resources/dockerfile-assignment-2/java_app/Dockerfile) file from the GitHub repository. In this file you will find detailed instructions on how to build the image.
  - The base image must be a openjdk 11.x image based on debian linux (buster or stretch).
  - Note that `buster` and `stretch` are code names for releases of Debian
  - The expected result is that you're actually able to access the web application from your browser by using the IP address of the host running Docker (e.g. http://192.168.99.100).
