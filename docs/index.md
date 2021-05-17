@@ -59,3 +59,4 @@
    1. [Code samples and other resources](https://github.com/gerassimos/dgs19/tree/master/resources)
    1. [pdf slides](https://github.com/gerassimos/dgs19/tree/master/pdf)
    1. [Exercises and Hands-on Labs](https://github.com/gerassimos/dgs19/tree/master/exercises)
+   1. [Play With Docker](https://labs.play-with-docker.com/)
