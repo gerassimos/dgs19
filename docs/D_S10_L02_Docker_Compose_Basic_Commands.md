@@ -11,8 +11,8 @@ class: center, middle
  - Docker Compose installation instructions for Linux are available [here](https://docs.docker.com/compose/install/)
 
 > Notes:  
-> 1. *Docker Compose* relies on **Docker Engine** to work, so make sure you have Docker Engine installed before you start using the *Docker Compose* tool.
-> 2. *Docker Compose* is **not** a production-grade tool but is ideal for local development and test
+> - *Docker Compose* relies on **Docker Engine** to work, so make sure you have Docker Engine installed before you start using the *Docker Compose* tool.  
+> - *Docker Compose* is **not** a production-grade tool but is ideal for local development and test
 
 ---
 
@@ -256,8 +256,6 @@ Removing volume compose-sample-2_db-data
 ---
 
 ## Docker Compose vs other CM tools
- - We can see how `Docker Compose` can replace more complicated CM tools such as **Vagrant** and others  
- - Avoid the complexity of managing a virtual machine environment with multiple VMs
  - With `Docker Compose` we have easier way to setup the development environment. The steps required to setup the development environment could be:
     1. Checkout the code `git clone <repo>`
     2. Use the `docker-compose up` to start all services required for the development

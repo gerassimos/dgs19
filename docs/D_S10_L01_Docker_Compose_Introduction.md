@@ -26,7 +26,7 @@ class: center, middle
 
 ## Overview of Docker Compose (2) 
  - docker-compose is mainly used for local development purposes. 
- - The yml files can be used on a production environment with Docker Swarm. 
+ - The yml files can be used on a production environment with **Docker Swarm**. 
  - **docker-compose.yml** is the **default** filename but any file name can be used with `docker-compose -f`. 
 
 ---
@@ -39,23 +39,20 @@ class: center, middle
 ---
 
 ## Docker Compose - Example (1a)
- - The [docker-compose.yml](https://github.com/gerassimos/dgs19/blob/master/resources/compose-sample-1/docker-compose.yml) of this example is available in the `resources` directory
+ - Use `docker-compose up` to start the services defined in a **docker-compose.yml** file  
  
-    ```console
-    version: '3.6'
-    # same as 
-    # docker run -p 8080:80 --name nginx nginx
-    
-    services:
-      nginx:
-        image: 
-          nginx
-        ports:
-          - "8080:80"
-    ```
-
-
- - To start the services defined in the **docker-compose.yml** file execute the `docker-compose up` command 
+```console
+version: '3.6'
+# same as 
+# docker run -p 8080:80 --name nginx nginx:1.19
+   
+services:
+  nginx:
+    image:nginx:1.19
+    ports:
+    - "8080:80"
+```
+> The [docker-compose.yml](https://github.com/gerassimos/dgs19/blob/master/resources/compose-sample-1/docker-compose.yml) of this example is available in the `resources` directory 
 
 ---
 
@@ -81,9 +78,10 @@ b0897e090893   host                     host      local
 
 ## Docker Compose - version
  - The *version* is first top level key attribute of the `docker-compose.yml` file 
- - It is mandatory and we should normally use the latest version 
+ - It ~~is~~ was mandatory and we should normally use the latest version 
  - The *version* value defines the format (basically the API) 
- - More information [here](https://docs.docker.com/compose/compose-file/compose-versioning/)
+ - More information [here](https://docs.docker.com/compose/compose-file/compose-versioning/) and [here](https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-top-level-element)
+ 
 
 ---
 
@@ -173,7 +171,6 @@ b0897e090893   host                     host      local
  # docker-compose -f docker-compose-custom.yml up
  ```
 
----
 
 
 
