@@ -46,7 +46,7 @@ class: center, middle
  - To force the **re-build** process to recreate the custom Docker image we must use the `docker-compose build` or `docker-compose up --build` command.
 
 > Notes  
-> - Documentation Reference available [here](https://docs.docker.com/compose/compose-file/#build)  
+> - Documentation Reference available [here](https://docs.docker.com/compose/reference/up/)  
 ---
 
 ## Docker Compose vs other CM tools
