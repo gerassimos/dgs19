@@ -3,7 +3,7 @@
  - The **iot-c** application is compose from 3 services:
     1. The **collector** service simulates the collection of performance data from IoT devices such as temperature/humidity sensors  
     2. The **collector-ui** service is the front end Web UI for the collector service.
-    3. The **postgres_db** service is the DB where the performance data are stored
+    3. The **postgres-db** service is the DB where the performance data are stored
  - The 3 services are related to the following docker images:
     1. dgs19/iot-collector:0.0.1
     2. dgs19/iot-collector-ui:0.0.1

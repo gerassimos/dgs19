@@ -35,7 +35,7 @@ services:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
 
-  postgres_db:
+  postgres-db:
     image: postgres:10
     networks:
       - iotc-db
@@ -69,7 +69,7 @@ services:
         - "traefik.http.services.collector.loadbalancer.server.port=8092"
     environment:
       LOG_LEVEL: DEBUG
-      DB_HOST: postgres_db
+      DB_HOST: postgres-db
   #      DB_PORT: 5432
   #      DB_NAME: ${DB_USER:-iotc}
   #      DB_USER: ${DB_USER:-iotc}
