@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'dgs19.Main'
+
+// tag::repositories[]
+repositories { 
+    mavenCentral() 
+}
+
+jar {
+    archiveBaseName = 'dgs19-jsim'
+    archiveVersion =  '0.1.0'
+}
+
+dependencies {
+    implementation "joda-time:joda-time:2.2"
+}
+

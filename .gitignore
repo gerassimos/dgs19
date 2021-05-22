@@ -19,3 +19,4 @@ gradle-app.setting
 /resources/iot-c/collector/build/
 /resources/iot-c/common/build/
 /resources/iot-c/collector-ui/build/
+/resources/jsim/build/
