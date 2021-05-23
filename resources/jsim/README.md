@@ -6,6 +6,7 @@
  - This is a simple java web application (single java file) that can be used to simulate cpu/memory loads on a system
  - By default the web server is listening on port 4567 (not configurable yet)
  - So for example after the application is started use `http://localhost:4567/details` to display details about the request
+ - The related GitHub repo is available [here](https://github.com/gerassimos/dgs19/tree/master/resources/jsim) 
  
 ## Endpoints
     GET "/"             =>  Display the server hosname and client IP
@@ -18,7 +19,6 @@
     GET "/details       => Display details about the request
 
 ## How to deploy
- - TODO - Unzip the distribution file jsim.zip and run the bin/jsim.bat  *jre 11 is required*
- - TODO - With Docker: `docker run -p 4567:4567 dgs19/jsim:latest` 
+ - With Docker: `docker run -p 4567:4567 dgs19/jsim:latest` 
     
 
