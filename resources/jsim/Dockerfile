@@ -38,7 +38,7 @@ COPY src /app/src
 RUN ./gradlew build
 
 FROM openjdk:11-jre
-COPY --from=builder /app/build/libs/java_app-0.0.1.jar /app.jar
+COPY --from=builder /app/build/libs/dgs19-jsim-0.1.0.jar /app.jar
 
 # Run the jar file
 # Inlude the "$JAVA_OPTIONS" parameter to set java options from the env variables
