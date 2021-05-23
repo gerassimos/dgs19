@@ -1,6 +1,6 @@
 FROM openjdk:11 AS builder
 
-# - This application listens on TCP port 8090
+# - This application listens on TCP port 4567
 # - Inform Docker that the application inside the container listens on port 8090
 EXPOSE 4567
 
@@ -36,11 +36,9 @@ COPY src /app/src
 # The build command will generate the jar file that will be later used the run the application
 # The jar file will be available at "build/libs/java_app-0.0.1.jar" path
 RUN ./gradlew build
+RUN cd /app/build/distributions/ && tar -xvf /app/build/distributions/app.tar
 
 FROM openjdk:11-jre
-COPY --from=builder /app/build/libs/dgs19-jsim-0.1.0.jar /app.jar
-
-# Run the jar file
-# Inlude the "$JAVA_OPTIONS" parameter to set java options from the env variables
-
-CMD java -XX:+PrintFlagsFinal $JAVA_OPTIONS -jar /app.jar
+WORKDIR /app
+COPY --from=builder /app/build/distributions/app .
+CMD bin/app
