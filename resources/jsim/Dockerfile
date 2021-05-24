@@ -33,12 +33,9 @@ RUN ./gradlew dependencies
 COPY src /app/src
 
 # From the /app directory execute the "./gradlew build" command
-# The build command will generate the jar file that will be later used the run the application
-# The jar file will be available at "build/libs/java_app-0.0.1.jar" path
+# The build command will generate a single the jar file that will be later used the run the application
 RUN ./gradlew build
-RUN cd /app/build/distributions/ && tar -xvf /app/build/distributions/app.tar
 
 FROM openjdk:11-jre
-WORKDIR /app
-COPY --from=builder /app/build/distributions/app .
-CMD bin/app
+COPY --from=builder /app/build/libs/app.jar .
+CMD java -jar app.jar

@@ -8,31 +8,20 @@ repositories {
     mavenCentral() 
 }
 
-jar {
-    archiveBaseName = 'dgs19-jsim'
-    archiveVersion =  '0.1.0'
-}
-
 // Ref https://stackoverflow.com/questions/4871656/using-gradle-to-build-a-jar-with-dependencies
-task oneJar(type: Jar) {
-    manifest.from jar.manifest
-    //Original
-    //classifier = 'all'
-    archiveClassifier = 'all'
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
 
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    } {
-        exclude "META-INF/*.SF"
-        exclude "META-INF/*.DSA"
-        exclude "META-INF/*.RSA"
     }
-    with jar
 }
+
 
 dependencies {
     implementation "joda-time:joda-time:2.2"
     implementation "com.sparkjava:spark-core:2.9.3"
 
 }
-
