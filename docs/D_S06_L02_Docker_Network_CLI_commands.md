@@ -16,16 +16,6 @@ class: center, middle
 - Disconnect a container from a network - `docker network disconnect`
 ---
 
-
-## Example 
-- We will create a nginx container "web_server" to use it as a reference for this lecture.
- 
-```terminal
-docker container run --publish 80:80 --name web_server -d nginx
-```
-
----
-
 ## docker network ls
  - Use `docker network ls` command to list all networks that have been created on a Docker host
  ```terminal
@@ -218,10 +208,10 @@ Options:
  - We can connect a container by name or by ID. Once connected, the container can communicate with other containers in the same network.
 
 ---
-
 ## docker network connect (2)
 
 ```terminal
+# docker container run --publish 80:80 --name web_server -d nginx
 # docker network connect my_app_net web_server
 # docker container inspect web_server
 [
