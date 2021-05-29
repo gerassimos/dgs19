@@ -53,7 +53,7 @@ B. False
 
 ---
 
-Q: In a multi-container application it is best practice to use the IP address of the containers for the network communication  
+Q: In a multi-container application it is best practice to use the IP addresses of the containers for the network communication  
 
 A. True  
 B. False  
