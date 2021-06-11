@@ -1,0 +1,5 @@
+This file is to list the jenkins plugin to install
+in addition to the defaults that are installed on the first login
+
+- AnsiColor
+

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins-dgs19
+    build:
+      context: .
+    networks:
+      - cicd
+    ports:
+      - "8180:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: on-failure
+
+networks:
+  cicd:
