@@ -205,7 +205,6 @@ Docker networking subsystem is pluggable using **drivers**. Remember that batter
  ## Network driver - host (2)
  - Example:
     - This could be the case of a special application such as a **redis cluster** where the containers that are part of the cluster require access to the physical network interface to work properly.
-    - Ref: https://slidr.io/parisk/stateful-applications-on-docker-swarm#19 
 
 ---
 
