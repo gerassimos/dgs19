@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:192.168.99.100}:${DB_PORT:5432}/${DB_NAME:iotc}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:iotc}
     username: ${DB_USER:iotc}
     password: ${DB_PASSWORD:iotc}
     continue-on-error: true
