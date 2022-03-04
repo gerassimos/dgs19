@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: "iot-c-collector"
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:iotc}
     username: ${DB_USER:iotc}
@@ -20,3 +22,13 @@ logging:
 
 server:
   port: ${TOMCAT_HTTP_PORT_V:8092}
+
+# jaeger
+opentracing:
+  jaeger:
+    enabled: ${JAEGER_ENABLED:true}
+    probabilistic-sampler:
+      sampling-rate: ${JAEGER_SAMPLING_RATE:1.0} # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+    udp-sender:
+      host: ${JAEGER_HOST:localhost}
+      port: ${JAEGER_PORT:6831}

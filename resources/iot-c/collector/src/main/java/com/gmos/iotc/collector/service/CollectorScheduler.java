@@ -34,7 +34,7 @@ public class CollectorScheduler {
   }
 
   @Scheduled(cron = "*/10 * * * * *")
-  private void scheduleCollectionTasks(){
+  public void scheduleCollectionTasks(){
     if(isCollectionInProgress){
       // Detect overlaps
       // we need to run the entire collection logic on an new thread in order to
