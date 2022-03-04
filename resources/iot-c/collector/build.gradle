@@ -41,6 +41,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
+	implementation('io.micrometer:micrometer-registry-prometheus')
 	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-web-starter', version: '3.3.1')
 	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-cloud-starter', version: '0.5.9')
 	implementation('org.postgresql:postgresql')

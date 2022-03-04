@@ -12,6 +12,15 @@ logging:
 server:
   port: ${TOMCAT_HTTP_PORT_V:8093}
 
+# prometheus
+management:
+  endpoints.web.exposure.include: "info, health, prometheus"
+  #  metrics.enable.jvm: false
+  metrics.tags:
+    instanceHostName: ${HOSTNAME:localhost}
+    application: iot-c
+    service: iot-c-collector-ui
+
 # jaeger
 opentracing:
   jaeger:
