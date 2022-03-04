@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11.0.4_11-jdk-hotspot-bionic
+FROM openjdk:11.0.14.1-jdk-buster
 
 ARG JAR_FILE
 ARG IOTC_TAG
