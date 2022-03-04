@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "iot-c-collector-ui"
+    name: iot-c-collector-ui
   output:
     ansi:
       enabled: ALWAYS
@@ -21,6 +21,7 @@ opentracing:
     udp-sender:
       host: ${JAEGER_HOST:localhost}
       port: ${JAEGER_PORT:6831}
+
 
 iot-collector-ui:
   collector-host-name: ${COLLECTOR_HOST_NAME:localhost}

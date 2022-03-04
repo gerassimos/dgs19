@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "iot-c-collector"
+    name: iot-c-collector
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:iotc}
     username: ${DB_USER:iotc}

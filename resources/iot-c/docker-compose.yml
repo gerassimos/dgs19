@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   postgres-db:
-    image: postgres:10
+    image: postgres:14.2
     networks:
       - iotc-db
     environment:
@@ -20,30 +20,25 @@ services:
       - db-data:/var/lib/postgresql/data
 
   collector:
-    image: dgs19/iot-collector:0.0.1
+    image: dgs19/iot-collector:0.0.2
     networks:
       - iotc-db
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
       DB_HOST: postgres-db
-#      DB_PORT: 5432
-#      DB_NAME: ${DB_USER:-iotc}
-#      DB_USER: ${DB_USER:-iotc}
-#      DB_PASSWORD: ${DB_PASSWORD:-iotc}
-#    ports:
-#      - "8092:8092"
+      JAEGER_SAMPLING_RATE: 0.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
 
   collector-ui:
-    image: dgs19/iot-collector-ui:0.0.1
+    image: dgs19/iot-collector-ui:0.0.2
     networks:
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
       COLLECTOR_HOST_NAME: collector
-#      COLLECTOR_HOST_PORT: 8092
+      JAEGER_SAMPLING_RATE: 0.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
     ports:
-      - "80:8093"
+      - "8093:8093"
 
 networks:
   iotc-db:
