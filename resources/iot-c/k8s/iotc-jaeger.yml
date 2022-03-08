@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger-all-in-one
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-all-in-one
+  template:
+    metadata:
+      labels:
+        app: jaeger-all-in-one
+        version: "1.31"
+    spec:
+      containers:
+        - image: jaegertracing/all-in-one:1.31
+          imagePullPolicy: Always
+          name: jaeger-all-in-one
+          ports:
+            - containerPort: 9411
+            - containerPort: 16686
+            - containerPort: 6831
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jaeger-all-in-one-collector
+spec:
+  selector:
+    app: jaeger-all-in-one
+  ports:
+    - name: http-zipkin
+      protocol: TCP
+      port: 9411
+      targetPort: 9411
+    - name: udp-jaeger-sender
+      protocol: UDP
+      port: 6831
+      targetPort: 6831
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jaeger-all-in-one-web-ui
+spec:
+  selector:
+    app: jaeger-all-in-one
+  type: NodePort
+  ports:
+    - name: http-web-ui
+      port: 16686
+      targetPort: 16686
+      nodePort: 30094
