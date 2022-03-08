@@ -27,9 +27,9 @@ spec:
             - name: COLLECTOR_HOST_NAME
               value: "iot-collector"
             - name: JAEGER_HOST
-              value: "jaeger-collector.istio-system.svc.cluster.local"
+              value: "jaeger-all-in-one-collector"
             - name: JAEGER_SAMPLING_RATE
-              value: "0.0"
+              value: "1.0"
 ---
 kind: Service
 apiVersion: v1
