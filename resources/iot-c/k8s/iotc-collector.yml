@@ -25,9 +25,11 @@ spec:
             - name: LOG_LEVEL
               value: "DEBUG"
             - name: DB_HOST
-              value: "postgres-db"
+              value: "iot-postgres-db"
             - name: JAEGER_HOST
-              value: "jaeger-all-in-one"
+              value: "jaeger-collector.istio-system.svc.cluster.local"
+            - name: JAEGER_SAMPLING_RATE
+              value: "0.0"
 ---
 kind: Service
 apiVersion: v1

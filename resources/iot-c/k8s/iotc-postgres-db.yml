@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-postgres-db
+  labels:
+    app: iot-postgres-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-postgres-db
+  template:
+    metadata:
+      labels:
+        app: iot-postgres-db
+        version: "14.2"
+    spec:
+      containers:
+        - image: postgres:14.2
+          imagePullPolicy: Always
+          name: iot-postgres-db
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "iotc"
+            - name: POSTGRES_PASSWORD
+              value: "iotc"
+            - name: POSTGRES_DB
+              value: "iotc"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-postgres-db
+spec:
+  selector:
+    app: iot-postgres-db
+  ports:
+    - port: 5432
+      name: tcp-postgres
+
