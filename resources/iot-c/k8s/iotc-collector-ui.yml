@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-collector-ui
+  labels:
+    app: iot-collector-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-collector-ui
+  template:
+    metadata:
+      labels:
+        app: iot-collector-ui
+        version: 0.0.2
+    spec:
+      containers:
+        - image: dgs19/iot-collector-ui:0.0.2
+          imagePullPolicy: Always
+          name: iot-collector-ui
+          ports:
+            - containerPort: 8093
+          env:
+            - name: LOG_LEVEL
+              value: "DEBUG"
+            - name: COLLECTOR_HOST_NAME
+              value: "iot-collector"
+            - name: JAEGER_HOST
+              value: "jaeger-collector.istio-system.svc.cluster.local"
+            - name: JAEGER_SAMPLING_RATE
+              value: "0.0"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-collector-ui
+  labels:
+    app: iot-collector-ui
+spec:
+  selector:
+    app: iot-collector-ui
+  type: NodePort
+  ports:
+    - port: 8093
+      name: http
+      targetPort: 8093
+      nodePort: 30093
