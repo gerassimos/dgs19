@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-collector
+  labels:
+    app: iot-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-collector
+  template:
+    metadata:
+      labels:
+        app: iot-collector
+        version: 0.0.2
+    spec:
+      containers:
+        - image: dgs19/iot-collector:0.0.2
+          imagePullPolicy: Always
+          name: iot-collector
+          ports:
+            - containerPort: 8092
+          env:
+            - name: LOG_LEVEL
+              value: "DEBUG"
+            - name: DB_HOST
+              value: "postgres-db"
+            - name: JAEGER_HOST
+              value: "jaeger-all-in-one"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-collector
+  labels:
+    app: iot-collector
+spec:
+  selector:
+    app: iot-collector
+  type: NodePort
+  ports:
+    - port: 8092
+      name: http
+      targetPort: 8092
+      nodePort: 30092
