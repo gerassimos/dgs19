@@ -26,8 +26,8 @@ spec:
               value: "DEBUG"
             - name: COLLECTOR_HOST_NAME
               value: "iot-collector"
-            - name: JAEGER_HOST
-              value: "jaeger-all-in-one-collector"
+            - name: JAEGER_HOST_HTTP_URL
+              value: "http://jaeger-all-in-one:14268/api/traces"
             - name: JAEGER_SAMPLING_RATE
               value: "1.0"
 ---

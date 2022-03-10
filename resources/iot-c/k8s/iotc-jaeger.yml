@@ -25,7 +25,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: jaeger-all-in-one-collector
+  name: jaeger-all-in-one
 spec:
   selector:
     app: jaeger-all-in-one
@@ -33,11 +33,13 @@ spec:
     - name: http-zipkin
       protocol: TCP
       port: 9411
-      targetPort: 9411
     - name: udp-jaeger-sender
       protocol: UDP
       port: 6831
-      targetPort: 6831
+    - name: http-jaeger-sender
+      protocol: TCP
+      port: 14268
+
 ---
 kind: Service
 apiVersion: v1
