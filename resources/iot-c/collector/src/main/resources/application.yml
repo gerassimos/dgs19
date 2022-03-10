@@ -38,6 +38,10 @@ opentracing:
     enabled: ${JAEGER_ENABLED:true}
     probabilistic-sampler:
       sampling-rate: ${JAEGER_SAMPLING_RATE:1.0} # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
-    udp-sender:
-      host: ${JAEGER_HOST:localhost}
-      port: ${JAEGER_PORT:6831}
+#    udp-sender:
+#      host: ${JAEGER_HOST:localhost}
+#      port: ${JAEGER_PORT:6831}
+    http-sender:
+      url: ${JAEGER_HOST_HTTP_URL:http://localhost:14268/api/traces}
+    log-spans: ${JAEGER_LOG_SPANS:true}
+

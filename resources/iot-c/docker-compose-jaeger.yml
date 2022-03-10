@@ -27,7 +27,7 @@ services:
     environment:
       LOG_LEVEL: DEBUG
       DB_HOST: postgres-db
-      JAEGER_HOST: jaeger-all-in-one
+      JAEGER_HOST_HTTP_URL: http://jaeger-all-in-one:14268/api/traces
       JAEGER_SAMPLING_RATE: 1.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
 
   collector-ui:
@@ -37,7 +37,7 @@ services:
     environment:
       LOG_LEVEL: DEBUG
       COLLECTOR_HOST_NAME: collector
-      JAEGER_HOST: jaeger-all-in-one
+      JAEGER_HOST_HTTP_URL: http://jaeger-all-in-one:14268/api/traces
       JAEGER_SAMPLING_RATE: 1.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
     ports:
       - "8093:8093"
