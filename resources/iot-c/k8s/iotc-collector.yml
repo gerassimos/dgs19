@@ -27,7 +27,8 @@ spec:
             - name: DB_HOST
               value: "iot-postgres-db"
             - name: JAEGER_HOST_HTTP_URL
-              value: "http://jaeger-all-in-one:14268/api/traces"
+              #value: "http://jaeger-all-in-one:14268/api/traces"
+              value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
             - name: JAEGER_SAMPLING_RATE
               value: "1.0"
 ---
