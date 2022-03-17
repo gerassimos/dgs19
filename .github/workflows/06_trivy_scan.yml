@@ -1,0 +1,21 @@
+name: Vulnerability Scan with Trivy and Dockle
+
+on:
+
+  push:
+    paths:
+      - '.github/workflows/06_trivy_scan.yml'
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - master         # Push events on master branch
+      - 'release*'     # Push events to branches matching refs/heads/release_01
+
+jobs:
+
+  scan:
+    name: Container image scan
+    runs-on: ubuntu-latest
+    steps:
+    - uses: Azure/container-scan@v0
+      with:
+        image-name: traefik:2.4.8
