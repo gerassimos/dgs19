@@ -16,6 +16,11 @@ jobs:
     name: Container image scan
     runs-on: ubuntu-latest
     steps:
-    - uses: Azure/container-scan@v0
+    - name: scan traefik:2.4.8
+      uses: Azure/container-scan@v0
       with:
         image-name: traefik:2.4.8
+    - name: scan traefik:2.6.1  
+      uses: Azure/container-scan@v0
+      with:
+        image-name: traefik:2.6.1
