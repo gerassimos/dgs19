@@ -20,7 +20,9 @@ jobs:
       uses: Azure/container-scan@v0
       with:
         image-name: traefik:2.4.8
+      continue-on-error: true  
     - name: scan traefik:2.6.1  
       uses: Azure/container-scan@v0
       with:
         image-name: traefik:2.6.1
+      continue-on-error: true    
