@@ -1,4 +1,4 @@
-name: Vulnerability Scan with Trivy and Dockle
+name: Scan synca images
 
 on:
 
@@ -27,7 +27,7 @@ jobs:
         image-name: traefik:2.6.1
       continue-on-error: true    
 
-  scan-postgres:
+  scan-timescale:
     name: Container image scan timescale
     runs-on: ubuntu-latest
     steps:
@@ -36,8 +36,48 @@ jobs:
       with:
         image-name: timescale/timescaledb:1.7.3-pg12
       continue-on-error: true  
-    - name: scan traefik:2.6.1  
+    - name: scan timescaledb:1.7.5-pg12
       uses: Azure/container-scan@v0
       with:
         image-name: timescale/timescaledb:1.7.5-pg12
-      continue-on-error: true    
+      continue-on-error: true
+    - name: scan timescaledb:2.2.1-pg12
+      uses: Azure/container-scan@v0
+      with:
+        image-name: timescale/timescaledb:2.2.1-pg12
+      continue-on-error: true
+    - name: scan timescaledb:2.6.0-pg12
+      uses: Azure/container-scan@v0
+      with:
+        image-name: timescale/timescaledb:2.6.0-pg12
+      continue-on-error: true
+    - name: scan timescaledb:2.6.0-pg14
+      uses: Azure/container-scan@v0
+      with:
+        image-name: timescale/timescaledb:2.6.0-pg14
+      continue-on-error: true
+    - name: scan timescaledb:2.6.0-pg14-bitnami
+      uses: Azure/container-scan@v0
+      with:
+        image-name: timescale/timescaledb:2.6.0-pg14-bitnami
+      continue-on-error: true
+
+  scan-kafka:
+    name: Container image scan kafka
+    runs-on: ubuntu-latest
+    steps:
+    - name: scan wurstmeister/kafka:2.13-2.7.0
+      uses: Azure/container-scan@v0
+      with:
+        image-name: wurstmeister/kafka:2.13-2.7.0
+      continue-on-error: true
+    - name: scan wurstmeister/kafka:2.13-2.8.1
+      uses: Azure/container-scan@v0
+      with:
+        image-name: wurstmeister/kafka:2.13-2.8.1
+      continue-on-error: true  
+    - name: scan bitnami/kafka
+      uses: Azure/container-scan@v0
+      with:
+        image-name: bitnami/kafka:3.1.0-debian-10-r50
+      continue-on-error: true  
