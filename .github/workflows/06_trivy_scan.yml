@@ -12,8 +12,8 @@ on:
 
 jobs:
 
-  scan:
-    name: Container image scan
+  scan-traefik:
+    name: Container image scan traefik
     runs-on: ubuntu-latest
     steps:
     - name: scan traefik:2.4.8
@@ -25,4 +25,19 @@ jobs:
       uses: Azure/container-scan@v0
       with:
         image-name: traefik:2.6.1
+      continue-on-error: true    
+
+  scan-postgres:
+    name: Container image scan timescale
+    runs-on: ubuntu-latest
+    steps:
+    - name: scan timescaledb:1.7.3-pg12
+      uses: Azure/container-scan@v0
+      with:
+        image-name: timescale/timescaledb:1.7.3-pg12
+      continue-on-error: true  
+    - name: scan traefik:2.6.1  
+      uses: Azure/container-scan@v0
+      with:
+        image-name: timescale/timescaledb:1.7.5-pg12
       continue-on-error: true    
