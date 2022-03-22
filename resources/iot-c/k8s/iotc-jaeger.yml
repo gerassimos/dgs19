@@ -17,6 +17,9 @@ spec:
         - image: jaegertracing/all-in-one:1.31
           imagePullPolicy: Always
           name: jaeger-all-in-one
+          env:
+            - name: COLLECTOR_ZIPKIN_HOST_PORT
+              value: "9411"
           ports:
             - containerPort: 9411
             - containerPort: 16686
