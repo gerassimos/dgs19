@@ -43,8 +43,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
 	implementation('io.micrometer:micrometer-registry-prometheus')
-	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-web-starter', version: '3.3.1')
-	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-cloud-starter', version: '0.5.9')
+//	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-web-starter', version: '3.3.1')
+//	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-cloud-starter', version: '0.5.9')
+	implementation 'io.opentracing.brave:brave-opentracing:1.0.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.1'
+	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin:3.1.1'
 	implementation('org.postgresql:postgresql')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

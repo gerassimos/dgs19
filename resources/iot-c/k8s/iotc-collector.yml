@@ -16,7 +16,7 @@ spec:
         version: 0.0.2
     spec:
       containers:
-        - image: dgs19/iot-collector:0.0.2
+        - image: dgs19/iot-collector:0.0.2-zipkin
           imagePullPolicy: Always
           name: iot-collector
           ports:
@@ -31,6 +31,8 @@ spec:
               value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
             - name: JAEGER_SAMPLING_RATE
               value: "1.0"
+            - name: ZIPKIN_HOST_HTTP_URL
+              value: "http://jaeger-all-in-one.default.svc.cluster.local:9411"
 ---
 kind: Service
 apiVersion: v1

@@ -14,6 +14,13 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  sleuth:
+    propagation:
+      type: b3,w3c
+    opentracing:
+      enabled: true
+  zipkin:
+    base-url: ${ZIPKIN_HOST_HTTP_URL:http://localhost:9411}
 
 
 logging:
