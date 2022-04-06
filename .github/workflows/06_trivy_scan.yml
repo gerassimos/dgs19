@@ -80,4 +80,14 @@ jobs:
       uses: Azure/container-scan@v0
       with:
         image-name: bitnami/kafka:3.1.0-debian-10-r50
-      continue-on-error: true  
+      continue-on-error: true
+
+
+  scan-zookeeper:
+    name: Container image scan kafka (2)
+    runs-on: ubuntu-latest
+    steps:
+      - name: scan zookeeper:3.5.8
+        uses: Azure/container-scan@v0
+        with:
+          image-name: zookeeper:3.5.8@sha256:f96139f0bc9ce66859e1b46da1843af496124a15219d9a48aa4569513d6241be
