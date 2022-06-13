@@ -99,10 +99,10 @@ jobs:
       - name: postgres-backup-local:12@sha256...651
         uses: Azure/container-scan@v0
         with:
-          image-name: prodrigestivill/postgres-backup-local:12@sha256:55b0fc2fe30f850bdb298c3d322a35f5177ce082ff5d86a0ff730f53f0ae7651
+          image-name: prodrigestivill/postgres-backup-local@sha256:55b0fc2fe30f850bdb298c3d322a35f5177ce082ff5d86a0ff730f53f0ae7651
         continue-on-error: true
       - name: postgres-backup-local:12@sha256...382
         uses: Azure/container-scan@v0
         with:
-          image-name: prodrigestivill/postgres-backup-local:12@sha256:a4a4ebca2d7ea16b202c7efd5060c8fe3a669419b3343cf93db81f55048ac382
+          image-name: prodrigestivill/postgres-backup-local@sha256:a4a4ebca2d7ea16b202c7efd5060c8fe3a669419b3343cf93db81f55048ac382
         continue-on-error: true
