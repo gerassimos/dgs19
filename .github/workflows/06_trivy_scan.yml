@@ -91,3 +91,18 @@ jobs:
         uses: Azure/container-scan@v0
         with:
           image-name: zookeeper:3.5.8@sha256:f96139f0bc9ce66859e1b46da1843af496124a15219d9a48aa4569513d6241be
+
+  scan-pg-backup:
+    name: Container image scan pg-backup
+    runs-on: ubuntu-latest
+    steps:
+      - name: postgres-backup-local:12@sha256...651
+        uses: Azure/container-scan@v0
+        with:
+          image-name: prodrigestivill/postgres-backup-local:12@sha256:55b0fc2fe30f850bdb298c3d322a35f5177ce082ff5d86a0ff730f53f0ae7651
+        continue-on-error: true
+      - name: postgres-backup-local:12@sha256...382
+        uses: Azure/container-scan@v0
+        with:
+          image-name: prodrigestivill/postgres-backup-local:12@sha256:a4a4ebca2d7ea16b202c7efd5060c8fe3a669419b3343cf93db81f55048ac382
+        continue-on-error: true
