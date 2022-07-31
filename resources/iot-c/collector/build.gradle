@@ -49,6 +49,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation(project(":common"))
+	implementation(project(":common-grpc"))
+	implementation("net.devh:grpc-server-spring-boot-starter:2.13.1.RELEASE")
+
 	println("iotcTAG ${iotcTAG}")
 	println("version ${version}")
 	println("project.name ${project.name}")

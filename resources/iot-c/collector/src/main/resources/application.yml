@@ -23,6 +23,10 @@ logging:
 server:
   port: ${TOMCAT_HTTP_PORT_V:8092}
 
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT:9091} # default it 9090
+
 # prometheus
 management:
   endpoints.web.exposure.include: "info, health, prometheus"

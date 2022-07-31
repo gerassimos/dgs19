@@ -1,6 +1,7 @@
 rootProject.name = 'iot-c'
 
 include 'common'
+include 'common-grpc'
 include 'collector'
 include 'collector-ui'
 

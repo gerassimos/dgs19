@@ -90,4 +90,32 @@ docker-compose -f docker-compose-dev.yml up
  - The application is configured to send traces to a jaeger collector
  - Use the env variables JAEGER_HOST and JAEGER_SAMPLING_RATE to configure the traces 
  - The traces generation can be disabled if we set JAEGER_SAMPLING_RATE=0.0
- 
+
+## grpc Integration
+ - the common-grpc module has been added that contains the .proto files
+ - from this module we can execute the generateProto gradle target to generate the java files needed
+ - the env variable `GRPC_SERVER_PORT` is to control the grpc server port (collector module)
+ - the dependencies added in the build.gradle file of the collector module are
+   - implementation(project(":common-grpc"))
+   - implementation("net.devh:grpc-server-spring-boot-starter:xxx")
+ - ref helper sites:
+ - https://yidongnan.github.io/grpc-spring-boot-starter/en/server/getting-started.html
+ - https://github.com/yidongnan/grpc-spring-boot-starter
+
+## grpcurl grpc cmd history
+```shell
+# install grpcurl
+brew install grpcurl
+
+# grpcurl list
+grpcurl --plaintext localhost:9091 list
+com.gmos.iotc.proto.greeting.GreetingService
+grpc.health.v1.Health
+grpc.reflection.v1alpha.ServerReflection
+
+# grpcurl service
+grpcurl --plaintext -d '{"name": "test222"}' localhost:9091 com.gmos.iotc.proto.greeting.GreetingService/greeting
+{
+  "result": "Hello test222"
+}
+```

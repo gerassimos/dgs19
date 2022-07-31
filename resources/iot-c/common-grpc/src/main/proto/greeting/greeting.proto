@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package com.gmos.iotc.proto.greeting;
+
+option java_package = "com.gmos.iotc.proto.greeting.lib";
+option java_multiple_files = true;
+
+message GreetingRequest {
+  string name = 1;
+}
+
+message GreetingResponse {
+  string result = 1;
+}
+
+service GreetingService {
+  // Unary
+  rpc greeting (GreetingRequest) returns (GreetingResponse);
+
+  // Server Streaming
+  rpc greetingManyTimes (GreetingRequest) returns (stream GreetingResponse);
+
+  // Client Streaming
+  rpc LongGreet(stream GreetingRequest) returns (GreetingResponse) {};
+
+  // Bidirectional Streaming
+  rpc GreetEveryone(stream GreetingRequest) returns (stream GreetingResponse);
+
+}
