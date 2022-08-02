@@ -34,6 +34,15 @@ opentracing:
       url: ${JAEGER_HOST_HTTP_URL:http://localhost:14268/api/traces}
     log-spans: ${JAEGER_LOG_SPANS:true}
 
+# grpc client
+grpc:
+  client:
+    greeting-grpc-server:
+      address: static://${COLLECTOR_HOST_NAME:test}:${COLLECTOR_GRPC_PORT:9091}
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
 iot-collector-ui:
   collector-host-name: ${COLLECTOR_HOST_NAME:localhost}
   collector-host-port: ${COLLECTOR_HOST_PORT:8092}
