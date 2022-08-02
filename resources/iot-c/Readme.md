@@ -48,6 +48,7 @@ docker-compose -f docker-compose-dev.yml up
     6. `DB_PASSWORD`: password of the database server. Default value is *iotc*
     7. `JAEGER_HOST`: jaeger collector host name 
     8. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+    9. `GRPC_SERVER_PORT` : set the port for the grpc server
 
  - **dgs19/iot-collector-ui**
    1. `LOG_LEVEL`: to set the log level. Valid values are: *INFO*, *DEBUG* and *TRACE*
@@ -55,6 +56,7 @@ docker-compose -f docker-compose-dev.yml up
    3. `COLLECTOR_HOST_PORT`: TCP port of the collector (dgs19/iot-collector) server. Default value is 8092
    4. `JAEGER_HOST`: jaeger collector host name
    5. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+   6. `COLLECTOR_GRPC_PORT`: set the grpc port for the greeting service implemented in the collector module 
 
 ## TCP ports
  - TCP port 8092 is used from the **dgs19/iot-collector** service to expose the REST Endpoints.  
