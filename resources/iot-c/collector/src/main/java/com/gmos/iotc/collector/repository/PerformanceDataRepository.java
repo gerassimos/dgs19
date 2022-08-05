@@ -15,6 +15,7 @@ public interface PerformanceDataRepository extends CrudRepository<PerformanceDat
   PerformanceDataEntity findById(long id);
 //  List<PerformanceDataEntity> findByTimestampBetweenAndDeviceEntity(Timestamp aTimestamp, Timestamp zTimestamp, DeviceEntity deviceEntity);
   List<PerformanceDataEntity> findByDeviceId(Long deviceId);
+  List<PerformanceDataEntity> findByTimestampBetweenAndDeviceId(Timestamp startTimestamp, Timestamp endTimestamp, Long deviceId);
 
   long deleteByDeviceIdAndTimestampIsLessThanEqual(Long deviceId, Timestamp timestamp);
 

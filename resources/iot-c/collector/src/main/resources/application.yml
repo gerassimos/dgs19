@@ -18,7 +18,10 @@ spring:
 
 logging:
   level:
+#    com.gmos.iotc.collector.service: ${LOG_LEVEL:DEBUG}
+    com.gmos.iotc.collector.service: ${LOG_LEVEL:WARN}
     com.gmos.iotc: ${LOG_LEVEL:DEBUG}
+
 
 server:
   port: ${TOMCAT_HTTP_PORT_V:8092}

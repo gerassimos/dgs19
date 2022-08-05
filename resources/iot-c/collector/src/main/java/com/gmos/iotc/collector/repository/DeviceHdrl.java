@@ -4,8 +4,11 @@ import com.gmos.iotc.collector.domain.DeviceEntity;
 import com.gmos.iotc.collector.domain.PerformanceDataEntity;
 import com.gmos.iotc.common.DeviceDTO;
 import com.gmos.iotc.common.PerformanceDataDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ public class DeviceHdrl {
 
   private final DeviceRepository deviceRepository;
   private final PerformanceDataRepository performanceDataRepository;
+  private Logger logger = LoggerFactory.getLogger(DeviceHdrl.class);
 
   public DeviceHdrl(DeviceRepository deviceRepository,
                     PerformanceDataRepository performanceDataRepository) {
@@ -46,6 +50,22 @@ public class DeviceHdrl {
       performanceDataDTO.setDeviceId(performanceDataEntity.getDeviceId());
       result.add(performanceDataDTO);
     }
+    return result;
+  }
+
+  public List<PerformanceDataEntity> findByTimestampBetweenAndDeviceEntity(Timestamp startTimestamp,Timestamp endTimestamp, long deviceId){
+    List<PerformanceDataEntity> result = performanceDataRepository.findByTimestampBetweenAndDeviceId(startTimestamp,endTimestamp,deviceId);
+    if ( result!=null && result.size()>0 ){
+      for (PerformanceDataEntity performanceDataEntity : result){
+        logger.debug("start: {} end: {} - pm date {}", startTimestamp.toLocalDateTime() , endTimestamp.toLocalDateTime(), performanceDataEntity.getTimestamp().toLocalDateTime());
+      }
+    }
+    else {
+      logger.debug("start: {} end: {} - empty", startTimestamp.toLocalDateTime() , endTimestamp.toLocalDateTime());
+    }
+
+
+    System.out.println("");
     return result;
   }
 
