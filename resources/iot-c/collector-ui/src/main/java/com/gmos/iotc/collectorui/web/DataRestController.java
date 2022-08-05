@@ -31,6 +31,13 @@ public class DataRestController {
     return result;
   }
 
+  @GetMapping("/grpc-stream-perf-data")
+  public void grpcStreamPerfData() {
+    logger.debug("Get Request grpcStreamPerfData");
+    long deviceId=1L;
+    dataHdrlGrpcClient.grpcStreamPerfData(deviceId);
+  }
+
   @GetMapping("/grpc-greet-mitge")
   public String grpcGreet() {
     logger.debug("Get Request grpcGreet");

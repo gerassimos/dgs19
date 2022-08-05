@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package com.gmos.iotc.proto.perfdata;
+
+option java_package = "com.gmos.iotc.proto.perfdata.lib";
+option java_multiple_files = true;
+
+message PerformanceDataMessage {
+  int64 id  = 1;
+  string version = 2;
+  int64 device_id = 3;
+  int64 timestamp = 4;
+  double temperature = 5;
+  double humidity = 6;
+}
+
+message PerformanceDataDeviceId {
+  int64 device_id = 1;
+}
+
+service PerformanceDataService {
+  // Server Streaming
+  rpc GetPerformanceDataStreaming (PerformanceDataDeviceId) returns (stream PerformanceDataMessage);
+
+}

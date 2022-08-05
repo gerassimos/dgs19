@@ -112,6 +112,8 @@ docker-compose -f docker-compose-dev.yml up
  - the env variables `COLLECTOR_HOST_NAME` and `COLLECTOR_GRPC_PORT` are used to the grpc host:port for the greeting service implemented in the collector
  - to test the grpc communication between the client (collector-ui) and the server (collector) use:
    - `curl http://localhost:8093/grpc-greet-mitge`
+ - to test the server side grpc streaming. Will get a stream of PerformanceDataMessage 
+   - `curl http://localhost:8093/grpc-stream-perf-data`
 
 ## grpcurl grpc cmd history
 ```shell

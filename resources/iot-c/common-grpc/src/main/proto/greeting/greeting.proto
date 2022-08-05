@@ -15,10 +15,10 @@ message GreetingResponse {
 
 service GreetingService {
   // Unary
-  rpc greeting (GreetingRequest) returns (GreetingResponse);
+  rpc Greeting (GreetingRequest) returns (GreetingResponse);
 
   // Server Streaming
-  rpc greetingManyTimes (GreetingRequest) returns (stream GreetingResponse);
+  rpc GreetingManyTimes (GreetingRequest) returns (stream GreetingResponse);
 
   // Client Streaming
   rpc LongGreet(stream GreetingRequest) returns (GreetingResponse) {};

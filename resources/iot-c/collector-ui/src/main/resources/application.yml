@@ -37,11 +37,12 @@ opentracing:
 # grpc client
 grpc:
   client:
-    greeting-grpc-server:
+    collector-grpc-server:
       address: static://${COLLECTOR_HOST_NAME:test}:${COLLECTOR_GRPC_PORT:9091}
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+
 
 iot-collector-ui:
   collector-host-name: ${COLLECTOR_HOST_NAME:localhost}
