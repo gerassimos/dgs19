@@ -97,7 +97,16 @@ docker-compose -f docker-compose-dev.yml up
 
 ## grpc Integration (common-grpc)
  - the common-grpc module has been added that contains the .proto files
- - from this module we can execute the generateProto gradle target to generate the java files needed
+ - from this module we can execute the `generateProto` gradle target to generate the java files needed
+   ```shell 
+   cd iot-c
+   ./gradlew :common-grpc:generateProto
+   ```
+ - Sometimes the import of the generated java files looks broker from intellij
+   Some workaround:
+   - `File -> Invalidate Caches/Restart`
+      ref: [intellij-cannot-resolve-symbol-on-import](https://stackoverflow.com/questions/26952078/intellij-cannot-resolve-symbol-on-import)
+   - From the gradle tab right click on iot-c -> `Reload Gradle project`
  - ref helper sites:
  - https://yidongnan.github.io/grpc-spring-boot-starter/en/server/getting-started.html
  - https://github.com/yidongnan/grpc-spring-boot-starter
