@@ -9,6 +9,7 @@ buildscript {
 plugins {
 	id 'java-library'
 	id 'com.google.protobuf' version "${protobufPluginVersion}"
+	id 'idea'
 }
 
 repositories {
@@ -42,3 +43,11 @@ protobuf {
 	}
 }
 
+idea {
+	module {
+		sourceDirs += file('src/generated/main/java')
+		sourceDirs += file('src/generated/main/grpc')
+		generatedSourceDirs += file('src/generated/main/java')
+		generatedSourceDirs += file('src/generated/main/grpc')
+	}
+}
