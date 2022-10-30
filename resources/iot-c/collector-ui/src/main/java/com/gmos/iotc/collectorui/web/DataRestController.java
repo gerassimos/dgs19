@@ -3,6 +3,7 @@ package com.gmos.iotc.collectorui.web;
 
 import com.gmos.iotc.collectorui.service.DataHdrl;
 import com.gmos.iotc.collectorui.service.DataHdrlGrpcClient;
+import com.gmos.iotc.collectorui.service.GnmiHdrlGrpcClient;
 import com.gmos.iotc.common.PerformanceDataDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,13 @@ public class DataRestController {
   private Logger logger = LoggerFactory.getLogger(DataRestController.class);
   private final DataHdrl dataHdrl;
   private final DataHdrlGrpcClient dataHdrlGrpcClient;
+  private final GnmiHdrlGrpcClient gnmiHdrlGrpcClient;
 
-  public DataRestController(DataHdrl dataHdrl, DataHdrlGrpcClient dataHdrlGrpcClient) {
+  public DataRestController(DataHdrl dataHdrl, DataHdrlGrpcClient dataHdrlGrpcClient,
+                            GnmiHdrlGrpcClient gnmiHdrlGrpcClient) {
     this.dataHdrl = dataHdrl;
     this.dataHdrlGrpcClient = dataHdrlGrpcClient;
+    this.gnmiHdrlGrpcClient = gnmiHdrlGrpcClient;
   }
 
   @GetMapping("/getData")
@@ -42,6 +46,13 @@ public class DataRestController {
   public String grpcGreet() {
     logger.debug("Get Request grpcGreet");
     String result = dataHdrlGrpcClient.doGreet("mitge");
+    return result;
+  }
+
+  @GetMapping("/gnmi")
+  public String gnmi() {
+    logger.debug("Get Request gnmi");
+    String result = gnmiHdrlGrpcClient.doGnmi();
     return result;
   }
 }

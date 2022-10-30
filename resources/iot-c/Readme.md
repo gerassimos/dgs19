@@ -57,6 +57,8 @@ docker-compose -f docker-compose-dev.yml up
    4. `JAEGER_HOST`: jaeger collector host name
    5. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
    6. `COLLECTOR_GRPC_PORT`: set the grpc port for the greeting service implemented in the collector module 
+   7. `GNMI_GRPC_HOST_NAME`:  the ip address of a grpc/gnmi network device (target) 
+   8. `GNMI_GRPC_PORT`:  the grpc port of a grpc/gnmi network device (target)
 
 ## TCP ports
  - TCP port 8092 is used from the **dgs19/iot-collector** service to expose the REST Endpoints.  
@@ -79,6 +81,7 @@ docker-compose -f docker-compose-dev.yml up
  - ./gradlew docker
  - ./gradlew dockerTagTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=0.0.1
  - ./gradlew dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=0.0.1
+ - ./gradlew :common-grpc:generateProto
 
 ## Prometheus Integration
  - The default spring boot prometheus metrics are enabled 
@@ -141,3 +144,12 @@ grpcurl --plaintext -d '{"name": "test222"}' localhost:9091 com.gmos.iotc.proto.
   "result": "Hello test222"
 }
 ```
+
+## gnmi/grpc Subscribe service example
+ - Add e very simple example on how to perform grpc request to a gnmi device
+ - The proto located in `common-grpc/src/main/proto/gnmi` directory are copied from
+ - [openconfig](https://github.com/openconfig/gnmi/blob/master/proto/gnmi/gnmi.proto)
+ - Use the `/gnmi` rest end point in the collector-ui service to test grpc 
+ - New env variables defined for the gnmi device are: 
+ - `GNMI_GRPC_HOST_NAME` -> the ip address of the grpc/gnmi network device (target) 
+ - `GNMI_GRPC_PORT` -> the grpc port  of the grpc/gnmi network device (target)

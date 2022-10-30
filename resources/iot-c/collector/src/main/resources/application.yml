@@ -44,7 +44,7 @@ opentracing:
   jaeger:
     enabled: ${JAEGER_ENABLED:true}
     probabilistic-sampler:
-      sampling-rate: ${JAEGER_SAMPLING_RATE:1.0} # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+      sampling-rate: ${JAEGER_SAMPLING_RATE:0.0} # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
 #    udp-sender:
 #      host: ${JAEGER_HOST:localhost}
 #      port: ${JAEGER_PORT:6831}

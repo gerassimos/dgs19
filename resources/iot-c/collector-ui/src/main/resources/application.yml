@@ -26,7 +26,7 @@ opentracing:
   jaeger:
     enabled: ${JAEGER_ENABLED:true}
     probabilistic-sampler:
-      sampling-rate: ${JAEGER_SAMPLING_RATE:1.0} # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+      sampling-rate: ${JAEGER_SAMPLING_RATE:0.0} # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
 #    udp-sender:
 #      host: ${JAEGER_HOST:localhost}
 #      port: ${JAEGER_PORT:6831}
@@ -38,11 +38,15 @@ opentracing:
 grpc:
   client:
     collector-grpc-server:
-      address: static://${COLLECTOR_HOST_NAME:test}:${COLLECTOR_GRPC_PORT:9091}
+      address: static://${COLLECTOR_HOST_NAME:localhost}:${COLLECTOR_GRPC_PORT:9091}
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
-
+    gnmi-grpc-server:
+      address: static://${GNMI_GRPC_HOST_NAME:localhost}:${GNMI_GRPC_PORT:20830}
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 iot-collector-ui:
   collector-host-name: ${COLLECTOR_HOST_NAME:localhost}
