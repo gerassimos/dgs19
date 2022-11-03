@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,19 @@ public class DataRestController {
     this.dataHdrl = dataHdrl;
     this.dataHdrlGrpcClient = dataHdrlGrpcClient;
     this.gnmiHdrlGrpcClient = gnmiHdrlGrpcClient;
+  }
+
+  @GetMapping("/hello")
+  public String hello() {
+    String host = "UnknownHost";
+    try{
+      host = InetAddress.getLocalHost().getHostName();
+    }
+    catch (UnknownHostException e ){
+      logger.error("Failed to get hostname: {}", e.getMessage());
+    }
+    logger.info("Hello from {}", host);
+    return "Hello from " + host;
   }
 
   @GetMapping("/getData")

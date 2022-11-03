@@ -153,3 +153,14 @@ grpcurl --plaintext -d '{"name": "test222"}' localhost:9091 com.gmos.iotc.proto.
  - New env variables defined for the gnmi device are: 
  - `GNMI_GRPC_HOST_NAME` -> the ip address of the grpc/gnmi network device (target) 
  - `GNMI_GRPC_PORT` -> the grpc port  of the grpc/gnmi network device (target)
+
+## log format json
+ - To enable log format add the following to the application.yml
+ - This is a quick a "dirty" way to have json log, probably we need to use more clean approach 
+ - [ref](https://stackoverflow.com/questions/53730449/is-there-a-recommended-way-to-get-spring-boot-to-json-format-logs-with-logback)
+```yaml
+logging:
+  #https://stackoverflow.com/questions/53730449/is-there-a-recommended-way-to-get-spring-boot-to-json-format-logs-with-logback
+  pattern:
+    console: "{\"time\": \"%d\", \"level\": \"%p\", \"correlation-id\": \"%X{X-Correlation-Id}\", \"source\": \"%logger{63}:%L\", \"message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\"}%n"
+```
