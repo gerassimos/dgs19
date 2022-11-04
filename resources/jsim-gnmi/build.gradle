@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.google.protobuf' version '0.8.19'
+}
+
+// tag::repositories[]
+repositories { 
+    mavenCentral() 
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.21.1"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.48.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+// Ref https://stackoverflow.com/questions/4871656/using-gradle-to-build-a-jar-with-dependencies
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes "Main-Class": "dgs19.Main"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
+dependencies {
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.48.0'
+    implementation 'io.grpc:grpc-protobuf:1.48.0'
+    implementation 'io.grpc:grpc-stub:1.48.0'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+sourceSets.main.java.srcDir new File(buildDir, 'generated/source')
+
+test {
+    useJUnitPlatform()
+}

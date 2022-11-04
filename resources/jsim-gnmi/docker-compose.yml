@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  dgs19-jsim:
+    image: dgs19/jsim-gnmi:latest
+    container_name: dgs19-jsim-gnmi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 4567:4567
+
