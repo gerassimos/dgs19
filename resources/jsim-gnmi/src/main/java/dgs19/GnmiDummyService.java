@@ -15,6 +15,8 @@ import com.github.gnmi.proto.Update;
 import com.github.gnmi.proto.gNMIGrpc;
 import io.grpc.stub.StreamObserver;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +53,7 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
         Subscription subscription = request.getSubscribe().getSubscription(0);
 
         Update update = Update.newBuilder().setPath(subscription.getPath())
-                .setVal(TypedValue.newBuilder().setAsciiVal("test-dummy-val").build())
+                .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val").build())
                 . build();
         Notification notification = Notification.newBuilder().addUpdate(update).build();
 
@@ -85,6 +87,18 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
         responseObserver.onCompleted();
       }
     };
+  }
+
+  private String getHostname(){
+    String result = "UnknownHost";
+    try {
+      String  port = System.getenv().getOrDefault("GRPC_SERVER_PORT", "4567");
+      result = InetAddress.getLocalHost().getHostName()+":"+port;
+
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    }
+    return result;
   }
 }
 
