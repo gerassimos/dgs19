@@ -79,7 +79,9 @@ public class GnmiHdrlGrpcClient {
             .setSampleInterval(3000000000l) //ns 1000000000l => 1s
             .build();
 
-    SubscriptionList list = SubscriptionList.newBuilder().addSubscription(subscription)
+    SubscriptionList list = SubscriptionList.newBuilder()
+            .addSubscription(subscription)
+            .addSubscription(getSubscriptionForClockClass())
             .setEncoding(Encoding.JSON)
             .build();
     SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
@@ -93,5 +95,44 @@ public class GnmiHdrlGrpcClient {
     }
     return "doGnmi";
   }
+  private Subscription getSubscriptionForClockClass(){
+//    name = "ssync_ClockClass"
+//    origin = "openconfig"
+//    path = "/ptp/instance-list/1/default-ds/clock-quality/clock-class"
+    PathElem ptp = PathElem.newBuilder()
+            .setName("ptp")
+            .build();
+    PathElem il = PathElem.newBuilder()
+            .setName("instance-list")
+            .build();
+    PathElem one = PathElem.newBuilder()
+            .setName("1")
+            .build();
+    PathElem cds = PathElem.newBuilder()
+            .setName("default-ds")
+            .build();
+    PathElem cq = PathElem.newBuilder()
+            .setName("clock-quality")
+            .build();
+    PathElem cc = PathElem.newBuilder()
+            .setName("clock-class")
+            .build();
 
+    Path path = Path.newBuilder()
+            .addElem(ptp)
+            .addElem(il)
+            .addElem(one)
+            .addElem(cds)
+            .addElem(cq)
+            .addElem(cc)
+            .setOrigin("openconfig")
+            .setTarget("ssync_ClockClass")
+            .build();
+    Subscription subscription = Subscription.newBuilder()
+            .setPath(path)
+            .setMode(SubscriptionMode.SAMPLE)
+            .setSampleInterval(3000000000l) //ns 1000000000l => 1s
+            .build();
+    return subscription;
+  }
 }
