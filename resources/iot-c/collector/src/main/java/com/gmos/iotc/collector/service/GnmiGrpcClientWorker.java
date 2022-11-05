@@ -25,59 +25,75 @@ public class GnmiGrpcClientWorker {
   private gNMIStub stub;
   private ManagedChannel channel;
   private String ne;
-  private Logger logger;
+  private final Logger logger = LoggerFactory.getLogger(GnmiGrpcClientWorker.class);
 
   public GnmiGrpcClientWorker(String ne) {
+    this.ne = ne;
+    createNewChannelANdStub();
+  }
+
+  public boolean isTerminated(){
+    //    Returns whether the channel is terminated.
+    //    Terminated channels have no running calls and relevant resources released (like TCP connections).
+    return channel.isTerminated();
+  }
+
+  public void createNewChannelANdStub(){
+    logger.info("{} - Creating new ChannelANdStub", ne);
     String[] parts = ne.split(":");
     String ip = parts[0];
     int port = Integer.parseInt(parts[1]) ;
-    this.ne = ne;
-    this.logger = LoggerFactory.getLogger(GnmiGrpcClientWorker.class);
     this.channel = ManagedChannelBuilder.forAddress(ip, port).usePlaintext().build();
     this.stub = gNMIGrpc.newStub(channel);
   }
 
-  public String getDataOverGnmiSubscribeStream(){
-//    logger.info(ne + " getDataOverGnmiSubscribeStream()" );
-    System.out.println(ne + " getDataOverGnmiSubscribeStream()" );
+  public void getDataOverGnmiSubscribeStream(){
+    logger.info("{} - getDataOverGnmiSubscribeStream()",ne);
     // Latch is needed otherwise onNext is never reached
     CountDownLatch latch = new CountDownLatch(1);
-
     StreamObserver<SubscribeRequest> stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
        @Override
        public void onNext(SubscribeResponse response) {
-//         String clockClass =  value.getUpdate().getUpdateList().get(1).getVal().toString();
-//         System.out.println("clockClass "+clockClass);
-
          try {
-           String thread = Thread.currentThread().getName();
            String responseVal0 =  response.getUpdate().getUpdateList().get(0).getVal().toString();
-           String msg = ne + " onNext() - thread: " +thread + " responseVal0: " + responseVal0;
-           System.out.println(msg);
-//           System.out.println(value.toString());
-
-           // NOTE logger is NOT working
-//           logger.info("{} onNext", ne);
-           System.out.println("------------------------");
+           logger.debug("{} - onNext() - responseVal0 {}", ne, responseVal0.trim());
          }catch (Exception e){
-           System.out.println("onNext Error: "+e.getMessage());
+           logger.error("onNext Error: {}", e.getMessage());
          }
        }
 
        @Override
        public void onError(Throwable t) {
-         System.out.println("StreamObserver onError " + t.toString());
+         logger.error("{} onError Error: {}",ne  ,t.getMessage());
        }
 
        @Override
        public void onCompleted() {
-         System.out.println("StreamObserver onCompleted");
+         logger.info("{} onCompleted() ",ne);
          latch.countDown();
        }
      }
     );
 
-//    PathElem pathElem = PathElem.newBuilder()
+    SubscriptionList list = SubscriptionList.newBuilder()
+            .addSubscription(getSubscriptionForOffsetFromMaster())
+            .addSubscription(getSubscriptionForClockClass())
+            .setEncoding(Encoding.JSON)
+            .build();
+
+    SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
+    stream.onNext(request);
+    stream.onCompleted();
+    try {
+      latch.await(3, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      logger.info("{} InterruptedException latch.await ",ne, e.getMessage());
+    }
+
+  }
+
+  private Subscription getSubscriptionForOffsetFromMaster(){
+    //    PathElem pathElem = PathElem.newBuilder()
 //            .setName("ptp/instance-list/1/current-ds/offset-from-master")
 //            .build();
     PathElem ptp = PathElem.newBuilder()
@@ -110,22 +126,7 @@ public class GnmiGrpcClientWorker {
             .setMode(SubscriptionMode.SAMPLE)
             .setSampleInterval(3000000000l) //ns 1000000000l => 1s
             .build();
-
-    SubscriptionList list = SubscriptionList.newBuilder()
-            .addSubscription(subscription)
-            .addSubscription(getSubscriptionForClockClass())
-            .setEncoding(Encoding.JSON)
-            .build();
-    SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
-    stream.onNext(request);
-    stream.onCompleted();
-    try {
-      latch.await(3, TimeUnit.SECONDS);
-    } catch (InterruptedException e) {
-      System.out.println("InterruptedException latch.await "+e.getMessage());
-      throw new RuntimeException(e);
-    }
-    return "doGnmi";
+    return subscription;
   }
   private Subscription getSubscriptionForClockClass(){
 //    name = "ssync_ClockClass"

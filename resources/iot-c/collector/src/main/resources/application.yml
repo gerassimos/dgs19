@@ -18,8 +18,8 @@ spring:
 
 logging:
   level:
-#    com.gmos.iotc.collector.service: ${LOG_LEVEL:DEBUG}
-    com.gmos.iotc.collector.service: ${LOG_LEVEL:WARN}
+    com.gmos.iotc.collector.service: ${LOG_LEVEL:DEBUG}
+#    com.gmos.iotc.collector.service: ${LOG_LEVEL:WARN}
     com.gmos.iotc: ${LOG_LEVEL:DEBUG}
 
 
@@ -52,3 +52,5 @@ opentracing:
       url: ${JAEGER_HOST_HTTP_URL:http://localhost:14268/api/traces}
     log-spans: ${JAEGER_LOG_SPANS:true}
 
+iot-collector:
+  collector-scheduler-enabled: ${COLLECTOR_SCHEDULER_ENABLED:true}

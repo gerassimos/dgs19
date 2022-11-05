@@ -49,6 +49,7 @@ docker-compose -f docker-compose-dev.yml up
     7. `JAEGER_HOST`: jaeger collector host name 
     8. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
     9. `GRPC_SERVER_PORT` : set the port for the grpc server
+    10. `COLLECTOR_SCHEDULER_ENABLED`: boolean flag, if set to `false` the main collector scheduler will NOT start 
 
  - **dgs19/iot-collector-ui**
    1. `LOG_LEVEL`: to set the log level. Valid values are: *INFO*, *DEBUG* and *TRACE*
@@ -144,23 +145,24 @@ grpcurl --plaintext -d '{"name": "test222"}' localhost:9091 com.gmos.iotc.proto.
   "result": "Hello test222"
 }
 ```
-
-## gnmi/grpc Subscribe service example
- - Add e very simple example on how to perform grpc request to a gnmi device
- - The proto located in `common-grpc/src/main/proto/gnmi` directory are copied from
- - [openconfig](https://github.com/openconfig/gnmi/blob/master/proto/gnmi/gnmi.proto)
- - Use the `/gnmi` rest end point in the collector-ui service to test grpc 
- - New env variables defined for the gnmi device are: 
- - `GNMI_GRPC_HOST_NAME` -> the ip address of the grpc/gnmi network device (target) 
- - `GNMI_GRPC_PORT` -> the grpc port  of the grpc/gnmi network device (target)
-
 ## log format json
- - To enable log format add the following to the application.yml
- - This is a quick a "dirty" way to have json log, probably we need to use more clean approach 
- - [ref](https://stackoverflow.com/questions/53730449/is-there-a-recommended-way-to-get-spring-boot-to-json-format-logs-with-logback)
+- To enable log format add the following to the application.yml
+- This is a quick a "dirty" way to have json log, probably we need to use more clean approach
+- [ref](https://stackoverflow.com/questions/53730449/is-there-a-recommended-way-to-get-spring-boot-to-json-format-logs-with-logback)
 ```yaml
 logging:
   #https://stackoverflow.com/questions/53730449/is-there-a-recommended-way-to-get-spring-boot-to-json-format-logs-with-logback
   pattern:
     console: "{\"time\": \"%d\", \"level\": \"%p\", \"correlation-id\": \"%X{X-Correlation-Id}\", \"source\": \"%logger{63}:%L\", \"message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\"}%n"
 ```
+
+## gnmi/grpc Subscribe service example
+ - Example to collect data via grpc/gnmi from network devices
+ - Can be tested with the `jsim-gnmi` project which simulates a dummy gnmi/gRPC server to simulate subscribe gRPC call
+ - The proto located in `common-grpc/src/main/proto/gnmi` directory are copied from
+ - [openconfig](https://github.com/openconfig/gnmi/blob/master/proto/gnmi/gnmi.proto)
+ - endpoints: 
+ - `/gnmi/start` to start the collection via rpc `subscribe`
+ - `/gnmi/status` to get (log) the status of the grpc clients 
+
+

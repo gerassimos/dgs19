@@ -7,6 +7,7 @@ import com.gmos.iotc.collector.repository.DeviceRepository;
 import com.gmos.iotc.collector.repository.PerformanceDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
+@ConditionalOnExpression("${iot-collector.collector-scheduler-enabled:true}")
 @Component
 public class CollectorScheduler {
   private Logger logger = LoggerFactory.getLogger(CollectorScheduler.class);

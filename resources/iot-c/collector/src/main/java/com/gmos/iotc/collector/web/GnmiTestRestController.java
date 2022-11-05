@@ -4,6 +4,7 @@ import com.gmos.iotc.collector.service.GnmiGrpcClientManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,11 +17,21 @@ public class GnmiTestRestController {
     this.gnmiGrpcClientManager = gnmiGrpcClientManager;
   }
 
-  @GetMapping("/gnmi")
-  public String gnmi() {
-    logger.debug("Get Request gnmi");
-    gnmiGrpcClientManager.startAllClients();
-    String result = "gnmi";
+  @GetMapping("/gnmi/{action}")
+  public String gnmi(@PathVariable("action") String action) {
+    logger.debug("gnmi action: {}", action);
+    switch (action){
+      case "start":
+        gnmiGrpcClientManager.startCollectionOfDataFromNEs();
+        break;
+      case "status":
+        gnmiGrpcClientManager.getConnectionStatusFromAllGrpcClients();
+        break;
+      default:
+        System.err.println("Action not supported");
+    }
+
+    String result = "gnmi action: " + action;
     return result;
   }
 }
