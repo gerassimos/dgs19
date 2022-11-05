@@ -10,6 +10,7 @@ import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
 import com.github.gnmi.proto.gNMIGrpc;
 import com.github.gnmi.proto.gNMIGrpc.gNMIStub;
+import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -29,17 +30,41 @@ public class GnmiGrpcClientWorker {
 
   public GnmiGrpcClientWorker(String ne) {
     this.ne = ne;
-    createNewChannelANdStub();
+    createNewChannelAndStub();
+    notifyWhenStateChanged();
   }
 
-  public boolean isTerminated(){
-    //    Returns whether the channel is terminated.
-    //    Terminated channels have no running calls and relevant resources released (like TCP connections).
-    return channel.isTerminated();
+  public boolean isConnected(){
+    boolean result = false;
+    ConnectivityState state = channel.getState(false);
+    logger.info("{} ConnectivityState {}", ne, state.toString());
+    if (state == ConnectivityState.READY ) {
+      result = true;
+    }
+    return result;
   }
 
-  public void createNewChannelANdStub(){
-    logger.info("{} - Creating new ChannelANdStub", ne);
+  public void reConnectReStartDataCollection(){
+    channel.shutdown();
+    createNewChannelAndStub();
+    getDataOverGnmiSubscribeStream();
+  }
+
+  private void notifyWhenStateChanged(){
+    //https://github.com/grpc/grpc-java/issues/3763
+    Runnable notify = new Runnable() {
+      @Override public void run() {
+        ConnectivityState currentState = channel.getState(false);
+        // handle currentState
+        channel.notifyWhenStateChanged(currentState, this);
+        logger.info("{}, Connection State Changed. New state: {}", ne, currentState);
+      }
+    };
+    notify.run();
+  }
+
+  public void createNewChannelAndStub(){
+    logger.info("{} - Creating new ChannelAndStub", ne);
     String[] parts = ne.split(":");
     String ip = parts[0];
     int port = Integer.parseInt(parts[1]) ;

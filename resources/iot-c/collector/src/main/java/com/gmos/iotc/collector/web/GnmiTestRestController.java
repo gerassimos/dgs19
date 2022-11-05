@@ -25,7 +25,7 @@ public class GnmiTestRestController {
         gnmiGrpcClientManager.startCollectionOfDataFromNEs();
         break;
       case "status":
-        gnmiGrpcClientManager.getConnectionStatusFromAllGrpcClients();
+        gnmiGrpcClientManager.getConnectionStatesFromAllGrpcClients();
         break;
       default:
         System.err.println("Action not supported");

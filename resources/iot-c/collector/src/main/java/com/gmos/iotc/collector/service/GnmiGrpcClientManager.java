@@ -13,11 +13,10 @@ import java.util.Map;
 public class GnmiGrpcClientManager {
 
   private Map<String, GnmiGrpcClientWorker> neToGrpcWorkerMap;
-  private Logger logger;
+  private final Logger logger = LoggerFactory.getLogger(GnmiGrpcClientManager.class);
 
   public GnmiGrpcClientManager() {
-    this.neToGrpcWorkerMap = new HashMap<String, GnmiGrpcClientWorker>();
-    this.logger = LoggerFactory.getLogger(GnmiGrpcClientManager.class);
+    this.neToGrpcWorkerMap = new HashMap();
   }
 
   public void startCollectionOfDataFromNEs(){
@@ -29,13 +28,18 @@ public class GnmiGrpcClientManager {
     }
   }
 
-  public void getConnectionStatusFromAllGrpcClients() {
-    for (String ne : getAllNEs()){
-      boolean isTerminated = neToGrpcWorkerMap.get(ne).isTerminated();
-      if (isTerminated){
-        logger.info("{} is NOT connected", ne);
+  public void getConnectionStatesFromAllGrpcClients() {
+    for (Map.Entry<String, GnmiGrpcClientWorker> entry : neToGrpcWorkerMap.entrySet()){
+      String ne = entry.getKey();
+      GnmiGrpcClientWorker grpcClientWorker = entry.getValue();
+
+      boolean isConnected = grpcClientWorker.isConnected();
+      if (isConnected){
+//        logger.info("{} is connected", ne);
       }else {
-        logger.info("{} is connected", ne);
+        logger.info("{} is NOT connected. try to reconnect and restart data collection", ne);
+        //Try to reconnect
+        grpcClientWorker.reConnectReStartDataCollection();
       }
     }
   }
