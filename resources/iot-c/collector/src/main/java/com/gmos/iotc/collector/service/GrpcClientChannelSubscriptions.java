@@ -105,7 +105,7 @@ public class GrpcClientChannelSubscriptions {
 
     SubscriptionList list = SubscriptionList.newBuilder()
             .addSubscription(getSubscriptionForOffsetFromMaster())
-            .addSubscription(getSubscriptionForClockClass())
+//            .addSubscription(getSubscriptionForClockClass())
             .setEncoding(Encoding.JSON)
             .build();
 
