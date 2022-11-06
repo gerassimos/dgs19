@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 public class GnmiGrpcClientManager {
 
-  private Map<String, GnmiGrpcClientWorker> neToGrpcWorkerMap;
+  private Map<String, GrpcClientChannelSubscriptions> neToGrpcWorkerMap;
   private final Logger logger = LoggerFactory.getLogger(GnmiGrpcClientManager.class);
 
   public GnmiGrpcClientManager() {
@@ -22,16 +22,16 @@ public class GnmiGrpcClientManager {
   public void startCollectionOfDataFromNEs(){
     List<String> listNEs = getAllNEs();
     for (String ne : listNEs){
-      GnmiGrpcClientWorker  gnmiGrpcClientWorker = new GnmiGrpcClientWorker(ne);
+      GrpcClientChannelSubscriptions gnmiGrpcClientWorker = new GrpcClientChannelSubscriptions(ne);
       neToGrpcWorkerMap.put(ne,gnmiGrpcClientWorker);
       gnmiGrpcClientWorker.getDataOverGnmiSubscribeStream();
     }
   }
 
   public void getConnectionStatesFromAllGrpcClients() {
-    for (Map.Entry<String, GnmiGrpcClientWorker> entry : neToGrpcWorkerMap.entrySet()){
+    for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
       String ne = entry.getKey();
-      GnmiGrpcClientWorker grpcClientWorker = entry.getValue();
+      GrpcClientChannelSubscriptions grpcClientWorker = entry.getValue();
 
       boolean isConnected = grpcClientWorker.isConnected();
       if (isConnected){

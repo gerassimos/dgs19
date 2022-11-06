@@ -21,14 +21,14 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class GnmiGrpcClientWorker {
+public class GrpcClientChannelSubscriptions {
 
   private gNMIStub stub;
   private ManagedChannel channel;
   private String ne;
-  private final Logger logger = LoggerFactory.getLogger(GnmiGrpcClientWorker.class);
+  private final Logger logger = LoggerFactory.getLogger(GrpcClientChannelSubscriptions.class);
 
-  public GnmiGrpcClientWorker(String ne) {
+  public GrpcClientChannelSubscriptions(String ne) {
     this.ne = ne;
     createNewChannelAndStub();
     notifyWhenStateChanged();
