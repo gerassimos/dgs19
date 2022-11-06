@@ -6,14 +6,15 @@ spring:
     username: ${DB_USER:iotc}
     password: ${DB_PASSWORD:iotc}
     continue-on-error: true
+  sql.init.continue-on-error: true
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate:
       ddl-auto: update
-    properties.hibernate.temp.use_jdbc_metadata_defaults : false
   output:
     ansi:
       enabled: ALWAYS
+
 
 
 logging:
