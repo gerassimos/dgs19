@@ -26,6 +26,7 @@ public class GrpcClientChannelSubscriptions {
   private gNMIStub stub;
   private ManagedChannel channel;
   private String ne;
+  private StreamObserver<SubscribeRequest> stream;
   private final Logger logger = LoggerFactory.getLogger(GrpcClientChannelSubscriptions.class);
 
   public GrpcClientChannelSubscriptions(String ne) {
@@ -45,6 +46,7 @@ public class GrpcClientChannelSubscriptions {
   }
 
   public void reConnectReStartDataCollection(){
+    stream.onCompleted();
     channel.shutdown();
     createNewChannelAndStub();
     getDataOverGnmiSubscribeStream();
@@ -76,10 +78,11 @@ public class GrpcClientChannelSubscriptions {
     logger.info("{} - getDataOverGnmiSubscribeStream()",ne);
     // Latch is needed otherwise onNext is never reached
     CountDownLatch latch = new CountDownLatch(1);
-    StreamObserver<SubscribeRequest> stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
+    stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
        @Override
        public void onNext(SubscribeResponse response) {
          try {
+           System.out.println(response.toString());
            String responseVal0 =  response.getUpdate().getUpdateList().get(0).getVal().toString();
            logger.debug("{} - onNext() - responseVal0 {}", ne, responseVal0.trim());
          }catch (Exception e){
@@ -108,12 +111,24 @@ public class GrpcClientChannelSubscriptions {
 
     SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
     stream.onNext(request);
-    stream.onCompleted();
+    //Never call onCompleted()
+//    stream.onCompleted();
     try {
       latch.await(3, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       logger.info("{} InterruptedException latch.await ",ne, e.getMessage());
     }
+
+  }
+
+  public void addSubscription(){
+    SubscriptionList list = SubscriptionList.newBuilder()
+            .addSubscription(getSubscriptionForClockClass())
+            .setEncoding(Encoding.JSON)
+            .build();
+    SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
+    stream.onNext(request);
+//    stream.onCompleted();
 
   }
 
@@ -149,7 +164,7 @@ public class GrpcClientChannelSubscriptions {
     Subscription subscription = Subscription.newBuilder()
             .setPath(path)
             .setMode(SubscriptionMode.SAMPLE)
-            .setSampleInterval(3000000000l) //ns 1000000000l => 1s
+            .setSampleInterval(5000000000l) //ns 1000000000l => 1s
             .build();
     return subscription;
   }
@@ -189,7 +204,7 @@ public class GrpcClientChannelSubscriptions {
     Subscription subscription = Subscription.newBuilder()
             .setPath(path)
             .setMode(SubscriptionMode.SAMPLE)
-            .setSampleInterval(3000000000l) //ns 1000000000l => 1s
+            .setSampleInterval(5000000000l) //ns 1000000000l => 1s
             .build();
     return subscription;
   }

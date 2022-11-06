@@ -27,6 +27,9 @@ public class GnmiTestRestController {
       case "status":
         gnmiGrpcClientManager.getConnectionStatesFromAllGrpcClients();
         break;
+      case "add-subscription":
+        gnmiGrpcClientManager.addSubscription();
+        break;
       default:
         System.err.println("Action not supported");
     }

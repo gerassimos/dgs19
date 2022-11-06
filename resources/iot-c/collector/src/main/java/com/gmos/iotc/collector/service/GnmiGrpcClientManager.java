@@ -44,14 +44,23 @@ public class GnmiGrpcClientManager {
     }
   }
 
+  public void addSubscription(){
+    for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
+      String ne = entry.getKey();
+      GrpcClientChannelSubscriptions grpcClient = entry.getValue();
+      try{ grpcClient.addSubscription(); }
+      catch (Exception e ){ logger.error("Failed to add subscription {}",e.getMessage());}
+    }
+  }
+
   private List<String> getAllNEs(){
     List<String> result = new ArrayList<String>();
-//    listNEs.add("192.168.56.102:20830");
-//    listNEs.add("192.168.56.105:20830");
-//    listNEs.add("192.168.56.106:20830");
-    result.add("localhost:4567");
-    result.add("localhost:4568");
-    result.add("localhost:4569");
+    result.add("192.168.56.102:20830");
+//    result.add("192.168.56.105:20830");
+//    result.add("192.168.56.106:20830");
+//    result.add("localhost:4567");
+//    result.add("localhost:4568");
+//    result.add("localhost:4569");
     return result;
   }
 
