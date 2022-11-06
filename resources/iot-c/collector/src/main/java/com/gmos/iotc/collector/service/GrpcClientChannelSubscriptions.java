@@ -26,7 +26,6 @@ public class GrpcClientChannelSubscriptions {
   private gNMIStub stub;
   private ManagedChannel channel;
   private String ne;
-  private StreamObserver<SubscribeRequest> stream;
   private final Logger logger = LoggerFactory.getLogger(GrpcClientChannelSubscriptions.class);
 
   public GrpcClientChannelSubscriptions(String ne) {
@@ -46,7 +45,6 @@ public class GrpcClientChannelSubscriptions {
   }
 
   public void reConnectReStartDataCollection(){
-    stream.onCompleted();
     channel.shutdown();
     createNewChannelAndStub();
     getDataOverGnmiSubscribeStream();
@@ -78,10 +76,11 @@ public class GrpcClientChannelSubscriptions {
     logger.info("{} - getDataOverGnmiSubscribeStream()",ne);
     // Latch is needed otherwise onNext is never reached
     CountDownLatch latch = new CountDownLatch(1);
-    stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
+    StreamObserver<SubscribeRequest> stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
        @Override
        public void onNext(SubscribeResponse response) {
          try {
+           System.out.println("stream 1 OffsetFromMaster");
            System.out.println(response.toString());
            String responseVal0 =  response.getUpdate().getUpdateList().get(0).getVal().toString();
            logger.debug("{} - onNext() - responseVal0 {}", ne, responseVal0.trim());
@@ -109,10 +108,9 @@ public class GrpcClientChannelSubscriptions {
             .setEncoding(Encoding.JSON)
             .build();
 
-    SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
+    SubscribeRequest request = SubscribeRequest.newBuilder().setSubscribe(list).build();
     stream.onNext(request);
-    //Never call onCompleted()
-//    stream.onCompleted();
+    stream.onCompleted();
     try {
       latch.await(3, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
@@ -122,13 +120,49 @@ public class GrpcClientChannelSubscriptions {
   }
 
   public void addSubscription(){
+    logger.info("{} - addSubscription()",ne);
+    // Latch is needed otherwise onNext is never reached
+    CountDownLatch latch = new CountDownLatch(1);
+    StreamObserver<SubscribeRequest> stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
+      @Override
+      public void onNext(SubscribeResponse response) {
+        try {
+          System.out.println("stream 2 ClockClass");
+          System.out.println(response.toString());
+          String responseVal0 =  response.getUpdate().getUpdateList().get(0).getVal().toString();
+          logger.debug("{} - onNext() - responseVal0 {}", ne, responseVal0.trim());
+        }catch (Exception e){
+          logger.error("onNext Error: {}", e.getMessage());
+        }
+      }
+
+      @Override
+      public void onError(Throwable t) {
+        logger.error("{} onError Error: {}",ne  ,t.getMessage());
+      }
+
+      @Override
+      public void onCompleted() {
+        logger.info("{} onCompleted() ",ne);
+        latch.countDown();
+      }
+    }
+    );
+
     SubscriptionList list = SubscriptionList.newBuilder()
+//            .addSubscription(getSubscriptionForOffsetFromMaster())
             .addSubscription(getSubscriptionForClockClass())
             .setEncoding(Encoding.JSON)
             .build();
+
     SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(list).build();
     stream.onNext(request);
-//    stream.onCompleted();
+    stream.onCompleted();
+    try {
+      latch.await(3, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      logger.info("{} InterruptedException latch.await ",ne, e.getMessage());
+    }
 
   }
 
