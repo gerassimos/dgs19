@@ -53,6 +53,15 @@ public class GnmiGrpcClientManager {
     }
   }
 
+  public void cancelStreaming(){
+    for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
+      String ne = entry.getKey();
+      GrpcClientChannelSubscriptions grpcClient = entry.getValue();
+      try{ grpcClient.cancelStreaming(); }
+      catch (Exception e ){ logger.error("Failed to cancelStreaming {}",e.getMessage());}
+    }
+  }
+
   private List<String> getAllNEs(){
     List<String> result = new ArrayList<String>();
     result.add("192.168.56.102:20830");

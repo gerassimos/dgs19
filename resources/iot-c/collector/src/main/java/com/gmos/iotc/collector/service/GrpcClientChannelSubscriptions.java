@@ -13,6 +13,7 @@ import com.github.gnmi.proto.gNMIGrpc.gNMIStub;
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.ClientCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GrpcClientChannelSubscriptions {
 
+  private StreamObserver<SubscribeRequest> stream;
   private gNMIStub stub;
   private ManagedChannel channel;
   private String ne;
@@ -76,7 +78,7 @@ public class GrpcClientChannelSubscriptions {
     logger.info("{} - getDataOverGnmiSubscribeStream()",ne);
     // Latch is needed otherwise onNext is never reached
     CountDownLatch latch = new CountDownLatch(1);
-    StreamObserver<SubscribeRequest> stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
+    this.stream = stub.subscribe(new StreamObserver<SubscribeResponse>() {
        @Override
        public void onNext(SubscribeResponse response) {
          try {
@@ -117,6 +119,11 @@ public class GrpcClientChannelSubscriptions {
       logger.info("{} InterruptedException latch.await ",ne, e.getMessage());
     }
 
+  }
+
+  public void cancelStreaming(){
+    ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
+    clientCallStreamObserver.cancel("client side cancellation", new Exception("cancellation"));
   }
 
   public void addSubscription(){

@@ -30,6 +30,9 @@ public class GnmiTestRestController {
       case "add-subscription":
         gnmiGrpcClientManager.addSubscription();
         break;
+      case "cancel-streaming":
+        gnmiGrpcClientManager.cancelStreaming();
+        break;
       default:
         System.err.println("Action not supported");
     }
