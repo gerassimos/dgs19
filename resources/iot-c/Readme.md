@@ -49,7 +49,9 @@ docker-compose -f docker-compose-dev.yml up
     7. `JAEGER_HOST`: jaeger collector host name 
     8. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
     9. `GRPC_SERVER_PORT` : set the port for the grpc server
-    10. `COLLECTOR_SCHEDULER_ENABLED`: boolean flag, if set to `false` the main collector scheduler will NOT start 
+    10. `COLLECTOR_SCHEDULER_ENABLED`: boolean flag, if set to `false` the main collector scheduler will NOT start
+    11. `spring_profiles_default`: set the default spring profile. Valid values are: *dev*
+    12. `spring_profiles_active`: set the active spring profile. Valid values are: *dev*
 
  - **dgs19/iot-collector-ui**
    1. `LOG_LEVEL`: to set the log level. Valid values are: *INFO*, *DEBUG* and *TRACE*
@@ -165,4 +167,21 @@ logging:
  - `/gnmi/start` to start the collection via rpc `subscribe`
  - `/gnmi/status` to get (log) the status of the grpc clients 
 
+## spring boot dev profile 
+ - It is now possible to use the spring boot dev profile which will use the `application-dev.yml` file
+ - There a number of ways to control which spring boot profile is active
+ - For example to set the `dev` profile
+ - Set the env variable `spring_profiles_active=dev`
+ - Set the env variable `spring_profiles_default=dev`
+ - update the application.yml as follows
+   ```yaml
+   spring:
+     profiles:
+       default: dev
+   ``` 
+ - Note that application.yml is meant to define the common setting among profiles
+ - For simplicity's sake in this project we us application.yml for "production" deployment
 
+## H2 Database
+ - The in memory `H2 Database` is configured for the `dev` spring boot profile
+ - [console](http://localhost:8092/h2-console) 

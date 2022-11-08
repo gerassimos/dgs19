@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    ## memory
+    url: jdbc:h2:mem:iotc
+    ## file
+#    url: jdbc:h2:file:/data/demo
+    username: ${DB_USER:iotc}
+    password: ${DB_PASSWORD:iotc}
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    ## console available at
+    ## http://localhost:8092/h2-console
+    console.enabled: true
+

@@ -46,6 +46,7 @@ dependencies {
 	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-web-starter', version: '3.3.1')
 	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-cloud-starter', version: '0.5.9')
 	implementation('org.postgresql:postgresql')
+	runtimeOnly('com.h2database:h2')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation(project(":common"))

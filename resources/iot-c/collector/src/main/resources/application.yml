@@ -15,8 +15,6 @@ spring:
     ansi:
       enabled: ALWAYS
 
-
-
 logging:
   level:
     com.gmos.iotc.collector.service: ${LOG_LEVEL:DEBUG}
