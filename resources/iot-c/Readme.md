@@ -181,7 +181,8 @@ logging:
    ``` 
  - Note that application.yml is meant to define the common setting among profiles
  - For simplicity's sake in this project we us application.yml for "production" deployment
-
+ - [ref-1](https://www.baeldung.com/spring-profiles)
+  
 ## H2 Database
  - The in memory `H2 Database` is configured for the `dev` spring boot profile
  - [console](http://localhost:8092/h2-console) 
