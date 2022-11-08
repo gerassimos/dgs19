@@ -1,4 +1,4 @@
-package com.gmos.iotc.collector.service;
+package com.gmos.iotc.collector.service.gnmi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class GnmiGrpcClientManager {
+public class GrpcClientManager {
 
   private Map<String, GrpcClientChannelSubscriptions> neToGrpcWorkerMap;
-  private final Logger logger = LoggerFactory.getLogger(GnmiGrpcClientManager.class);
+  private final Logger logger = LoggerFactory.getLogger(GrpcClientManager.class);
 
-  public GnmiGrpcClientManager() {
+  public GrpcClientManager() {
     this.neToGrpcWorkerMap = new HashMap();
   }
 

@@ -1,4 +1,4 @@
-package com.gmos.iotc.collector.service;
+package com.gmos.iotc.collector.service.gnmi;
 
 import com.github.gnmi.proto.Encoding;
 import com.github.gnmi.proto.Path;
@@ -13,8 +13,6 @@ import com.github.gnmi.proto.gNMIGrpc.gNMIStub;
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.Status;
-import io.grpc.StatusRuntimeException;
 import io.grpc.stub.ClientCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
