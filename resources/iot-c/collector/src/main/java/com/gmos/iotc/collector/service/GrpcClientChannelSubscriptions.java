@@ -13,6 +13,8 @@ import com.github.gnmi.proto.gNMIGrpc.gNMIStub;
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.ClientCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
@@ -122,6 +124,17 @@ public class GrpcClientChannelSubscriptions {
   }
 
   public void cancelStreaming(){
+    //TODO test the following and replace the bellow
+//    if (additionalInfo==null || additionalInfo.isEmpty() ){
+//      additionalInfo ="Not provided";
+//    }
+//    ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
+//    StatusRuntimeException e = Status.CANCELLED
+//            .withDescription("client side cancellation")
+//            .augmentDescription("Additional Info: " + additionalInfo)
+//            .asRuntimeException();
+//    clientCallStreamObserver.cancel("client side cancellation ttt", e);
+
     ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
     clientCallStreamObserver.cancel("client side cancellation", new Exception("cancellation"));
   }
