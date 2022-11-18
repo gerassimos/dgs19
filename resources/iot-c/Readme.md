@@ -169,10 +169,9 @@ logging:
  - `/gnmi/example/dto/subscriptionlist` to get an example SubscriptionList json object 
 
 ## gnmi/grpc Subscribe service TODO
- - Connection State Changed. New state: TRANSIENT_FAILURE
-   We keep getting TRANSIENT_FAILURE error if the target is down
- - 
- 
+ - [TODO Review with Ziv]
+   Connection State Changed. New state: TRANSIENT_FAILURE
+   We keep getting TRANSIENT_FAILURE error if the target is down (softsync is not running)
 
 ## spring boot dev profile 
  - It is now possible to use the spring boot dev profile which will use the `application-dev.yml` file
