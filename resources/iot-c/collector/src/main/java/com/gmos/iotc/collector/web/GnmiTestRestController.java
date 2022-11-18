@@ -1,7 +1,7 @@
 package com.gmos.iotc.collector.web;
 
 import com.gmos.iotc.collector.service.gnmi.GnmiPathBuilder;
-import com.gmos.iotc.collector.service.gnmi.GrpcClientManager;
+import com.gmos.iotc.collector.service.gnmi.GrpcClientTester;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,27 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class GnmiTestRestController {
 
   private Logger logger = LoggerFactory.getLogger(GnmiTestRestController.class);
-  private final GrpcClientManager grpcClientManager;
+  private final GrpcClientTester grpcClientTester;
 
-  public GnmiTestRestController(GrpcClientManager grpcClientManager) {
-    this.grpcClientManager = grpcClientManager;
+  public GnmiTestRestController(GrpcClientTester grpcClientTester) {
+    this.grpcClientTester = grpcClientTester;
   }
 
-  @GetMapping("/gnmi/{action}")
+  @GetMapping("/gnmi/test/{action}")
   public String gnmi(@PathVariable("action") String action) {
     logger.debug("gnmi action: {}", action);
     switch (action){
       case "start":
-        grpcClientManager.startCollectionOfDataFromNEs();
+        grpcClientTester.startCollectionOfDataFromNEs();
         break;
       case "status":
-        grpcClientManager.getConnectionStatesFromAllGrpcClients();
+        grpcClientTester.getConnectionStatesFromAllGrpcClients();
         break;
       case "add-subscription":
-        grpcClientManager.addSubscription();
+        grpcClientTester.addSubscription();
         break;
       case "cancel-streaming":
-        grpcClientManager.cancelStreaming();
+        grpcClientTester.cancelStreaming();
         break;
       default:
         System.err.println("Action not supported");

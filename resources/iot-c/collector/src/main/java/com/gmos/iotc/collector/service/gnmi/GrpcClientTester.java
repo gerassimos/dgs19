@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class GrpcClientManager {
+public class GrpcClientTester {
 
   private Map<String, GrpcClientChannelSubscriptions> neToGrpcWorkerMap;
-  private final Logger logger = LoggerFactory.getLogger(GrpcClientManager.class);
+  private final Logger logger = LoggerFactory.getLogger(GrpcClientTester.class);
 
-  public GrpcClientManager() {
+  public GrpcClientTester() {
     this.neToGrpcWorkerMap = new HashMap();
   }
 
