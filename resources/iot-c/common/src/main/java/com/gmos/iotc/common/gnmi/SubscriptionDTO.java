@@ -1,7 +1,5 @@
 package com.gmos.iotc.common.gnmi;
 
-import java.util.List;
-
 public class SubscriptionDTO {
 
   private PathDTO path;
@@ -35,5 +33,14 @@ public class SubscriptionDTO {
 
   public void setSampleInterval(long sampleInterval) {
     this.sampleInterval = sampleInterval;
+  }
+
+  @Override
+  public String toString() {
+    return "SubscriptionDTO{" +
+            "path=" + path +
+            ", mode=" + mode +
+            ", sampleInterval=" + sampleInterval +
+            '}';
   }
 }

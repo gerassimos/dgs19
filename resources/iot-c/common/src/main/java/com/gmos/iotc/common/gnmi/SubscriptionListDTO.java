@@ -6,15 +6,7 @@ public class SubscriptionListDTO {
 
   private List<SubscriptionDTO> subscriptionList;
 
-
-  //  enum Encoding {
-//    JSON = 0;           // JSON encoded text.
-//    BYTES = 1;          // Arbitrarily encoded bytes.
-//    PROTO = 2;          // Encoded according to scalar values of TypedValue.
-//    ASCII = 3;          // ASCII text of an out-of-band agreed format.
-//    JSON_IETF = 4;      // JSON encoded text as per RFC7951.
-//  }
-  private int encoding;
+  private GnmiEnum.Encoding encoding;
 
   public List<SubscriptionDTO> getSubscriptionList() {
     return subscriptionList;
@@ -24,11 +16,19 @@ public class SubscriptionListDTO {
     this.subscriptionList = subscriptionList;
   }
 
-  public int getEncoding() {
+  public GnmiEnum.Encoding getEncoding() {
     return encoding;
   }
 
-  public void setEncoding(int encoding) {
+  public void setEncoding(GnmiEnum.Encoding encoding) {
     this.encoding = encoding;
+  }
+
+  @Override
+  public String toString() {
+    return "SubscriptionListDTO{" +
+            "subscriptionList=" + subscriptionList +
+            ", encoding=" + encoding +
+            '}';
   }
 }

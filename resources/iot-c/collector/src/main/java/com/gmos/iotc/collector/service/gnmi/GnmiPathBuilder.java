@@ -7,6 +7,7 @@ import com.github.gnmi.proto.PathElem;
 import com.github.gnmi.proto.Subscription;
 import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
+import com.gmos.iotc.common.gnmi.GnmiEnum;
 import com.gmos.iotc.common.gnmi.PathDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
@@ -53,6 +54,10 @@ public class GnmiPathBuilder {
     return null;
   }
 
+  private static Encoding getEncoding(GnmiEnum.Encoding gnmiEnumEncoding){
+    return Encoding.forNumber(gnmiEnumEncoding.getNumber());
+  }
+
   private static Subscription getSubscription(String gnmiPath,
                                               int subscriptionMode,
                                               long sampleIntervalNanoSeconds,
@@ -74,23 +79,46 @@ public class GnmiPathBuilder {
             .build();
     return subscription;
   }
+  private static Subscription getSubscriptionFromDTO(SubscriptionDTO subscriptionDTO){
+    Subscription result;
+    PathDTO pathDTO = subscriptionDTO.getPath();
+    String gnmiPath = pathDTO.getPath();
+    int subscriptionMode = subscriptionDTO.getMode();
+    long sampleInterval = subscriptionDTO.getSampleInterval(); //NanoSeconds
+    String origin = pathDTO.getTarget();
+    String target  = pathDTO.getTarget();
+    result = getSubscription(gnmiPath,subscriptionMode,sampleInterval,origin,target);
+    return result;
+  }
 
-  public static SubscriptionList getSubscriptionList(SubscriptionDTO subscriptionDTO){
+  public static SubscriptionList getSubscriptionList(SubscriptionListDTO subscriptionListDTO){
 
     SubscriptionList.Builder subscriptionListBuilder = SubscriptionList.newBuilder();
-// TODO
-//    for (String path :subscriptionDTO.getGnmiPathList()){
-//      subscriptionListBuilder.addSubscription( getSubscription(
-//              path,
-//              subscriptionDTO.getSubscriptionMode(),
-//              subscriptionDTO.getSampleIntervalNanoSeconds(),
-//              subscriptionDTO.getOrigin(),
-//              subscriptionDTO.getTarget() )
-//      );
-//    }
-//    subscriptionListBuilder.setEncoding(Encoding.forNumber(subscriptionDTO.getEncoding()));
+
+    subscriptionListBuilder.setEncoding(getEncoding(subscriptionListDTO.getEncoding()));
+    for (SubscriptionDTO subscriptionDTO : subscriptionListDTO.getSubscriptionList()){
+      Subscription subscription = getSubscriptionFromDTO(subscriptionDTO);
+      subscriptionListBuilder.addSubscription(subscription);
+    }
 
     return subscriptionListBuilder.build();
+  }
+
+  public static SubscriptionListDTO buildExampleSubscriptionListDTO4OFM(){
+    SubscriptionListDTO result = new SubscriptionListDTO();
+    List<SubscriptionDTO> subscriptionList = new ArrayList<>();
+    PathDTO pathDTO = new PathDTO();
+    pathDTO.setPath("/ptp/instance-list/1/default-ds/clock-quality/clock-class");
+    pathDTO.setOrigin("openconfig");
+    pathDTO.setTarget("ssync_ClockClass");
+    SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+    subscriptionDTO.setPath(pathDTO);
+    subscriptionDTO.setMode(2); //SubscriptionMode.SAMPLE = 2
+    subscriptionDTO.setSampleInterval(5000000000l);
+    subscriptionList.add(subscriptionDTO);
+    result.setSubscriptionList(subscriptionList);
+    result.setEncoding(GnmiEnum.Encoding.JSON);
+    return result;
   }
 
   public static void main(String[] args) {
@@ -102,22 +130,17 @@ public class GnmiPathBuilder {
     //    origin = "openconfig"
     //    path = "/ptp/instance-list/1/current-ds/offset-from-master"
 
-
-    List<String> gnmiPathList = new ArrayList<>();
-    gnmiPathList.add("/ptp/instance-list/1/default-ds/clock-quality/clock-class");
-    gnmiPathList.add("/ptp/instance-list/1/current-ds/offset-from-master");
-
-
-    PathDTO pathDTO = new PathDTO();
-    pathDTO.setPath("/ptp/instance-list/1/default-ds/clock-quality/clock-class");
-    pathDTO.setOrigin("openconfig");
-    pathDTO.setTarget("ssync_ClockClass");
-    SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
-    subscriptionDTO.setPath(pathDTO);
-    subscriptionDTO.setMode(2); //SubscriptionMode.SAMPLE = 2
-    subscriptionDTO.setSampleInterval(5000000000l);
-    List<SubscriptionDTO> subscriptionDTOList = new ArrayList<>();
+// Other paths
+//    path = /ptp/instance-list/1/current-ds/offset-from-master
+//    path = /ptp/instance-list/1/current-ds/mean-path-delay
+//    path = /ptp/instance-list/1/time-properties-ds/time-traceable
+//    path = /ptp/instance-list/1/default-ds/clock-quality/clock-class
 
 
+    SubscriptionListDTO subListDTO4OFM = buildExampleSubscriptionListDTO4OFM();
+    SubscriptionList subscriptionListProto = getSubscriptionList(subListDTO4OFM);
+
+    System.out.println("subscriptionList DTO "+subListDTO4OFM.toString());
+    System.out.println("subscriptionListProto "+subscriptionListProto);
   }
 }

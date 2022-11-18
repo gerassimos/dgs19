@@ -28,4 +28,15 @@ public class PathDTO {
   public void setTarget(String target) {
     this.target = target;
   }
+
+  @Override
+  public String toString() {
+    return "PathDTO{" +
+            "path='" + path + '\'' +
+            ", origin='" + origin + '\'' +
+            ", target='" + target + '\'' +
+            '}';
+  }
+
+
 }
