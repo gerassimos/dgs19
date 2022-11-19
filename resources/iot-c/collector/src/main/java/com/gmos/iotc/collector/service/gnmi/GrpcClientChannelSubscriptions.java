@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GrpcClientChannelSubscriptions {
 
-  private Map<String, StreamObserver<SubscribeRequest> > streamMap;
+  private Map<SubscriptionList, StreamObserver<SubscribeRequest> > streamMap;
   private gNMIStub stub;
   private ManagedChannel channel;
   private String ne;
@@ -38,7 +38,7 @@ public class GrpcClientChannelSubscriptions {
   public boolean isConnected(){
     boolean result = false;
     ConnectivityState state = channel.getState(false);
-    logger.info("{} ConnectivityState {}", ne, state.toString());
+    logger.debug("{} ConnectivityState {}", ne, state.toString());
     if (state == ConnectivityState.READY ) {
       result = true;
     }
@@ -48,6 +48,9 @@ public class GrpcClientChannelSubscriptions {
   public void reConnectReStartDataCollection(){
     channel.shutdown();
     createNewChannelAndStub();
+    for (SubscriptionList subscriptionList : streamMap.keySet()){
+      createStreamForSubscriptionList(subscriptionList);
+    }
   }
 
   private void notifyWhenStateChanged(){
@@ -73,16 +76,15 @@ public class GrpcClientChannelSubscriptions {
   }
 
   public void cancelStreamForSubscriptionList(SubscriptionList subscriptionList){
-    String subscriptionListStr = subscriptionList.toString();
-    StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionListStr);
+    StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionList);
 
     ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
     StatusRuntimeException e = Status.CANCELLED
-            .withDescription("Received cancellation request for  " + subscriptionListStr)
-            .augmentDescription("Augment Description Not prvided yet")
+            .withDescription("Received cancellation request for  " + subscriptionList.toString())
+            .augmentDescription("Augment Description Not provided yet")
             .asRuntimeException();
-    clientCallStreamObserver.cancel("Received cancellation request for  " + subscriptionListStr, e);
-    streamMap.remove(subscriptionListStr);
+    clientCallStreamObserver.cancel("Received cancellation request for  " + subscriptionList.toString(), e);
+    streamMap.remove(subscriptionList);
   }
 
   public void createStreamForSubscriptionList(SubscriptionList subscriptionList){
@@ -93,10 +95,15 @@ public class GrpcClientChannelSubscriptions {
       @Override
       public void onNext(SubscribeResponse response) {
         try {
-          System.out.println("stream 2 ClockClass");
-          System.out.println(response.toString());
-          String responseVal0 =  response.getUpdate().getUpdateList().get(0).getVal().toString();
-          logger.debug("{} - onNext() - responseVal0 {}", ne, responseVal0.trim());
+          logger.debug("{} - onNext() - ResponseCase {}", ne, response.getResponseCase());
+          //TODO
+          // Review with Ziv,
+          // parse the response if needed and send to kafka
+          // what is the best approach to parse the response
+          // (handle multiple values that could come with the use of * in the path request)
+          if ( logger.isTraceEnabled() ){
+            logger.trace("{} - onNext() - response {}", ne, response);
+          }
         }catch (Exception e){
           logger.error("onNext Error: {}", e.getMessage());
         }
@@ -104,7 +111,19 @@ public class GrpcClientChannelSubscriptions {
 
       @Override
       public void onError(Throwable t) {
-        logger.error("{} onError Error: {}",ne  ,t.getMessage());
+        //Handle case of StatusRuntimeException
+        if (t instanceof  io.grpc.StatusRuntimeException){
+          //Safe cast
+          Status status = ((io.grpc.StatusRuntimeException)t).getStatus();
+          //Handle case of cancellation - log at info level
+          if (status.getCode() == Status.Code.CANCELLED) {
+            logger.info("{} StatusRuntimeException status.code: {} - msg: {}",ne, status.getCode().toString() ,t.getMessage());
+          }else{
+            logger.error("{} StatusRuntimeException status.code: {} - msg: {}",ne, status.getCode().toString() ,t.getMessage());
+          }
+        }else{
+          logger.error("{} onError Error: {}",ne  ,t.getMessage());
+        }
       }
 
       @Override
@@ -117,10 +136,9 @@ public class GrpcClientChannelSubscriptions {
 
     //TODO
     // Review with Ziv,
-    // We use as key the subscriptionList.toString() is it ok ?? dd
+    // We use as key the SubscriptionList is it ok ?? dd
     // Should we use an other key ?
-
-    streamMap.put(subscriptionList.toString(), stream);
+    streamMap.put(subscriptionList, stream);
     SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(subscriptionList).build();
     stream.onNext(request);
     stream.onCompleted();
@@ -129,8 +147,5 @@ public class GrpcClientChannelSubscriptions {
     } catch (InterruptedException e) {
       logger.info("{} InterruptedException latch.await ",ne, e.getMessage());
     }
-
   }
-
-
 }

@@ -69,7 +69,9 @@ public class GrpcClientTester {
       GrpcClientChannelSubscriptions grpcClient = entry.getValue();
       SubscriptionList subscriptionList = getSubscriptionListForTest();
       try{ grpcClient.cancelStreamForSubscriptionList(subscriptionList); }
-      catch (Exception e ){ logger.error("Failed to cancelStreaming {}",e.getMessage());}
+      catch (Exception e ) {
+        logger.error("Failed to cancelStreaming {}",e.getMessage());
+      }
     }
   }
 
