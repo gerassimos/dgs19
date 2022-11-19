@@ -1,0 +1,23 @@
+subscription {
+  path {
+    origin: "openconfig"
+    elem {
+      name: "ptp"
+    }
+    elem {
+      name: "instance-list"
+    }
+    elem {
+      name: "1"
+    }
+    elem {
+      name: "current-ds"
+    }
+    elem {
+      name: "offset-from-master"
+    }
+    target: "ssync_OFM"
+  }
+  mode: SAMPLE
+  sample_interval: 5000000000
+}
