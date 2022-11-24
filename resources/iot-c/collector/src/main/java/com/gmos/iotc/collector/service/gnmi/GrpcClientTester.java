@@ -162,11 +162,11 @@ public class GrpcClientTester {
 
   private List<String> getAllNEs(){
     List<String> result = new ArrayList<String>();
-    result.add("192.168.56.102:20830");
+//    result.add("192.168.56.102:20830");
 //    result.add("192.168.56.105:20830");
 //    result.add("192.168.56.106:20830");
-//    result.add("localhost:4567");
-//    result.add("localhost:4568");
+    result.add("localhost:4567");
+    result.add("localhost:4568");
 //    result.add("localhost:4569");
     return result;
   }

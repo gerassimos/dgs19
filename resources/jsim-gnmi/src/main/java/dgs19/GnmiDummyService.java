@@ -17,8 +17,8 @@ import io.grpc.stub.StreamObserver;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -50,12 +50,24 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
     return new StreamObserver<SubscribeRequest>() {
       @Override
       public void onNext(SubscribeRequest request) {
-        Subscription subscription = request.getSubscribe().getSubscription(0);
+        Notification.Builder notificationBuilder = Notification.newBuilder();
+        List<Subscription> subscriptionList = request.getSubscribe().getSubscriptionList();
+        int dummyVal=101;
+        for(Subscription subscription : subscriptionList){
+          Update update = Update.newBuilder().setPath(subscription.getPath())
+                  .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val"+dummyVal).build())
+                  . build();
+          notificationBuilder.addUpdate(update);
+          dummyVal++;
+        }
+        Notification notification = notificationBuilder.build();
 
-        Update update = Update.newBuilder().setPath(subscription.getPath())
-                .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val").build())
-                . build();
-        Notification notification = Notification.newBuilder().addUpdate(update).build();
+//        Subscription subscription = request.getSubscribe().getSubscription(0);
+//
+//        Update update = Update.newBuilder().setPath(subscription.getPath())
+//                .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val").build())
+//                . build();
+//        Notification notification = Notification.newBuilder().addUpdate(update).build();
 
 
         SubscribeResponse response = SubscribeResponse.newBuilder()
