@@ -3,6 +3,7 @@ package com.gmos.iotc.collector.web;
 import com.gmos.iotc.collector.service.gnmi.GnmiPathBuilder;
 import com.gmos.iotc.collector.service.gnmi.GrpcClientTester;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
+import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,6 @@ public class GnmiTestRestController {
   public String gnmi(@PathVariable("action") String action) {
     logger.debug("gnmi action: {}", action);
     switch (action){
-      case "start":
-        grpcClientTester.startCollectionOfDataFromNEs();
-        break;
       case "status":
         grpcClientTester.getConnectionStatesFromAllGrpcClients();
         break;
@@ -50,9 +48,15 @@ public class GnmiTestRestController {
     return GnmiPathBuilder.buildExampleSubscriptionListDTO4OFM();
   }
 
+  @GetMapping("/gnmi/example/dto/subscription-operation")
+  public SubscriptionCfgDTO getExampleSubOperDTO(){
+    return GnmiPathBuilder.buildExampleSubscriptionOperationDTO4OFM();
+  }
+
   @PostMapping("/gnmi/example/dto/subscribe")
-  public String subscribe(@RequestBody SubscriptionListDTO SubscriptionListDTO){
-    logger.info("subscribe for {}" , SubscriptionListDTO.toString());
+  public String subscribe(@RequestBody SubscriptionCfgDTO subscriptionCfgDTO){
+    logger.info("subscribe for {}" , subscriptionCfgDTO.toString());
+    grpcClientTester.subscribe(subscriptionCfgDTO);
     return "done";
   }
 }
