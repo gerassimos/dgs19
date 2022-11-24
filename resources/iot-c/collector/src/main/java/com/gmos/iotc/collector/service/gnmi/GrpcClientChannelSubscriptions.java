@@ -5,6 +5,7 @@ import com.github.gnmi.proto.SubscribeResponse;
 import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.gNMIGrpc;
 import com.github.gnmi.proto.gNMIGrpc.gNMIStub;
+import com.gmos.iotc.common.gnmi.TargetDTO;
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -25,11 +26,13 @@ public class GrpcClientChannelSubscriptions {
   private Map<SubscriptionList, StreamObserver<SubscribeRequest> > streamMap;
   private gNMIStub stub;
   private ManagedChannel channel;
-  private String ne;
+  private final TargetDTO targetDTO;
+  private final String ne;
   private final Logger logger = LoggerFactory.getLogger(GrpcClientChannelSubscriptions.class);
 
-  public GrpcClientChannelSubscriptions(String ne) {
-    this.ne = ne;
+  public GrpcClientChannelSubscriptions(TargetDTO targetDTO) {
+    this.targetDTO = targetDTO;
+    this.ne = targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort();
     streamMap = new HashMap<>();
     createNewChannelAndStub();
     notifyWhenStateChanged();
@@ -67,11 +70,11 @@ public class GrpcClientChannelSubscriptions {
   }
 
   public void createNewChannelAndStub(){
-    logger.info("{} - Creating new ChannelAndStub", ne);
-    String[] parts = ne.split(":");
-    String ip = parts[0];
-    int port = Integer.parseInt(parts[1]) ;
-    this.channel = ManagedChannelBuilder.forAddress(ip, port).usePlaintext().build();
+    logger.info("{} - Creating new ChannelAndStub", targetDTO.getAddress());
+    this.channel = ManagedChannelBuilder.forAddress(
+            targetDTO.getAddress().getName(),
+            targetDTO.getAddress().getPort()).
+            usePlaintext().build();
     this.stub = gNMIGrpc.newStub(channel);
   }
 

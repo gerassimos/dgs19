@@ -6,6 +6,9 @@ import com.github.gnmi.proto.PathElem;
 import com.github.gnmi.proto.Subscription;
 import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
+import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
+import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
+import com.gmos.iotc.common.gnmi.TargetDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,15 +30,6 @@ public class GrpcClientTester {
     this.neToGrpcWorkerMap = new HashMap();
   }
 
-  public void startCollectionOfDataFromNEs(){
-    List<String> listNEs = getAllNEs();
-    for (String ne : listNEs){
-      GrpcClientChannelSubscriptions gnmiGrpcClientWorker = new GrpcClientChannelSubscriptions(ne);
-      neToGrpcWorkerMap.put(ne,gnmiGrpcClientWorker);
-      //TODO
-//      gnmiGrpcClientWorker.getDataOverGnmiSubscribeStream();
-    }
-  }
 
   public void getConnectionStatesFromAllGrpcClients() {
     for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
@@ -172,5 +166,22 @@ public class GrpcClientTester {
   }
 
 
-
+  public void subscribe(final SubscriptionCfgDTO subscriptionCfgDTO) {
+    List<TargetDTO> targetList = subscriptionCfgDTO.getTargetList();
+    Map<String, SubscriptionListDTO>  subscriptionMap = subscriptionCfgDTO.getSubscriptionMap();
+    for (Map.Entry<String, SubscriptionListDTO> entry : subscriptionMap.entrySet()){
+      //TODO store subName name in the worker
+      String subName = entry.getKey();
+      SubscriptionListDTO subscriptionListDTO = entry.getValue();
+      for (TargetDTO targetDTO: targetList){
+        //TODO move logic to handler
+        GrpcClientChannelSubscriptions grpcClientChannelSubscriptions =
+                new GrpcClientChannelSubscriptions(targetDTO);
+        neToGrpcWorkerMap.put(targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort(),
+                grpcClientChannelSubscriptions);
+        grpcClientChannelSubscriptions.
+                createStreamForSubscriptionList(GnmiPathBuilder.getSubscriptionList(subscriptionListDTO));
+      }
+    }
+  }
 }

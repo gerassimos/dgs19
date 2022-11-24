@@ -11,6 +11,8 @@ import com.gmos.iotc.common.gnmi.GnmiEnum;
 import com.gmos.iotc.common.gnmi.PathDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
+import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
+import com.gmos.iotc.common.gnmi.TargetDTO;
 import io.micrometer.core.instrument.util.StringUtils;
 
 import java.util.ArrayList;
@@ -121,6 +123,31 @@ public class GnmiPathBuilder {
     return result;
   }
 
+  private static List<TargetDTO> getTargetListForLocalSim() {
+    List<TargetDTO> result = new ArrayList<>();
+    TargetDTO targetDTO = new TargetDTO();
+    Map<String,String> meta = new HashMap<>();
+    meta.put("key1", "val1");
+    meta.put("key2", "val2");
+    targetDTO.setMetadata(meta);
+    targetDTO.getAddress().setName("localhost");
+    targetDTO.getAddress().setPort(4567);
+    result.add(targetDTO);
+    return result;
+  }
+
+  public static SubscriptionCfgDTO buildExampleSubscriptionOperationDTO4OFM() {
+    SubscriptionCfgDTO result = new SubscriptionCfgDTO();
+    SubscriptionListDTO subscriptionListDTO = buildExampleSubscriptionListDTO4OFM();
+    Map<String , SubscriptionListDTO> map = new HashMap<>();
+    map.put("sub-name-01", subscriptionListDTO);
+    result.setTargetList(getTargetListForLocalSim());
+    result.setSubscriptionMap(map);
+    return result;
+  }
+
+
+
   public static void main(String[] args) {
     //    name = "ssync_ClockClass"
     //    origin = "openconfig"
@@ -143,4 +170,6 @@ public class GnmiPathBuilder {
     System.out.println("subscriptionList DTO "+subListDTO4OFM.toString());
     System.out.println("subscriptionListProto "+subscriptionListProto);
   }
+
+
 }

@@ -50,17 +50,7 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
     return new StreamObserver<SubscribeRequest>() {
       @Override
       public void onNext(SubscribeRequest request) {
-        Notification.Builder notificationBuilder = Notification.newBuilder();
-        List<Subscription> subscriptionList = request.getSubscribe().getSubscriptionList();
-        int dummyVal=101;
-        for(Subscription subscription : subscriptionList){
-          Update update = Update.newBuilder().setPath(subscription.getPath())
-                  .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val"+dummyVal).build())
-                  . build();
-          notificationBuilder.addUpdate(update);
-          dummyVal++;
-        }
-        Notification notification = notificationBuilder.build();
+
 
 //        Subscription subscription = request.getSubscribe().getSubscription(0);
 //
@@ -70,12 +60,26 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
 //        Notification notification = Notification.newBuilder().addUpdate(update).build();
 
 
-        SubscribeResponse response = SubscribeResponse.newBuilder()
-                .mergeUpdate(notification)
-                .build();
+//        SubscribeResponse response = SubscribeResponse.newBuilder()
+//                .mergeUpdate(notification)
+//                .build();
         int count = 0;
         while (true){
           count++;
+          Notification.Builder notificationBuilder = Notification.newBuilder();
+          List<Subscription> subscriptionList = request.getSubscribe().getSubscriptionList();
+          int dummyVal=101;
+          for(Subscription subscription : subscriptionList){
+            Update update = Update.newBuilder().setPath(subscription.getPath())
+                    .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val: "+dummyVal +" count: "+count ).build())
+                    . build();
+            notificationBuilder.addUpdate(update);
+            dummyVal++;
+          }
+          Notification notification = notificationBuilder.build();
+          SubscribeResponse response = SubscribeResponse.newBuilder()
+                  .mergeUpdate(notification)
+                  .build();
           try {
             TimeUnit.SECONDS.sleep(3);
           } catch (InterruptedException e) {
