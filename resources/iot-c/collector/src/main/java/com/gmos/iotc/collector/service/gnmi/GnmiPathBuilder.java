@@ -83,7 +83,7 @@ public class GnmiPathBuilder {
     Subscription result;
     PathDTO pathDTO = subscriptionDTO.getPath();
     String gnmiPath = pathDTO.getPath();
-    int subscriptionMode = subscriptionDTO.getMode();
+    int subscriptionMode = subscriptionDTO.getSubscriptionMode().getNumber();
     long sampleInterval = subscriptionDTO.getSampleInterval(); //NanoSeconds
     String origin = pathDTO.getTarget();
     String target  = pathDTO.getTarget();
@@ -113,7 +113,7 @@ public class GnmiPathBuilder {
     pathDTO.setTarget("ssync_ClockClass");
     SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
     subscriptionDTO.setPath(pathDTO);
-    subscriptionDTO.setMode(2); //SubscriptionMode.SAMPLE = 2
+    subscriptionDTO.setSubscriptionMode(GnmiEnum.SubscriptionMode.SAMPLE);
     subscriptionDTO.setSampleInterval(5000000000l);
     subscriptionList.add(subscriptionDTO);
     result.setSubscriptionList(subscriptionList);

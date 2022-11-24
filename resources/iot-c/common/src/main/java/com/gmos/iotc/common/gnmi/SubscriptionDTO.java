@@ -3,12 +3,7 @@ package com.gmos.iotc.common.gnmi;
 public class SubscriptionDTO {
 
   private PathDTO path;
-  //  enum SubscriptionMode {
-  //    TARGET_DEFINED = 0;  // The target selects the relevant mode for each element.
-  //    ON_CHANGE      = 1;  // The target sends an update on element value change.
-  //    SAMPLE         = 2;  // The target samples values according to the interval.
-  //  }
-  private int mode;
+  private GnmiEnum.SubscriptionMode subscriptionMode;
   private long sampleInterval; //NanoSeconds
 
   public PathDTO getPath() {
@@ -19,12 +14,12 @@ public class SubscriptionDTO {
     this.path = path;
   }
 
-  public int getMode() {
-    return mode;
+  public GnmiEnum.SubscriptionMode getSubscriptionMode() {
+    return subscriptionMode;
   }
 
-  public void setMode(int mode) {
-    this.mode = mode;
+  public void setSubscriptionMode(GnmiEnum.SubscriptionMode subscriptionMode) {
+    this.subscriptionMode = subscriptionMode;
   }
 
   public long getSampleInterval() {
@@ -39,7 +34,7 @@ public class SubscriptionDTO {
   public String toString() {
     return "SubscriptionDTO{" +
             "path=" + path +
-            ", mode=" + mode +
+            ", subscriptionMode=" + subscriptionMode +
             ", sampleInterval=" + sampleInterval +
             '}';
   }
