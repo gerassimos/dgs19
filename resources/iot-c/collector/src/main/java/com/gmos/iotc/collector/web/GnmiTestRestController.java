@@ -53,7 +53,7 @@ public class GnmiTestRestController {
     return GnmiPathBuilder.buildExampleSubscriptionOperationDTO4OFM();
   }
 
-  @PostMapping("/gnmi/example/dto/subscribe")
+  @PostMapping("/gnmi/test/add/subscribe")
   public String subscribe(@RequestBody SubscriptionCfgDTO subscriptionCfgDTO){
     logger.info("subscribe for {}" , subscriptionCfgDTO.toString());
     grpcClientTester.subscribe(subscriptionCfgDTO);
