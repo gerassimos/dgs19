@@ -102,6 +102,8 @@ public class GnmiPathBuilder {
       Subscription subscription = getSubscriptionFromDTO(subscriptionDTO);
       subscriptionListBuilder.addSubscription(subscription);
     }
+    //TODO subscriptionListBuilder.setPrefix()
+    //TODO subscriptionListBuilder.setQos()
 
     return subscriptionListBuilder.build();
   }
