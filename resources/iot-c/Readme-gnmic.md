@@ -88,6 +88,30 @@
  - getStreamStatus(id)
 
 ---
+
+## Subscription - Table  
+ - path  /ptp/1/current/offsetfrommaster
+ - mode (SAMPLE, ON_CHANGE etc...)
+ - sample interval
+Maybe we do not need this table ???
+
+## SubscriptionRequest - Table
+ - name (user define unique)
+ - metadata-labels (subnet=sub1,region=reg1) ???
+ - list of Subscription(path list) ??? test this 
+ - encoding (JSON, PROTO, BYTES etc...)
+ - targetID (use the address <targetIP:PORT> as targetId) //Ask Ziv ???
+ - 
+
+## Target - Table
+ - id (incrementalID or <ip:port>) ???
+ - metadata-labels (subnet=sub1,region=reg1) ???
+ - name (ip address or DNS name)
+ - port (TCP port for the gRPC connections)
+ - credentials (username password)
+ - primary key from (ip,port) or (incrementalID) ???
+  
+---
 Questions for Ziv
  - metadata labels 
  - tables
