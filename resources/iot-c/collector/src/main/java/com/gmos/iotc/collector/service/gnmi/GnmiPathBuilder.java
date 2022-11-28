@@ -131,7 +131,7 @@ public class GnmiPathBuilder {
     Map<String,String> meta = new HashMap<>();
     meta.put("key1", "val1");
     meta.put("key2", "val2");
-    targetDTO.setMetadata(meta);
+    targetDTO.setTags(meta);
     targetDTO.getAddress().setName("localhost");
     targetDTO.getAddress().setPort(4567);
     result.add(targetDTO);
