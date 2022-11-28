@@ -7,6 +7,36 @@ public class TargetDTO {
   private Credential credential;
   private Map<String, String> tags;
 
-  //TODO add setter and getter and toString methods
+  public Address getAddress() {
+    return address;
+  }
 
+  public void setAddress(Address address) {
+    this.address = address;
+  }
+
+  public Credential getCredential() {
+    return credential;
+  }
+
+  public void setCredential(Credential credential) {
+    this.credential = credential;
+  }
+
+  public Map<String, String> getTags() {
+    return tags;
+  }
+
+  public void setTags(Map<String, String> tags) {
+    this.tags = tags;
+  }
+
+  @Override
+  public String toString() {
+    return "TargetDTO{" +
+            "address=" + address +
+            ", credential=" + credential +
+            ", tags=" + tags +
+            '}';
+  }
 }
