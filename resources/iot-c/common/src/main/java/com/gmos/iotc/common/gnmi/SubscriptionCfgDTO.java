@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SubscriptionCfgDTO {
-
+  //TODO delete
   private Map<String, SubscriptionListDTO> subscriptionMap;
   private List<TargetDTO> targetList;
 

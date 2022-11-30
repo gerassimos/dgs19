@@ -1,8 +1,10 @@
 ## SubscribeRestController
- - subscribe() - /gnmi/subscribe - SubscriptionCfgNewDTO
- - unsubscribe() - /gnmi/unsubscribe - SubscriptionCfgNewDTO
- - subscriptionStatus() - /gnmi/subscription-status
- - subscriptionStatistics() - /gnmi/subscription-statistics ???
+ - subscribe(SubscribeConfigureDTO) - /gnmi/subscribe
+ - subscriptionPerTarget(filter) - /gnmi/subscription/per-target 
+     - request (Filter.name, [List] Filter.TargetName)
+     - response (TargetName, TargetPort SubscriptionRequest.Name, status, last_update_time)
+ - subscriptionInfo(name) - /gnmi/subscription/info
+ - subscriptionPerTargetInfo(name) - /gnmi/subscription/per-target/info
 
 ## SubscribeTestRestController - (for dev only - to test GrpcClientHandler directly)
  - subscribe - /gnmi/test/subscribe
@@ -15,11 +17,11 @@
    - validate Subscription requests ???
    - store Subscription requests to db (status=RequestCreate)
    - send message to `subscribe-request-topic` (one message per SubscriptionRequest/target key=targetId) 
- - unsubscribe()
+ - unsubscribe(target)
     - validate Subscription requests
     - store Subscription requests to db (status=RequestCancel)
     - send messages `subscribe-request-topic` for unsubscribe
- - unsubscribeAll(target)
+ - unsubscribeAll(targets)
      - go over all the subscriptions and set status=RequestCancel
  - getSubscriptionStatus() - get subscription status from db - ???  what to return ???
  - updateSubscriptionStatus() get message from `subscribe-monitor-topic` -> update DB
@@ -93,53 +95,54 @@
 
 ## Subscription - Table
  - id (incremental)
- - id (path-mode)
- - SubscriptionRequestId (SubscriptionRequest.Name)
+ - SubscriptionRequest.Name (create foreign key)
  - path  /ptp/1/current/offsetfrommaster
  - mode (SAMPLE, ON_CHANGE etc...)
  - sample interval
 
 ## SubscriptionPerTarget - Table
- - id: <SubscriptionRequest.Name-targetID>
- - SubscriptionRequestId (SubscriptionRequest.Name)
- - name (user define unique)
- - tagsetId
- - list of Subscription(path list) ??? test this 
- - encoding (JSON, PROTO, BYTES etc...)
- - targetID (use the address <targetIP:PORT> as targetId) //Ask Ziv ???
+ - id: (incremental) PRIMARY-KEY
+ - SubscriptionRequest.name (user define unique)
+ - tag.id
+ - Target.id 
  - status
  - last_update_time 
  - service-host-name
+ - UNIQUE (SubscriptionRequest.name, Target.id) 
 
-## tag
- - id (incremental)
+## tag - Table
+ - id (incremental) PRIMARY-KEY
  - tagset (subnet=sub1,region=reg1)
  - tagrules (regex string) /ptp/1
+ - UNIQUE (tagset, tagrules)
 
 ## SubscriptionRequest - Table
+ - id (incremental) PRIMARY-KEY
  - name (user define unique)
  - encoding (JSON, PROTO, BYTES etc...)
+ - [SubscriptionList] - not an actual column - derived from the  Subscription Table
+ - UNIQUE (name)
 
 ## Target - Table
- - id (incrementalID or <ip:port>) ???
+ - id (incremental) PRIMARY-KEY
  - name (ip address or DNS name)
  - port (TCP port for the gRPC connections)
  - credentials (username password)
+ - UNIQUE (name, port)
 
-  
 ---
-Questions for Ziv
+## Questions for Ziv
  - metadata labels 
- - tables
  - processAllSubscriptionsForTTL 
 
 ## open points to discuss again 
- - validation
-   tags max lenght
-   SubscriptionMode
  - tags
+   tags max lenght
  - Who is updating the SubscriptionPerTarget.status 
    - SubscribeManager.unsubscribe()
    - SubscribeManager.updateSubscriptionStatus()
- - Cover tha case when we have 2 replicas and one goes down  
-  
+ - Cover tha case when we have 2 replicas and one goes down   
+
+## validation
+ - When you assign a SubscriptionRequest to target if the target already have another SubscriptionRequest 
+   containing at least one equal Subscription.path then should be rejected

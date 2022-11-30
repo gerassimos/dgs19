@@ -3,7 +3,7 @@ package com.gmos.iotc.common.gnmi;
 import java.util.List;
 import java.util.Map;
 
-public class SubscriptionCfgNewDTO {
+public class SubscribeConfigureDTO {
 
 //  private Map<String, SubscriptionListDTO> subscriptionMap;
   private String name;
