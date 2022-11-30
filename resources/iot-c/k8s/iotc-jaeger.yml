@@ -24,6 +24,7 @@ spec:
             - containerPort: 9411
             - containerPort: 16686
             - containerPort: 6831
+            - containerPort: 14250
 ---
 kind: Service
 apiVersion: v1
@@ -42,6 +43,13 @@ spec:
     - name: http-jaeger-sender
       protocol: TCP
       port: 14268
+    - name: http-otel-tcp # accept model.proto
+      protocol: TCP
+      port: 14250
+    - name: http-otel-udp # accept model.proto
+      protocol: UDP
+      port: 14250
+
 
 ---
 kind: Service
