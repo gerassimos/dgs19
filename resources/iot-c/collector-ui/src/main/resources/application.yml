@@ -50,3 +50,5 @@ grpc:
 iot-collector-ui:
   collector-host-name: ${COLLECTOR_HOST_NAME:localhost}
   collector-host-port: ${COLLECTOR_HOST_PORT:8092}
+  collectoratoc-host-name: ${COLLECTOR_HOST_NAME_A_TO_C:localhost}
+  collectoratoc-host-port: ${COLLECTOR_HOST_PORT_A_TO_C:8094}

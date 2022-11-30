@@ -198,3 +198,7 @@ logging:
  - The `start-jar.sh` added on each module to test locally the opentelemetry-javaagent.jar
  - The [collector] - `findByDeviceId()` method is updated to log all Headers (logHeaders)
  - The [collector-ui] - `getData()` method is updated to log all Headers (logHeaders)
+
+## collector-a-to-c
+ - acting as a proxy between collector-ui and collector for one endpoint
+ - Implemented to test tracing functionality when a request is passing through multiple services 

@@ -1,6 +1,6 @@
-package com.gmos.iotc.collectorui.service;
+package com.gmos.iotc.collectoratoc.service;
 
-import com.gmos.iotc.collectorui.config.IoTConfig;
+import com.gmos.iotc.collectoratoc.config.IoTConfig;
 import com.gmos.iotc.common.PerformanceDataDTO;
 import com.gmos.iotc.common.RestPath;
 import org.slf4j.Logger;
@@ -53,29 +53,6 @@ public class DataHdrl {
             .path(RestPath.DEVICE_PERFORMANCE).
             queryParam("deviceId", deviceId).
         build().toUriString();
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
-    ResponseEntity<List<PerformanceDataDTO>> response = restTemplate.exchange(
-            urlStr,
-            HttpMethod.GET,
-            null,
-            new ParameterizedTypeReference<List<PerformanceDataDTO>>(){});
-    List<PerformanceDataDTO> performanceDataDTOList = response.getBody();
-    return performanceDataDTOList;
-  }
-
-  public List<PerformanceDataDTO> getDataAtoC(long deviceId){
-    logger.info("getDataAtoC for deviceId: "+ deviceId);
-
-    String urlStr = UriComponentsBuilder.newInstance().
-            scheme("http")
-            .host(ioTConfig.getCollectoratocHostName() )
-            .port(ioTConfig.getCollectoratocHostPort())
-            .path(RestPath.DEVICE_PERFORMANCE_A_TO_C).
-            queryParam("deviceId", deviceId).
-            build().toUriString();
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);

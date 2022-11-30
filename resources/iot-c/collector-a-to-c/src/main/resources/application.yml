@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: iot-c-collector-a-to-c
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  level:
+    com.gmos.iotc: ${LOG_LEVEL:DEBUG}
+
+server:
+  port: ${TOMCAT_HTTP_PORT_V:8094}
+
+iot-collector-a-to-c:
+  collector-host-name: ${COLLECTOR_HOST_NAME:localhost}
+  collector-host-port: ${COLLECTOR_HOST_PORT:8092}
