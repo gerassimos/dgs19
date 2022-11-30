@@ -33,7 +33,8 @@ docker {
 	name "iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
 	tag 'tag1', "${dockerUsername}/iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
 	tag 'tag2', "anOtherRepository"
-	files bootJar.archiveFile.get()
+//	files bootJar.archiveFile.get()
+	files bootJar.archiveFile.get(), '../utils/otel/opentelemetry-javaagent.jar'
 	buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}", 'IOTC_TAG': "${version}"])
 }
 

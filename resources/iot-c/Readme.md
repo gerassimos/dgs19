@@ -60,8 +60,6 @@ docker-compose -f docker-compose-dev.yml up
    4. `JAEGER_HOST`: jaeger collector host name
    5. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
    6. `COLLECTOR_GRPC_PORT`: set the grpc port for the greeting service implemented in the collector module 
-   7. `GNMI_GRPC_HOST_NAME`:  the ip address of a grpc/gnmi network device (target) 
-   8. `GNMI_GRPC_PORT`:  the grpc port of a grpc/gnmi network device (target)
 
 ## TCP ports
  - TCP port 8092 is used from the **dgs19/iot-collector** service to expose the REST Endpoints.  
@@ -192,3 +190,11 @@ logging:
 ## H2 Database
  - The in memory `H2 Database` is configured for the `dev` spring boot profile
  - [console](http://localhost:8092/h2-console) 
+
+## open-telemetry
+ - The opentelemetry-javaagent has been added to the docker images
+ - The `Dockerfile` updated to copy the opentelemetry-javaagent.jar
+ - The `docker-compose-jaeger.yml` is updates to use opentelemetry-javaagent
+ - The `start-jar.sh` added on each module to test locally the opentelemetry-javaagent.jar
+ - The [collector] - `findByDeviceId()` method is updated to log all Headers (logHeaders)
+ - The [collector-ui] - `getData()` method is updated to log all Headers (logHeaders)

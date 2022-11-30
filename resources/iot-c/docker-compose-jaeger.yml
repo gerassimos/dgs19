@@ -20,25 +20,40 @@ services:
       - db-data:/var/lib/postgresql/data
 
   collector:
-    image: dgs19/iot-collector:0.0.2
+#    image: dgs19/iot-collector:0.0.2
+    image: iot-collector:latest
     networks:
       - iotc-db
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
+      JAVA_OPTS: "-javaagent:/opentelemetry-javaagent.jar"
       DB_HOST: postgres-db
       JAEGER_HOST_HTTP_URL: http://jaeger-all-in-one:14268/api/traces
-      JAEGER_SAMPLING_RATE: 1.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+      JAEGER_SAMPLING_RATE: 0.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+      OTEL_SERVICE_NAME: collector-otel-name
+      OTEL_METRICS_EXPORTER: none # explicitly disable since default is otlp
+      OTEL_TRACES_EXPORTER: jaeger # logging # jaeger
+      OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-all-in-one:14250
+      OTEL_PROPAGATORS: "tracecontext,baggage,b3multi"
 
   collector-ui:
-    image: dgs19/iot-collector-ui:0.0.2
+#    image: dgs19/iot-collector-ui:0.0.2
+    image: iot-collector-ui:latest
     networks:
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
+      JAVA_OPTS: "-javaagent:/opentelemetry-javaagent.jar"
       COLLECTOR_HOST_NAME: collector
       JAEGER_HOST_HTTP_URL: http://jaeger-all-in-one:14268/api/traces
-      JAEGER_SAMPLING_RATE: 1.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+      JAEGER_SAMPLING_RATE: 0.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
+      OTEL_SERVICE_NAME: collector-ui-otel-name
+      OTEL_METRICS_EXPORTER: none # explicitly disable since default is otlp
+      OTEL_TRACES_EXPORTER: jaeger # logging # jaeger
+      OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-all-in-one:14250
+      OTEL_PROPAGATORS: "tracecontext,baggage,b3multi"
+
     ports:
       - "8093:8093"
 
@@ -51,6 +66,7 @@ services:
       COLLECTOR_ZIPKIN_HOST_PORT: 9411
     ports:
       - "16686:16686" # Web UI
+      - "14250:14250"
 
 networks:
   iotc-db:

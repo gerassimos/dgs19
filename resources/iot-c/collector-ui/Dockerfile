@@ -15,6 +15,7 @@ LABEL jar.file="${JAR_FILE}"
 # this script will wait for postgres to accept connections
 # then will execute all arguments as a linux command
 # COPY wait-for-postgres.sh /wait-for-postgres.sh
+COPY opentelemetry-javaagent.jar opentelemetry-javaagent.jar
 
 COPY ${JAR_FILE} app.jar
 #ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
