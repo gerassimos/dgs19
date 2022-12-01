@@ -13,10 +13,10 @@ spec:
     metadata:
       labels:
         app: iot-collector
-        version: 0.0.3
+        version: latest
     spec:
       containers:
-        - image: dgs19/iot-collector:0.0.3
+        - image: dgs19/iot-collector:latest
           imagePullPolicy: Always
           name: iot-collector
           ports:

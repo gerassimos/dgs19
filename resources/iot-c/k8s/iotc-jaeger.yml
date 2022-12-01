@@ -64,4 +64,4 @@ spec:
     - name: http-web-ui
       port: 16686
       targetPort: 16686
-      nodePort: 30094
+      nodePort: 30997

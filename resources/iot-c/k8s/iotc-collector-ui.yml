@@ -13,10 +13,10 @@ spec:
     metadata:
       labels:
         app: iot-collector-ui
-        version: 0.0.3
+        version: latest
     spec:
       containers:
-        - image: dgs19/iot-collector-ui:0.0.3
+        - image: dgs19/iot-collector-ui:latest
           imagePullPolicy: Always
           name: iot-collector-ui
           ports:
@@ -28,6 +28,8 @@ spec:
               value: "-javaagent:/opentelemetry-javaagent.jar"
             - name: COLLECTOR_HOST_NAME
               value: "iot-collector"
+            - name: COLLECTOR_HOST_NAME_A_TO_C
+              value: "iot-collector-a-to-c"
             - name: JAEGER_HOST_HTTP_URL
              #value: "http://jaeger-all-in-one:14268/api/traces"
               value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
