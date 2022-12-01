@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-collector-a-to-c
+  labels:
+    app: iot-collector-a-to-c
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-collector-a-to-c
+  template:
+    metadata:
+      labels:
+        app: iot-collector-a-to-c
+        version: 0.0.3
+    spec:
+      containers:
+        - image: dgs19/iot-collector-a-to-c:0.0.3
+          imagePullPolicy: Always
+          name: iot-collector-a-to-c
+          ports:
+            - containerPort: 8097
+          env:
+            - name: LOG_LEVEL
+              value: "DEBUG"
+            - name: JAVA_OPTS
+              value: "-javaagent:/opentelemetry-javaagent.jar"
+            - name: COLLECTOR_HOST_NAME
+              value: "iot-collector"
+            - name: JAEGER_HOST_HTTP_URL
+             #value: "http://jaeger-all-in-one:14268/api/traces"
+              value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
+            - name: JAEGER_SAMPLING_RATE
+              value: "1.0"
+            - name: "OTEL_SERVICE_NAME"
+              value: "collector-a-to-c-otel-name"
+            - name: "OTEL_METRICS_EXPORTER"
+              value: "none"
+            - name: "OTEL_TRACES_EXPORTER"
+              value: "jaeger" # logging # jaeger
+            - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
+              #value: "http://jaeger-all-in-one:14250"
+              #value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
+              value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
+            - name: "OTEL_PROPAGATORS"
+              value: "tracecontext,baggage,b3multi"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-collector-a-to-c
+  labels:
+    app: iot-collector-a-to-c
+spec:
+  selector:
+    app: iot-collector-a-to-c
+  type: NodePort
+  ports:
+    - port: 8094
+      name: http
+      targetPort: 8094
+      nodePort: 30094
