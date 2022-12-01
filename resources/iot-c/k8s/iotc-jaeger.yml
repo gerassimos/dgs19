@@ -43,12 +43,10 @@ spec:
     - name: http-jaeger-sender
       protocol: TCP
       port: 14268
-    - name: http-otel-tcp # accept model.proto
+    - name: jaeger-collector-grpc
+      port: 14250
+      targetPort: 14250
       protocol: TCP
-      port: 14250
-    - name: http-otel-udp # accept model.proto
-      protocol: UDP
-      port: 14250
 
 
 ---

@@ -32,17 +32,16 @@ spec:
               #value: "http://jaeger-all-in-one:14268/api/traces"
               value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
             - name: JAEGER_SAMPLING_RATE
-              value: "1.0"
+              value: "0.0"
             - name: "OTEL_SERVICE_NAME"
               value: "collector-otel-name"
             - name: "OTEL_METRICS_EXPORTER"
               value: "none"
             - name: "OTEL_TRACES_EXPORTER"
-              value: "jaeger" # logging # jaeger
+              value: "jaeger" # logging # jaeger # none
             - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
-              #value: "http://jaeger-all-in-one:14250"
-              #value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
-              value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
+              value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
+              #value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
             - name: "OTEL_PROPAGATORS"
               value: "tracecontext,baggage,b3multi"
 
