@@ -26,6 +26,7 @@ spec:
               value: "DEBUG"
             - name: JAVA_OPTS
               value: "-javaagent:/opentelemetry-javaagent.jar"
+              #value: "" # use this to disable JAVA_OPTS
             - name: COLLECTOR_HOST_NAME
               value: "iot-collector"
             - name: COLLECTOR_HOST_NAME_A_TO_C
@@ -40,7 +41,7 @@ spec:
             - name: "OTEL_METRICS_EXPORTER"
               value: "none"
             - name: "OTEL_TRACES_EXPORTER"
-              value: "jaeger" # logging # jaeger # none
+              value: "none" # logging # jaeger # none
             - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
               value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
               #value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
