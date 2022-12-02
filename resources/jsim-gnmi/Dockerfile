@@ -1,4 +1,4 @@
-FROM openjdk:11 AS builder
+FROM openjdk:18 AS builder
 
 # - This application listens on TCP port 4567
 # - Inform Docker that the application inside the container listens on port 8090
