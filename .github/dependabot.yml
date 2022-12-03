@@ -10,6 +10,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "resources/jsim-gnmi/" # Location of package manifests
+    schedule:
+      interval: "daily"
+
 #  - package-ecosystem: "gradle"
 #      # path to build.gradle
 #      directory: "resources/iot-c/collector-a-to-c"
