@@ -32,13 +32,4 @@ jobs:
         cd resources/iot-c
         ./gradlew :collector-a-to-c:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
         ./gradlew :collector-ui:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
-
-  build-collector:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Build collector with Gradle
-        run: |
-          docker version
-          cd resources/iot-c
-          ./gradlew :collector:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
+        ./gradlew :collector:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
