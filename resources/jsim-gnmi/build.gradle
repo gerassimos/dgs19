@@ -11,11 +11,11 @@ repositories {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.21.10"
+        artifact = "com.google.protobuf:protoc:3.21.1"
     }
     plugins {
         grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.51.0'
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.48.0'
         }
     }
     generateProtoTasks {
@@ -40,13 +40,13 @@ jar {
 
 
 dependencies {
-    runtimeOnly 'io.grpc:grpc-netty-shaded:1.51.0'
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.48.0'
     implementation 'io.grpc:grpc-protobuf:1.48.0'
     implementation 'io.grpc:grpc-stub:1.48.0'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 sourceSets.main.java.srcDir new File(buildDir, 'generated/source')
