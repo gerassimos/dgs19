@@ -13,6 +13,6 @@ updates:
   - package-ecosystem: "gradle"
       # path to build.gradle
       #directory: "resources/iot-c/collector-a-to-c"
-      directory: "dgs19/resources/iot-c/collector-a-to-c"
+      directory: "/dgs19/resources/iot-c/collector-a-to-c"
       schedule:
         interval: "daily"
