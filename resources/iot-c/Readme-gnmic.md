@@ -112,9 +112,23 @@
 
 ## tag - Table
  - id (incremental) PRIMARY-KEY
- - tagset (subnet=sub1,region=reg1)
- - tagrules (regex string) /ptp/1
+ - tagset STRING NULLABLE TRUE
+ - tagrules STRING NULLABLE TRUE
  - UNIQUE (tagset, tagrules)
+
+## Example for tags:
+  prefix          = /ptp/instance-list/
+  subscribePath   = /ptp/instance-list/*
+  returnedPath    = /ptp/instance-list/1/current-ds/offset-from-master
+
+- tagset=subnet=sub1,region=reg1,service=serviceA
+  tagrules=  service=(1)(.*)  # This a regex to match:
+  - 1 a number  1
+  - 2 a string   
+  resultTag      = service=serviceA
+
+ - In this example the tags `subnet=sub1` and `region=reg1` will be added to the response message.
+ - In this example the tag `service=serviceA` will be added only if the path is matching the regex rule with the service key 
 
 ## SubscriptionRequest - Table
  - id (incremental) PRIMARY-KEY
@@ -146,3 +160,7 @@
 ## validation
  - When you assign a SubscriptionRequest to target if the target already have another SubscriptionRequest 
    containing at least one equal Subscription.path then should be rejected
+ - Add validation for the tags. The tags should not contain invalid characters
+   we can use as reference the kubernetes label valid characters
+   Example the `=` cannot be part of the key or value of the tag
+  
