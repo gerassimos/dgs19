@@ -84,6 +84,7 @@
  - streamMap Map<SubscriptionRequestId - Stream>
  - createNewChannelAndStub
  - createStream(SubscriptionRequest) -> will send SubscribeResponse to `pm-data-topic` 
+   TODO add tags to the response
  - cancelStream(SubscriptionRequest)
  - isTargetConnected() - based on channel connected state
  - getStreamStatusAll()
