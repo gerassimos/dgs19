@@ -1,4 +1,4 @@
-package com.gmos.iotc.collector.service.gnmi;
+package com.gmos.iotc.collector.service.gnmi.worker;
 
 import com.github.gnmi.proto.Encoding;
 import com.github.gnmi.proto.Path;
@@ -8,10 +8,10 @@ import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
 import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
-import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
 import com.gmos.iotc.common.gnmi.TargetDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,11 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 // NOTE
-//
+// ONLY FOR DEV
+@ConditionalOnExpression("${iot-collector.dev-mode-enabled:true}")
 @Component
 public class GrpcClientTester {
 
-  private Map<String, GrpcClientChannelSubscriptions> neToGrpcWorkerMap;
+  private Map<String, SubscribeGrpcClient> neToGrpcWorkerMap;
   private final Logger logger = LoggerFactory.getLogger(GrpcClientTester.class);
 
   public GrpcClientTester() {
@@ -33,11 +34,11 @@ public class GrpcClientTester {
 
 
   public void getConnectionStatesFromAllGrpcClients() {
-    for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
+    for (Map.Entry<String, SubscribeGrpcClient> entry : neToGrpcWorkerMap.entrySet()){
       String ne = entry.getKey();
-      GrpcClientChannelSubscriptions grpcClientWorker = entry.getValue();
+      SubscribeGrpcClient grpcClientWorker = entry.getValue();
 
-      boolean isConnected = grpcClientWorker.isConnected();
+      boolean isConnected = grpcClientWorker.isTargetConnected();
       if (isConnected){
 //        logger.info("{} is connected", ne);
       }else {
@@ -49,21 +50,21 @@ public class GrpcClientTester {
   }
 
   public void addSubscription(){
-    for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
+    for (Map.Entry<String, SubscribeGrpcClient> entry : neToGrpcWorkerMap.entrySet()){
       String ne = entry.getKey();
-      GrpcClientChannelSubscriptions grpcClient = entry.getValue();
+      SubscribeGrpcClient grpcClient = entry.getValue();
       SubscriptionList list = getSubscriptionListForTest();
-      try{ grpcClient.createStreamForSubscriptionList(list); }
+      try{ grpcClient.createStream(list); }
       catch (Exception e ){ logger.error("Failed to add subscription {}",e.getMessage());}
     }
   }
 
   public void cancelStreaming(){
-    for (Map.Entry<String, GrpcClientChannelSubscriptions> entry : neToGrpcWorkerMap.entrySet()){
+    for (Map.Entry<String, SubscribeGrpcClient> entry : neToGrpcWorkerMap.entrySet()){
       String ne = entry.getKey();
-      GrpcClientChannelSubscriptions grpcClient = entry.getValue();
+      SubscribeGrpcClient grpcClient = entry.getValue();
       SubscriptionList subscriptionList = getSubscriptionListForTest();
-      try{ grpcClient.cancelStreamForSubscriptionList(subscriptionList); }
+      try{ grpcClient.cancelStream(subscriptionList); }
       catch (Exception e ) {
         logger.error("Failed to cancelStreaming {}",e.getMessage());
       }
@@ -173,12 +174,12 @@ public class GrpcClientTester {
       SubscriptionListDTO subscriptionListDTO = subscribeConfigureDTO.getSubscriptionListDTO();
       for (TargetDTO targetDTO: targetList){
         //TODO move logic to worker
-        GrpcClientChannelSubscriptions grpcClientChannelSubscriptions =
-                new GrpcClientChannelSubscriptions(targetDTO);
+        SubscribeGrpcClient grpcClientChannelSubscriptions =
+                new SubscribeGrpcClient(targetDTO);
         neToGrpcWorkerMap.put(targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort(),
                 grpcClientChannelSubscriptions);
         grpcClientChannelSubscriptions.
-                createStreamForSubscriptionList(GnmiPathBuilder.getSubscriptionList(subscriptionListDTO));
+                createStream(GnmiPathBuilder.getSubscriptionList(subscriptionListDTO));
       }
   }
 }

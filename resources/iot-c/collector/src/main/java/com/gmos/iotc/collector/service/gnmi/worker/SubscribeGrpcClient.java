@@ -1,4 +1,4 @@
-package com.gmos.iotc.collector.service.gnmi;
+package com.gmos.iotc.collector.service.gnmi.worker;
 
 import com.github.gnmi.proto.SubscribeRequest;
 import com.github.gnmi.proto.SubscribeResponse;
@@ -21,24 +21,24 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class GrpcClientChannelSubscriptions {
+public class SubscribeGrpcClient {
 
   private Map<SubscriptionList, StreamObserver<SubscribeRequest> > streamMap;
   private gNMIStub stub;
   private ManagedChannel channel;
   private final TargetDTO targetDTO;
   private final String ne;
-  private final Logger logger = LoggerFactory.getLogger(GrpcClientChannelSubscriptions.class);
+  private final Logger logger = LoggerFactory.getLogger(SubscribeGrpcClient.class);
 
-  public GrpcClientChannelSubscriptions(TargetDTO targetDTO) {
+  public SubscribeGrpcClient(TargetDTO targetDTO) {
     this.targetDTO = targetDTO;
     this.ne = targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort();
     streamMap = new HashMap<>();
     createNewChannelAndStub();
-    notifyWhenStateChanged();
+    notifyTargetStateChanged();
   }
 
-  public boolean isConnected(){
+  public boolean isTargetConnected(){
     boolean result = false;
     ConnectivityState state = channel.getState(false);
     logger.debug("{} ConnectivityState {}", ne, state.toString());
@@ -52,11 +52,11 @@ public class GrpcClientChannelSubscriptions {
     channel.shutdown();
     createNewChannelAndStub();
     for (SubscriptionList subscriptionList : streamMap.keySet()){
-      createStreamForSubscriptionList(subscriptionList);
+      createStream(subscriptionList);
     }
   }
 
-  private void notifyWhenStateChanged(){
+  private void notifyTargetStateChanged(){
     //https://github.com/grpc/grpc-java/issues/3763
     Runnable notify = new Runnable() {
       @Override public void run() {
@@ -78,7 +78,7 @@ public class GrpcClientChannelSubscriptions {
     this.stub = gNMIGrpc.newStub(channel);
   }
 
-  public void cancelStreamForSubscriptionList(SubscriptionList subscriptionList){
+  public void cancelStream(SubscriptionList subscriptionList){
     StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionList);
 
     ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
@@ -90,7 +90,7 @@ public class GrpcClientChannelSubscriptions {
     streamMap.remove(subscriptionList);
   }
 
-  public void createStreamForSubscriptionList(SubscriptionList subscriptionList){
+  public void createStream(SubscriptionList subscriptionList){
     logger.info("{} - addSubscription()",ne);
     // Latch is needed otherwise onNext is never reached
     CountDownLatch latch = new CountDownLatch(1);
@@ -100,7 +100,6 @@ public class GrpcClientChannelSubscriptions {
         try {
           logger.debug("{} - onNext() - ResponseCase {}", ne, response.getResponseCase());
           //TODO
-          // Review with Ziv,
           // parse the response if needed and send to kafka
           // what is the best approach to parse the response
           // (handle multiple values that could come with the use of * in the path request)

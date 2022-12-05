@@ -82,21 +82,17 @@
    
 ## SubscribeGrpcClient
  - streamMap Map<SubscriptionRequestId - Stream>
+ - createNewChannelAndStub
  - createStream(SubscriptionRequest) -> will send SubscribeResponse to `pm-data-topic` 
  - cancelStream(SubscriptionRequest)
  - isTargetConnected() - based on channel connected state
  - getStreamStatusAll()
  - getStreamStatus(id)
- - notifyTargetStateChanged() ??
- - notifyStreamStateChanged() ??
-## GrpcClientChannelSubscriptions -> SubscribeGrpcClient
- - createNewChannelAndStub
- - createStreamForSubscriptionList -> createStream(SubscriptionRequest)
- - cancelStreamForSubscriptionList -> cancelStream(SubscriptionRequest)
- - isConnected -> isTargetConnected
+ - notifyTargetStateChanged() ?
+ - notifyStreamStateChanged() ?
  - disconnectTarget() - needed in case of rebalance
  - notifyWhenStateChanged (ManagedChannel) -> notifyTargetStateChanged
- - reConnectReStartDataCollection -> reConnectReCreateStreamsForAll
+ - reConnectReStartDataCollection ?
  - getStreamStatusAll()
  - getStreamStatus(id)
 

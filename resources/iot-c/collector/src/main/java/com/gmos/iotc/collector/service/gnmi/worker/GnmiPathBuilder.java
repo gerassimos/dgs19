@@ -1,4 +1,4 @@
-package com.gmos.iotc.collector.service.gnmi;
+package com.gmos.iotc.collector.service.gnmi.worker;
 
 
 import com.github.gnmi.proto.Encoding;

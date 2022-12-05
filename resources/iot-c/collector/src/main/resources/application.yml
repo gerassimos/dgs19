@@ -52,4 +52,5 @@ opentracing:
     log-spans: ${JAEGER_LOG_SPANS:true}
 
 iot-collector:
+  dev-mode-enabled: ${DEV_MODE_ENABLED:false}
   collector-scheduler-enabled: ${COLLECTOR_SCHEDULER_ENABLED:true}
