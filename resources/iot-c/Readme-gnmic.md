@@ -1,5 +1,7 @@
-## SubscribeRestController
+## SubscribeRestController (SubscribeAction)
  - subscribe(SubscribeConfigureDTO) - /gnmi/subscribe
+
+## SubscribeRestController (status)
  - subscriptionPerTarget(filter) - /gnmi/subscription/per-target 
      - request (Filter.name, [List] Filter.TargetName)
      - response (TargetName, TargetPort SubscriptionRequest.Name, status, last_update_time)
@@ -13,26 +15,27 @@
  - subscriptionStatistics - /gnmi/test/subscription-statistics ???
 
 ## SubscribeManager
- - subscribe() 
-   - validate Subscription requests ???
-   - store Subscription requests to db (status=RequestCreate)
-   - send message to `subscribe-request-topic` (one message per SubscriptionRequest/target key=targetId) 
- - unsubscribe(target)
-    - validate Subscription requests
-    - store Subscription requests to db (status=RequestCancel)
-    - send messages `subscribe-request-topic` for unsubscribe
- - unsubscribeAll(targets)
-     - go over all the subscriptions and set status=RequestCancel
- - getSubscriptionStatus() - get subscription status from db - ???  what to return ???
- - updateSubscriptionStatus() get message from `subscribe-monitor-topic` -> update DB
+ - subscribe(`SubscribeConfigureDTO.SubscribeAction=subscribe`) 
+   - validate [SubscriptionRequest validation](###subscriptionRequest-validation)
+   - store Subscription requests to db 
+   - set status `status=RequestCreate`
+   - loop over the targets and send message to `subscribe-request-topic` 
+     one message per target key=targetId=<ip>:<port>
+ - subscribe(`SubscribeConfigureDTO.SubscribeAction=unsubscribe`)
+   - validate (check that exist)
+   - loop over the targets send message to `subscribe-request-topic`
+     one message per target key=targetId=<ip>:<port> 
+ - subscribe(`SubscribeConfigureDTO.SubscribeAction=unsubscribeAll`)
+   - validate (check that exist)
+   - loop over the targets 
+     find all subscriptions belonging to the target 
+     send message to `subscribe-request-topic` one message per target key=targetId=<ip>:<port>
+
  - deleteAllSubscriptionsAndScheduleRecreation()
    - executed on startup
    - send message to `all` services `topic-???` to execute disconnectAndDeleteClientAll
    - set status to Recreate
- - processAllSubscriptionsForRecreate()
-   - executed via cron scheduler
-   - executed with lock on sub 
-   - executed subscribe() for all Subscriptions in Recreate status
+
  - processAllSubscriptionsForTTL()
    - executed via cron scheduler
    - executed with lock
@@ -42,6 +45,10 @@
      The TTL = schedule period + safety margin 10%
      Ask Ziv ??? 
      Could be that we can avoid this if we can relay on the stubError  
+
+## SubscribeMonitorUpdater
+ - get message from `subscribe-monitor-topic` -> update status in DB
+   This is the only component that is allowed to update the `status` in DB
 
 ## SubscriptionStatus - enum
  - RequestCreate  
@@ -56,20 +63,22 @@
 
 ## SubscribeGrpcClientHandler
  - clientMap Map<tarhetId - SubscribeGrpcClient>
+ - partitionToTargetsMap<partitioId - TargetList>
  - will handle message from listener of the `subscribe-request-topic` topic
- - subscribe(SubscriptionCfgDTO.SingleTarget) 
+ - subscribe(SubscribeConfigureDTO.SingleTarget) 
    - ignore if already exist
    - create chanel if is the first Subscription of the target 
    - create Subscription
    - send Subscription state change Alive(connected and streaming)
  - unsubscribe(SubscriptionCfgDTO.SingleTarget)
  - disconnectAndDeleteClient()
- - disconnectAndDeleteClientAll()
  - getStreamStatusAllTargets() 
-   - get Stream Status from tha clients and send message to subscribe-monitor-topic
+   - get Stream Status from tha clients and send message to `subscribe-monitor-topic`
    - executed via cron scheduler
  - notifyTargetStateChangedAsync() 
  - notifyStreamStateChangedAsync()  
+ - rebalanceClients()
+   Detect Kafka Partition Rebalancing and delete all clients for unassign partitions  
    
 ## SubscribeGrpcClient
  - streamMap Map<SubscriptionRequestId - Stream>
@@ -158,6 +167,7 @@
  - Cover tha case when we have 2 replicas and one goes down   
 
 ## validation
+### SubscriptionRequest validation 
  - When you assign a SubscriptionRequest to target if the target already have another SubscriptionRequest 
    containing at least one equal Subscription.path then should be rejected
  - Add validation for the tags. The tags should not contain invalid characters

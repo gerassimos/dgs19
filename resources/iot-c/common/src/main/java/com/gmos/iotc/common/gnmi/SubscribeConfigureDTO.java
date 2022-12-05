@@ -9,8 +9,11 @@ public class SubscribeConfigureDTO {
   private String name;
   private SubscriptionListDTO SubscriptionListDTO;
   private List<TargetDTO> targetList;
-  private Map<String, String> globalTags;
-  //TODO private enum SubscribeAction; subscribe unsubscribe unsubscribeAll
+  private Map<String, String> tags;
+  //TODO private enum SubscribeAction;
+  // subscribe
+  // unsubscribe
+  // unsubscribeAll (=> all the subscriptions of the specified targets)
 
 
 
