@@ -61,7 +61,7 @@
  - SubscribeError  need to schedule a restart/recreate of the Subscription request
  - TargetCommunicationFailure ??? -> need to wait until the target is alive again
 
-## SubscribeGrpcClientsWorker
+## SubscribeGrpcClientWorker
  - clientMap Map<tarhetId - SubscribeGrpcClient>
  - partitionToTargetsMap<partitioId - TargetList>
  - will handle message from listener of the `subscribe-request-topic` topic

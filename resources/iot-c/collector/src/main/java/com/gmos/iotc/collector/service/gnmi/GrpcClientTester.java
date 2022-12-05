@@ -6,6 +6,7 @@ import com.github.gnmi.proto.PathElem;
 import com.github.gnmi.proto.Subscription;
 import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
+import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
 import com.gmos.iotc.common.gnmi.TargetDTO;
@@ -166,15 +167,12 @@ public class GrpcClientTester {
   }
 
 
-  public void subscribe(final SubscriptionCfgDTO subscriptionCfgDTO) {
-    List<TargetDTO> targetList = subscriptionCfgDTO.getTargetList();
-    Map<String, SubscriptionListDTO>  subscriptionMap = subscriptionCfgDTO.getSubscriptionMap();
-    for (Map.Entry<String, SubscriptionListDTO> entry : subscriptionMap.entrySet()){
+  public void subscribe(final SubscribeConfigureDTO subscribeConfigureDTO) {
+    List<TargetDTO> targetList = subscribeConfigureDTO.getTargetList();
       //TODO store subName name in the worker
-      String subName = entry.getKey();
-      SubscriptionListDTO subscriptionListDTO = entry.getValue();
+      SubscriptionListDTO subscriptionListDTO = subscribeConfigureDTO.getSubscriptionListDTO();
       for (TargetDTO targetDTO: targetList){
-        //TODO move logic to handler
+        //TODO move logic to worker
         GrpcClientChannelSubscriptions grpcClientChannelSubscriptions =
                 new GrpcClientChannelSubscriptions(targetDTO);
         neToGrpcWorkerMap.put(targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort(),
@@ -182,6 +180,5 @@ public class GrpcClientTester {
         grpcClientChannelSubscriptions.
                 createStreamForSubscriptionList(GnmiPathBuilder.getSubscriptionList(subscriptionListDTO));
       }
-    }
   }
 }

@@ -49,15 +49,15 @@ public class GnmiTestRestController {
     return GnmiPathBuilder.buildExampleSubscriptionListDTO4OFM();
   }
 
-  @GetMapping("/gnmi/example/dto/subscription-operation")
+  @GetMapping("/gnmi/example/dto/subscribe-configure")
   public SubscribeConfigureDTO getExampleSubCfgDTO(){
     return GnmiPathBuilder.buildExampleSubscriptionOperationDTO4OFM();
   }
 
   @PostMapping("/gnmi/test/add/subscribe")
-  public String subscribe(@RequestBody SubscriptionCfgDTO subscriptionCfgDTO){
-    logger.info("subscribe for {}" , subscriptionCfgDTO.toString());
-    grpcClientTester.subscribe(subscriptionCfgDTO);
+  public String subscribe(@RequestBody SubscribeConfigureDTO subscribeConfigureDTO){
+    logger.info("subscribe for {}" , subscribeConfigureDTO.toString());
+    grpcClientTester.subscribe(subscribeConfigureDTO);
     return "done";
   }
 }

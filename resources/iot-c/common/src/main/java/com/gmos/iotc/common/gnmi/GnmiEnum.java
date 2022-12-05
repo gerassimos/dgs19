@@ -3,11 +3,11 @@ package com.gmos.iotc.common.gnmi;
 public class GnmiEnum {
 
   public enum Encoding {
-    JSON(0),
-    BYTES(1),
-    PROTO(2),
-    JSON_IETF(3),
-    UNRECOGNIZED(-1);
+    json(0),
+    bytes(1),
+    proto(2),
+    json_ietf(3),
+    unrecognized(-1);
 
     public final int getNumber() { return value; }
     private final int value;
@@ -17,10 +17,10 @@ public class GnmiEnum {
   }
 
   public enum SubscriptionMode {
-    TARGET_DEFINED(0),
-    ON_CHANGE(1),
-    SAMPLE(2),
-    UNRECOGNIZED(-1);
+    targetDefined(0),
+    onChange(1),
+    sample(2),
+    unrecognized(-1);
     public final int getNumber() { return value; }
     private final int value;
     SubscriptionMode(int value) {
@@ -29,9 +29,9 @@ public class GnmiEnum {
   }
 
   public enum SubscribeAction {
-    SUBSCRIBE(0),
-    UNSUBSCRIBE(1),
-    UNSUBSCRIBE_ALL(2);
+    subscribe(0),
+    unsubscribe(1),
+    unsubscribeAll(2);
     public final int getNumber() { return value; }
     private final int value;
     SubscribeAction(int value) {
@@ -40,8 +40,8 @@ public class GnmiEnum {
   }
 
   public enum SubscriptionStatus {
-    RequestCreate(0),
-    RequestCancel(1);
+    requestCreate(0),
+    requestCancel(1);
     public final int getNumber() { return value; }
     private final int value;
     SubscriptionStatus(int value) {this.value = value;

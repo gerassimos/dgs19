@@ -7,6 +7,7 @@ import com.github.gnmi.proto.PathElem;
 import com.github.gnmi.proto.Subscription;
 import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
+import com.gmos.iotc.common.gnmi.Address;
 import com.gmos.iotc.common.gnmi.GnmiEnum;
 import com.gmos.iotc.common.gnmi.PathDTO;
 import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
@@ -102,8 +103,13 @@ public class GnmiPathBuilder {
       Subscription subscription = getSubscriptionFromDTO(subscriptionDTO);
       subscriptionListBuilder.addSubscription(subscription);
     }
-    //TODO subscriptionListBuilder.setPrefix()
-    //TODO subscriptionListBuilder.setQos()
+
+    String pathPrefix = subscriptionListDTO.getPathPrefix();
+    if ( pathPrefix!=null ){
+      subscriptionListBuilder.setPrefix(getPathBuilder(pathPrefix));
+    }
+
+    //TODO subscriptionListBuilder.setQos();
 
     return subscriptionListBuilder.build();
   }
@@ -117,23 +123,25 @@ public class GnmiPathBuilder {
     pathDTO.setTarget("ssync_ClockClass");
     SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
     subscriptionDTO.setPath(pathDTO);
-    subscriptionDTO.setSubscriptionMode(GnmiEnum.SubscriptionMode.SAMPLE);
+    subscriptionDTO.setSubscriptionMode(GnmiEnum.SubscriptionMode.sample);
     subscriptionDTO.setSampleInterval(5000000000l);
     subscriptionList.add(subscriptionDTO);
     result.setSubscriptionList(subscriptionList);
-    result.setEncoding(GnmiEnum.Encoding.JSON);
+    result.setEncoding(GnmiEnum.Encoding.json);
     return result;
   }
 
   private static List<TargetDTO> getTargetListForLocalSim() {
     List<TargetDTO> result = new ArrayList<>();
     TargetDTO targetDTO = new TargetDTO();
-    Map<String,String> meta = new HashMap<>();
-    meta.put("key1", "val1");
-    meta.put("key2", "val2");
-    targetDTO.setTags(meta);
-    targetDTO.getAddress().setName("localhost");
-    targetDTO.getAddress().setPort(4567);
+    Map<String,String> tags = new HashMap<>();
+    tags.put("key1", "val1");
+    tags.put("key2", "val2");
+    targetDTO.setTags(tags);
+    Address address = new Address();
+    address.setName("localhost");
+    address.setPort(4567);
+    targetDTO.setAddress(address);
     result.add(targetDTO);
     return result;
   }
@@ -141,10 +149,10 @@ public class GnmiPathBuilder {
   public static SubscribeConfigureDTO buildExampleSubscriptionOperationDTO4OFM() {
     SubscribeConfigureDTO result = new SubscribeConfigureDTO();
     SubscriptionListDTO subscriptionListDTO = buildExampleSubscriptionListDTO4OFM();
-    Map<String , SubscriptionListDTO> map = new HashMap<>();
-    map.put("sub-name-01", subscriptionListDTO);
+    result.setSubscriptionListDTO(subscriptionListDTO);
     result.setTargetList(getTargetListForLocalSim());
     result.setName("sub-name-01");
+    result.setSubscribeAction(GnmiEnum.SubscribeAction.subscribe);
     return result;
   }
 
