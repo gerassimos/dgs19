@@ -27,4 +27,24 @@ public class GnmiEnum {
       this.value = value;
     }
   }
+
+  public enum SubscribeAction {
+    SUBSCRIBE(0),
+    UNSUBSCRIBE(1),
+    UNSUBSCRIBE_ALL(2);
+    public final int getNumber() { return value; }
+    private final int value;
+    SubscribeAction(int value) {
+      this.value = value;
+    }
+  }
+
+  public enum SubscriptionStatus {
+    RequestCreate(0),
+    RequestCancel(1);
+    public final int getNumber() { return value; }
+    private final int value;
+    SubscriptionStatus(int value) {this.value = value;
+    }
+  }
 }

@@ -2,6 +2,7 @@ package com.gmos.iotc.collector.web;
 
 import com.gmos.iotc.collector.service.gnmi.GnmiPathBuilder;
 import com.gmos.iotc.collector.service.gnmi.GrpcClientTester;
+import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class GnmiTestRestController {
   }
 
   @GetMapping("/gnmi/example/dto/subscription-operation")
-  public SubscriptionCfgDTO getExampleSubOperDTO(){
+  public SubscribeConfigureDTO getExampleSubCfgDTO(){
     return GnmiPathBuilder.buildExampleSubscriptionOperationDTO4OFM();
   }
 

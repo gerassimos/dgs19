@@ -9,9 +9,9 @@ import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
 import com.gmos.iotc.common.gnmi.GnmiEnum;
 import com.gmos.iotc.common.gnmi.PathDTO;
+import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionDTO;
 import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
-import com.gmos.iotc.common.gnmi.SubscriptionCfgDTO;
 import com.gmos.iotc.common.gnmi.TargetDTO;
 import io.micrometer.core.instrument.util.StringUtils;
 
@@ -138,13 +138,13 @@ public class GnmiPathBuilder {
     return result;
   }
 
-  public static SubscriptionCfgDTO buildExampleSubscriptionOperationDTO4OFM() {
-    SubscriptionCfgDTO result = new SubscriptionCfgDTO();
+  public static SubscribeConfigureDTO buildExampleSubscriptionOperationDTO4OFM() {
+    SubscribeConfigureDTO result = new SubscribeConfigureDTO();
     SubscriptionListDTO subscriptionListDTO = buildExampleSubscriptionListDTO4OFM();
     Map<String , SubscriptionListDTO> map = new HashMap<>();
     map.put("sub-name-01", subscriptionListDTO);
     result.setTargetList(getTargetListForLocalSim());
-    result.setSubscriptionMap(map);
+    result.setName("sub-name-01");
     return result;
   }
 

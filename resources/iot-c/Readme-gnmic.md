@@ -18,27 +18,30 @@
  - subscribe(`SubscribeConfigureDTO.SubscribeAction=subscribe`) 
    - validate [SubscriptionRequest validation](###subscriptionRequest-validation)
    - store Subscription requests to db 
-   - set status `status=RequestCreate`
+   - set status `status=RequestCreate` 
+     This is tne only exception to update the status from a place other than SubscribeMonitorUpdater
    - loop over the targets and send message to `subscribe-request-topic` 
      one message per target key=targetId=<ip>:<port>
  - subscribe(`SubscribeConfigureDTO.SubscribeAction=unsubscribe`)
-   - validate (check that exist)
-   - loop over the targets send message to `subscribe-request-topic`
-     one message per target key=targetId=<ip>:<port> 
+   - validate (check that exist ) ???
+   - loop over the targets 
+     send message to `subscribe-monitor-topic` status=RequestCancel
+     We are waiting for the cancel to happen
+     In this case we ignore all other updates that we could receive 
+     send message to `subscribe-request-topic` 
+     one message per target key=targetId=<ip>:<port>
+
  - subscribe(`SubscribeConfigureDTO.SubscribeAction=unsubscribeAll`)
    - validate (check that exist)
-   - loop over the targets 
-     find all subscriptions belonging to the target 
-     send message to `subscribe-request-topic` one message per target key=targetId=<ip>:<port>
+   - loop over the targets
+     send message to `subscribe-monitor-topic`
+     send message to `subscribe-request-topic` status=RequestCancel
 
- - deleteAllSubscriptionsAndScheduleRecreation()
-   - executed on startup
-   - send message to `all` services `topic-???` to execute disconnectAndDeleteClientAll
-   - set status to Recreate
+ - onStartupReSubscribeAll()
 
  - processAllSubscriptionsForTTL()
    - executed via cron scheduler
-   - executed with lock
+   - executed with lock 
    - executed subscribe() for all Subscriptions of which:
      currentTime - isAliveTimeFromDB > TTL (time to live)
      The TTL is related to the schedule period of the getStreamStatusAllTargets()
@@ -55,13 +58,10 @@
  - RequestCancel
  - RequestCancelled (delete from DB)
  - Alive(connected and streaming)
- - StreamError ??? -> need to schedule a restart/recreate of the Subscription request  
- - TargetFailure ??? -> need to wait until the target is alive again
- - Recreate -> ??? Delete all clients and recreate new ones 
-                   Set this when the service is started/restarted 
-                   Needed for replica services to rebalance/redistribute the load 
+ - SubscribeError  need to schedule a restart/recreate of the Subscription request
+ - TargetCommunicationFailure ??? -> need to wait until the target is alive again
 
-## SubscribeGrpcClientHandler
+## SubscribeGrpcClientsWorker
  - clientMap Map<tarhetId - SubscribeGrpcClient>
  - partitionToTargetsMap<partitioId - TargetList>
  - will handle message from listener of the `subscribe-request-topic` topic
