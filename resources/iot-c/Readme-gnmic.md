@@ -67,7 +67,7 @@
  - will handle message from listener of the `subscribe-request-topic` topic
  - subscribe(SubscribeConfigureDTO.SingleTarget) 
    - ignore if already exist
-   - create chanel if is the first Subscription of the target 
+   - create channel if is the first Subscription of the target 
    - create Subscription
    - send Subscription state change Alive(connected and streaming)
  - unsubscribe(SubscriptionCfgDTO.SingleTarget)
@@ -92,10 +92,8 @@
  - notifyTargetStateChanged() ?
  - notifyStreamStateChanged() ?
  - disconnectTarget() - needed in case of rebalance
- - notifyWhenStateChanged (ManagedChannel) -> notifyTargetStateChanged
  - reConnectReStartDataCollection ?
- - getStreamStatusAll()
- - getStreamStatus(id)
+
 
 ---
 
