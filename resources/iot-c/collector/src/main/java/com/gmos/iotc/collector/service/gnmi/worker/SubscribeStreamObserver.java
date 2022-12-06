@@ -9,6 +9,7 @@ public class SubscribeStreamObserver implements StreamObserver<SubscribeResponse
 
   private final Logger logger = LoggerFactory.getLogger(SubscribeStreamObserver.class);
 
+
   public SubscribeStreamObserver() {
   }
 

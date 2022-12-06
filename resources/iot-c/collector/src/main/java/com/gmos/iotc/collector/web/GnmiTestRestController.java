@@ -31,12 +31,6 @@ public class GnmiTestRestController {
       case "status":
         grpcClientTester.getConnectionStatesFromAllGrpcClients();
         break;
-      case "add-subscription":
-        grpcClientTester.addSubscription();
-        break;
-      case "cancel-streaming":
-        grpcClientTester.cancelStreaming();
-        break;
       default:
         System.err.println("Action not supported");
     }

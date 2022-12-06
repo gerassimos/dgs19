@@ -55,7 +55,7 @@
 
 ## SubscriptionStatus - enum
  - RequestCreate  
- - RequestCancel
+ - RequestCancel (ignore all other updates)
  - RequestCancelled (delete from DB)
  - Alive(connected and streaming)
  - SubscribeError  need to schedule a restart/recreate of the Subscription request
@@ -170,4 +170,6 @@
  - Add validation for the tags. The tags should not contain invalid characters
    we can use as reference the kubernetes label valid characters
    Example the `=` cannot be part of the key or value of the tag
-  
+
+## TODO 
+ - Ask Ziv about the tag. It is confusing the have them in the TargetDTO

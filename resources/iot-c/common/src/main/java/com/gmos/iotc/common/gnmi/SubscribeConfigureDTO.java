@@ -8,6 +8,8 @@ public class SubscribeConfigureDTO {
   private String name;
   private SubscriptionListDTO SubscriptionListDTO;
   private List<TargetDTO> targetList;
+  //NOTE
+  // This is for global tags. Applied to all NEs
   private Map<String, String> tags;
   private GnmiEnum.SubscribeAction subscribeAction;
 

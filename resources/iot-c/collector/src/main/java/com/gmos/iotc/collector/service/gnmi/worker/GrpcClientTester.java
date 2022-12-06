@@ -49,27 +49,7 @@ public class GrpcClientTester {
     }
   }
 
-  public void addSubscription(){
-    for (Map.Entry<String, SubscribeGrpcClient> entry : neToGrpcWorkerMap.entrySet()){
-      String ne = entry.getKey();
-      SubscribeGrpcClient grpcClient = entry.getValue();
-      SubscriptionList list = getSubscriptionListForTest();
-      try{ grpcClient.createStream(list); }
-      catch (Exception e ){ logger.error("Failed to add subscription {}",e.getMessage());}
-    }
-  }
 
-  public void cancelStreaming(){
-    for (Map.Entry<String, SubscribeGrpcClient> entry : neToGrpcWorkerMap.entrySet()){
-      String ne = entry.getKey();
-      SubscribeGrpcClient grpcClient = entry.getValue();
-      SubscriptionList subscriptionList = getSubscriptionListForTest();
-      try{ grpcClient.cancelStream(subscriptionList); }
-      catch (Exception e ) {
-        logger.error("Failed to cancelStreaming {}",e.getMessage());
-      }
-    }
-  }
 
   private SubscriptionList getSubscriptionListForTest(){
     return SubscriptionList.newBuilder()
@@ -178,8 +158,20 @@ public class GrpcClientTester {
                 new SubscribeGrpcClient(targetDTO);
         neToGrpcWorkerMap.put(targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort(),
                 grpcClientChannelSubscriptions);
+        SubscribeConfigureDTO subscribeConfigureDTOPerTarget = new SubscribeConfigureDTO();
+
+        List<TargetDTO> singleTarget = new ArrayList<>(1);
+        singleTarget.add(targetDTO);
+
+        subscribeConfigureDTOPerTarget.setTargetList(singleTarget);
+        subscribeConfigureDTOPerTarget.setName(subscribeConfigureDTO.getName());
+        subscribeConfigureDTOPerTarget.setSubscribeAction(subscribeConfigureDTO.getSubscribeAction());
+        subscribeConfigureDTOPerTarget.setTags(subscribeConfigureDTO.getTags());
+        subscribeConfigureDTOPerTarget.setSubscriptionListDTO(subscribeConfigureDTO.getSubscriptionListDTO());
+
         grpcClientChannelSubscriptions.
-                createStream(GnmiPathBuilder.getSubscriptionList(subscriptionListDTO));
+                createStream(subscribeConfigureDTOPerTarget);
+
       }
   }
 }

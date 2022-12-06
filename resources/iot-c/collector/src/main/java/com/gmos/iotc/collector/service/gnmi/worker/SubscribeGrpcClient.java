@@ -5,6 +5,7 @@ import com.github.gnmi.proto.SubscribeResponse;
 import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.gNMIGrpc;
 import com.github.gnmi.proto.gNMIGrpc.gNMIStub;
+import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
 import com.gmos.iotc.common.gnmi.TargetDTO;
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
@@ -23,7 +24,9 @@ import java.util.concurrent.TimeUnit;
 
 public class SubscribeGrpcClient {
 
-  private Map<SubscriptionList, StreamObserver<SubscribeRequest> > streamMap;
+  private Map<String, StreamObserver<SubscribeRequest> > streamMap;
+  private Map<String, SubscribeConfigureDTO> subscriptionMap;
+
   private gNMIStub stub;
   private ManagedChannel channel;
   private final TargetDTO targetDTO;
@@ -33,7 +36,8 @@ public class SubscribeGrpcClient {
   public SubscribeGrpcClient(TargetDTO targetDTO) {
     this.targetDTO = targetDTO;
     this.ne = targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort();
-    streamMap = new HashMap<>();
+    this.streamMap = new HashMap<>();
+    this.subscriptionMap = new HashMap<>();
     createNewChannelAndStub();
     notifyTargetStateChanged();
   }
@@ -51,8 +55,8 @@ public class SubscribeGrpcClient {
   public void reConnectReStartDataCollection(){
     channel.shutdown();
     createNewChannelAndStub();
-    for (SubscriptionList subscriptionList : streamMap.keySet()){
-      createStream(subscriptionList);
+    for (SubscribeConfigureDTO subscribeConfigureDTO : subscriptionMap.values()){
+      createStream(subscribeConfigureDTO);
     }
   }
 
@@ -78,19 +82,19 @@ public class SubscribeGrpcClient {
     this.stub = gNMIGrpc.newStub(channel);
   }
 
-  public void cancelStream(SubscriptionList subscriptionList){
-    StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionList);
+  public void cancelStream(String subscriptionRequestName){
+    StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionRequestName);
 
     ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
     StatusRuntimeException e = Status.CANCELLED
-            .withDescription("Received cancellation request for  " + subscriptionList.toString())
+            .withDescription("Received cancellation request for  " + subscriptionRequestName)
             .augmentDescription("Augment Description Not provided yet")
             .asRuntimeException();
-    clientCallStreamObserver.cancel("Received cancellation request for  " + subscriptionList.toString(), e);
-    streamMap.remove(subscriptionList);
+    clientCallStreamObserver.cancel("Received cancellation request for  " + subscriptionRequestName, e);
+    streamMap.remove(subscriptionRequestName);
   }
 
-  public void createStream(SubscriptionList subscriptionList){
+  public void createStream(SubscribeConfigureDTO subscribeConfigureDTO){
     logger.info("{} - addSubscription()",ne);
     // Latch is needed otherwise onNext is never reached
     CountDownLatch latch = new CountDownLatch(1);
@@ -98,7 +102,15 @@ public class SubscribeGrpcClient {
       @Override
       public void onNext(SubscribeResponse response) {
         try {
-          logger.debug("{} - onNext() - ResponseCase {}", ne, response.getResponseCase());
+          Map<String, String> totalTagsToApply = new HashMap<>();
+          Map<String, String> globalTags = subscribeConfigureDTO.getTags();
+          // NOTE
+          // At this point is safe to assume that subscribeConfigureDTO.targetList will always contain on target
+          Map<String, String> targetLevelTagsPerSubscribeRequest = subscribeConfigureDTO.getTargetList().get(0).getTags();
+          if ( globalTags != null ){ totalTagsToApply.putAll( globalTags ); }
+          if ( targetLevelTagsPerSubscribeRequest != null) { totalTagsToApply.putAll( targetLevelTagsPerSubscribeRequest ); }
+
+          logger.debug("{} - onNext() - ResponseCase {} tags: {}" , ne, response.getResponseCase() , totalTagsToApply);
           //TODO
           // parse the response if needed and send to kafka
           // what is the best approach to parse the response
@@ -136,11 +148,10 @@ public class SubscribeGrpcClient {
     }
     );
 
-    //TODO
-    // Review with Ziv,
-    // We use as key the SubscriptionList is it ok ?? dd
-    // Should we use an other key ?
-    streamMap.put(subscriptionList, stream);
+    String subscriptionRequestName = subscribeConfigureDTO.getName();
+    streamMap.put(subscriptionRequestName, stream);
+    subscriptionMap.put(subscriptionRequestName, subscribeConfigureDTO);
+    SubscriptionList subscriptionList = GnmiPathBuilder.getSubscriptionList(subscribeConfigureDTO.getSubscriptionListDTO()) ;
     SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(subscriptionList).build();
     stream.onNext(request);
     stream.onCompleted();

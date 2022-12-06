@@ -5,6 +5,9 @@ import java.util.Map;
 public class TargetDTO {
   private Address address;
   private Credential credential;
+  // NOTE:
+  // The tags at this point are not at target level
+  // They are at subscription level per target
   private Map<String, String> tags;
 
   public Address getAddress() {
