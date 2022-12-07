@@ -150,6 +150,7 @@ public class GrpcClientTester {
   }
 
   private void unsubscribe(SubscribeConfigureDTO subscribeConfigureDTO) {
+    String name = subscribeConfigureDTO.getName();
     List<TargetDTO> targetList = subscribeConfigureDTO.getTargetList();
     for (TargetDTO targetDTO: targetList){
       String targetAddressStr =  targetDTO.getAddress().toConnectionString();
@@ -158,7 +159,12 @@ public class GrpcClientTester {
         logger.warn("{} - Subscribe Grpc Client not found", targetAddressStr);
         return;
       }
-      subscribeGrpcClient.cancelStream(subscribeConfigureDTO.getName());
+
+      if ( !subscribeGrpcClient.streamExist(name) ) {
+        logger.warn("{} - {} Stream not found", targetAddressStr ,name);
+        return;
+      }
+      subscribeGrpcClient.cancelStream(name);
       if ( !subscribeGrpcClient.isAnyStream() ) {
         //Here if there is not any stream in progress
         logger.info("{} - No other streams exist - disconnect and delete client", targetAddressStr);

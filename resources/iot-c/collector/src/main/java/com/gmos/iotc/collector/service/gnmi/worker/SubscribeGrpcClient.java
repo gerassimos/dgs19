@@ -85,11 +85,6 @@ public class SubscribeGrpcClient {
 
   public void cancelStream(String subscriptionRequestName){
     StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionRequestName);
-    if ( stream==null ) {
-      logger.warn("{} - {} Stream not found", ne ,subscriptionRequestName);
-      return;
-    }
-
     ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
     StatusRuntimeException e = Status.CANCELLED
             .withDescription("Received cancellation request for  " + subscriptionRequestName)
