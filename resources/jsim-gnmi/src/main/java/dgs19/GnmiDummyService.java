@@ -64,6 +64,7 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
 //                .mergeUpdate(notification)
 //                .build();
         int count = 0;
+        long sampleIntervalMilliSec = 3000;
         while (true){
           count++;
           Notification.Builder notificationBuilder = Notification.newBuilder();
@@ -73,6 +74,7 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
             Update update = Update.newBuilder().setPath(subscription.getPath())
                     .setVal(TypedValue.newBuilder().setAsciiVal(getHostname() + " test-dummy-val: "+dummyVal +" count: "+count ).build())
                     . build();
+            sampleIntervalMilliSec = subscription.getSampleInterval() / 1000000;
             notificationBuilder.addUpdate(update);
             dummyVal++;
           }
@@ -81,7 +83,7 @@ public class GnmiDummyService extends gNMIGrpc.gNMIImplBase {
                   .mergeUpdate(notification)
                   .build();
           try {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.MILLISECONDS.sleep(sampleIntervalMilliSec);
           } catch (InterruptedException e) {
             e.printStackTrace();
           }

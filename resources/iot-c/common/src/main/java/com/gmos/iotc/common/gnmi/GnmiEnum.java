@@ -29,22 +29,14 @@ public class GnmiEnum {
   }
 
   public enum SubscribeAction {
-    subscribe(0),
-    unsubscribe(1),
-    unsubscribeAll(2);
-    public final int getNumber() { return value; }
-    private final int value;
-    SubscribeAction(int value) {
-      this.value = value;
-    }
+    subscribe,
+    unsubscribe,
+    unsubscribeAll;
   }
 
   public enum SubscriptionStatus {
-    requestCreate(0),
-    requestCancel(1);
-    public final int getNumber() { return value; }
-    private final int value;
-    SubscriptionStatus(int value) {this.value = value;
-    }
+    requestCreate,
+    requestCancel;
   }
+
 }

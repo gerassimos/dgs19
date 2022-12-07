@@ -83,8 +83,9 @@
 ## SubscribeGrpcClient
  - streamMap Map<SubscriptionRequestId - Stream>
  - createNewChannelAndStub
- - createStream(SubscriptionRequest) -> will send SubscribeResponse to `pm-data-topic` 
-   TODO add tags to the response
+ - createStream(SubscriptionRequest) -> will  
+     - add tags to the response
+     - TODO send SubscribeResponse to `pm-data-topic`
  - cancelStream(SubscriptionRequest)
  - isTargetConnected() - based on channel connected state
  - getStreamStatusAll()

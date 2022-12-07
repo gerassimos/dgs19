@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 
 public class SubscribeGrpcClient {
 
-  private Map<String, StreamObserver<SubscribeRequest> > streamMap;
-  private Map<String, SubscribeConfigureDTO> subscriptionMap;
+  private final Map<String, StreamObserver<SubscribeRequest> > streamMap;
+  private final Map<String, SubscribeConfigureDTO> subscriptionMap;
 
   private gNMIStub stub;
   private ManagedChannel channel;
@@ -35,11 +35,12 @@ public class SubscribeGrpcClient {
 
   public SubscribeGrpcClient(TargetDTO targetDTO) {
     this.targetDTO = targetDTO;
-    this.ne = targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort();
+    this.ne = targetDTO.getAddress().toConnectionString();
     this.streamMap = new HashMap<>();
     this.subscriptionMap = new HashMap<>();
     createNewChannelAndStub();
     notifyTargetStateChanged();
+    logger.debug("{} - SubscribeGrpcClient created");
   }
 
   public boolean isTargetConnected(){
@@ -84,6 +85,10 @@ public class SubscribeGrpcClient {
 
   public void cancelStream(String subscriptionRequestName){
     StreamObserver<SubscribeRequest> stream = streamMap.get(subscriptionRequestName);
+    if ( stream==null ) {
+      logger.warn("{} - {} Stream not found", ne ,subscriptionRequestName);
+      return;
+    }
 
     ClientCallStreamObserver clientCallStreamObserver = (ClientCallStreamObserver)stream;
     StatusRuntimeException e = Status.CANCELLED
@@ -92,6 +97,7 @@ public class SubscribeGrpcClient {
             .asRuntimeException();
     clientCallStreamObserver.cancel("Received cancellation request for  " + subscriptionRequestName, e);
     streamMap.remove(subscriptionRequestName);
+    subscriptionMap.remove(subscriptionRequestName);
   }
 
   public void createStream(SubscribeConfigureDTO subscribeConfigureDTO){
@@ -155,10 +161,28 @@ public class SubscribeGrpcClient {
     SubscribeRequest request =SubscribeRequest.newBuilder().setSubscribe(subscriptionList).build();
     stream.onNext(request);
     stream.onCompleted();
+
     try {
       latch.await(3, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       logger.info("{} InterruptedException latch.await ",ne, e.getMessage());
     }
+  }
+
+  public void disconect() {
+    channel.shutdown();
+  }
+
+  public boolean isAnyStream() {
+    return streamMap.size() > 0;
+  }
+
+  public boolean streamExist(String name) {
+    return streamMap.get(name) !=null;
+  }
+
+  public void validateSubscriptionRequest(SubscribeConfigureDTO subscribeConfigureDTOPerTarget) {
+    //TODO
+    // check if there is any other Subscription with the same path
   }
 }

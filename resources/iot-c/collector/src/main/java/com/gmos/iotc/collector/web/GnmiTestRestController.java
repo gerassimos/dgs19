@@ -29,7 +29,7 @@ public class GnmiTestRestController {
     logger.debug("gnmi action: {}", action);
     switch (action){
       case "status":
-        grpcClientTester.getConnectionStatesFromAllGrpcClients();
+        //grpcClientTester.getConnectionStatesFromAllGrpcClients();
         break;
       default:
         System.err.println("Action not supported");
@@ -49,10 +49,11 @@ public class GnmiTestRestController {
     return GnmiPathBuilder.buildExampleSubscriptionOperationDTO4OFM();
   }
 
-  @PostMapping("/gnmi/test/add/subscribe")
+  ///gnmi/subscribe
+  @PostMapping("/gnmi/test/subscribe")
   public String subscribe(@RequestBody SubscribeConfigureDTO subscribeConfigureDTO){
-    logger.info("subscribe for {}" , subscribeConfigureDTO.toString());
-    grpcClientTester.subscribe(subscribeConfigureDTO);
+    logger.info("subscribeConfigure for {}" , subscribeConfigureDTO.toString());
+    grpcClientTester.subscribeConfigure(subscribeConfigureDTO);
     return "done";
   }
 }

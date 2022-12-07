@@ -1,13 +1,11 @@
 package com.gmos.iotc.collector.service.gnmi.worker;
 
-import com.github.gnmi.proto.Encoding;
 import com.github.gnmi.proto.Path;
 import com.github.gnmi.proto.PathElem;
 import com.github.gnmi.proto.Subscription;
-import com.github.gnmi.proto.SubscriptionList;
 import com.github.gnmi.proto.SubscriptionMode;
+import com.gmos.iotc.common.gnmi.GnmiEnum;
 import com.gmos.iotc.common.gnmi.SubscribeConfigureDTO;
-import com.gmos.iotc.common.gnmi.SubscriptionListDTO;
 import com.gmos.iotc.common.gnmi.TargetDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +23,16 @@ import java.util.Map;
 @Component
 public class GrpcClientTester {
 
-  private Map<String, SubscribeGrpcClient> neToGrpcWorkerMap;
+  private final Map<String, SubscribeGrpcClient> targetToGrpcClientMap;
   private final Logger logger = LoggerFactory.getLogger(GrpcClientTester.class);
 
   public GrpcClientTester() {
-    this.neToGrpcWorkerMap = new HashMap();
+    this.targetToGrpcClientMap = new HashMap<>();
   }
 
 
   public void getConnectionStatesFromAllGrpcClients() {
-    for (Map.Entry<String, SubscribeGrpcClient> entry : neToGrpcWorkerMap.entrySet()){
+    for (Map.Entry<String, SubscribeGrpcClient> entry : targetToGrpcClientMap.entrySet()){
       String ne = entry.getKey();
       SubscribeGrpcClient grpcClientWorker = entry.getValue();
 
@@ -49,15 +47,6 @@ public class GrpcClientTester {
     }
   }
 
-
-
-  private SubscriptionList getSubscriptionListForTest(){
-    return SubscriptionList.newBuilder()
-            .addSubscription(getSubscriptionForOffsetFromMaster())
-            .addSubscription(getSubscriptionForClockClass())
-            .setEncoding(Encoding.JSON)
-            .build();
-  }
 
   private Subscription getSubscriptionForOffsetFromMaster(){
     //    PathElem pathElem = PathElem.newBuilder()
@@ -136,42 +125,84 @@ public class GrpcClientTester {
     return subscription;
   }
 
-  private List<String> getAllNEs(){
-    List<String> result = new ArrayList<String>();
-//    result.add("192.168.56.102:20830");
-//    result.add("192.168.56.105:20830");
-//    result.add("192.168.56.106:20830");
-    result.add("localhost:4567");
-    result.add("localhost:4568");
-//    result.add("localhost:4569");
-    return result;
-  }
 
+  public void subscribeConfigure(final SubscribeConfigureDTO subscribeConfigureDTO) {
+    GnmiEnum.SubscribeAction subscribeAction = subscribeConfigureDTO.getSubscribeAction();
 
-  public void subscribe(final SubscribeConfigureDTO subscribeConfigureDTO) {
-    List<TargetDTO> targetList = subscribeConfigureDTO.getTargetList();
-      //TODO store subName name in the worker
-      SubscriptionListDTO subscriptionListDTO = subscribeConfigureDTO.getSubscriptionListDTO();
-      for (TargetDTO targetDTO: targetList){
-        //TODO move logic to worker
-        SubscribeGrpcClient grpcClientChannelSubscriptions =
-                new SubscribeGrpcClient(targetDTO);
-        neToGrpcWorkerMap.put(targetDTO.getAddress().getName()+":"+targetDTO.getAddress().getPort(),
-                grpcClientChannelSubscriptions);
-        SubscribeConfigureDTO subscribeConfigureDTOPerTarget = new SubscribeConfigureDTO();
-
-        List<TargetDTO> singleTarget = new ArrayList<>(1);
-        singleTarget.add(targetDTO);
-
-        subscribeConfigureDTOPerTarget.setTargetList(singleTarget);
-        subscribeConfigureDTOPerTarget.setName(subscribeConfigureDTO.getName());
-        subscribeConfigureDTOPerTarget.setSubscribeAction(subscribeConfigureDTO.getSubscribeAction());
-        subscribeConfigureDTOPerTarget.setTags(subscribeConfigureDTO.getTags());
-        subscribeConfigureDTOPerTarget.setSubscriptionListDTO(subscribeConfigureDTO.getSubscriptionListDTO());
-
-        grpcClientChannelSubscriptions.
-                createStream(subscribeConfigureDTOPerTarget);
-
+    switch (subscribeAction){
+      case subscribe: {
+        subscribe(subscribeConfigureDTO);
+        break;
       }
+      case unsubscribe: {
+        unsubscribe(subscribeConfigureDTO);
+        break;
+      }
+      case unsubscribeAll: {
+        unsubscribeAll(subscribeConfigureDTO);
+        break;
+      }
+      default:{
+        logger.info("No action found for {}", subscribeAction);
+      }
+    }
+
   }
+
+  private void unsubscribe(SubscribeConfigureDTO subscribeConfigureDTO) {
+    List<TargetDTO> targetList = subscribeConfigureDTO.getTargetList();
+    for (TargetDTO targetDTO: targetList){
+      String targetAddressStr =  targetDTO.getAddress().toConnectionString();
+      SubscribeGrpcClient subscribeGrpcClient = targetToGrpcClientMap.get(targetAddressStr);
+      if ( subscribeGrpcClient == null ){
+        logger.warn("{} - Subscribe Grpc Client not found", targetAddressStr);
+        return;
+      }
+      subscribeGrpcClient.cancelStream(subscribeConfigureDTO.getName());
+      if ( !subscribeGrpcClient.isAnyStream() ) {
+        //Here if there is not any stream in progress
+        logger.info("{} - No other streams exist - disconnect and delete client", targetAddressStr);
+        subscribeGrpcClient.disconect();
+        targetToGrpcClientMap.remove(targetAddressStr);
+      };
+    }
+  }
+
+  private void unsubscribeAll(SubscribeConfigureDTO subscribeConfigureDTO) {
+  }
+
+  private void subscribe(SubscribeConfigureDTO subscribeConfigureDTO) {
+    String name = subscribeConfigureDTO.getName();
+    List<TargetDTO> targetList = subscribeConfigureDTO.getTargetList();
+    for (TargetDTO targetDTO: targetList){
+      String targetAddressStr =  targetDTO.getAddress().toConnectionString();
+      SubscribeGrpcClient subscribeGrpcClient = targetToGrpcClientMap.get(targetAddressStr);
+      //create grpc client if does not already exist
+      if ( subscribeGrpcClient != null ){
+        logger.debug("{} - Using existing SubscribeGrpcClient", targetAddressStr);
+      }else {
+        subscribeGrpcClient = new SubscribeGrpcClient(targetDTO);
+        targetToGrpcClientMap.put(targetAddressStr, subscribeGrpcClient);
+      }
+
+      //Ignore creation of stream if already exist
+      if ( subscribeGrpcClient.streamExist(name) ) {
+        logger.warn("{} - {} stream already exists", targetAddressStr, name);
+        return;
+      }
+
+      //create stream for Subscription Request
+      SubscribeConfigureDTO subscribeConfigureDTOPerTarget = new SubscribeConfigureDTO();
+      List<TargetDTO> singleTarget = new ArrayList<>(1);
+      singleTarget.add(targetDTO);
+      subscribeConfigureDTOPerTarget.setTargetList(singleTarget);
+      subscribeConfigureDTOPerTarget.setName(name);
+      subscribeConfigureDTOPerTarget.setTags(subscribeConfigureDTO.getTags());
+      subscribeConfigureDTOPerTarget.setSubscriptionListDTO(subscribeConfigureDTO.getSubscriptionListDTO());
+      subscribeGrpcClient.validateSubscriptionRequest(subscribeConfigureDTOPerTarget);
+      subscribeGrpcClient.createStream(subscribeConfigureDTOPerTarget);
+    }
+  }
+
+
 }

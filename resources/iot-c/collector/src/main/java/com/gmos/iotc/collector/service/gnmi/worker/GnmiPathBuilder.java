@@ -86,7 +86,7 @@ public class GnmiPathBuilder {
     Subscription result;
     PathDTO pathDTO = subscriptionDTO.getPath();
     String gnmiPath = pathDTO.getPath();
-    int subscriptionMode = subscriptionDTO.getSubscriptionMode().getNumber();
+    int subscriptionMode = subscriptionDTO.getSubscriptionMode().ordinal();
     long sampleInterval = subscriptionDTO.getSampleInterval(); //NanoSeconds
     String origin = pathDTO.getTarget();
     String target  = pathDTO.getTarget();

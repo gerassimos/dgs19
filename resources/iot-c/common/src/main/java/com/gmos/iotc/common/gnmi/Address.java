@@ -20,6 +20,10 @@ public class Address {
     this.port = port;
   }
 
+  public String toConnectionString(){
+    return name+":"+port;
+  }
+
   @Override
   public String toString() {
     return "Address{" +
