@@ -2,7 +2,14 @@ syntax = "proto3";
 
 package greet;
 
-option go_package = "github.com/Clement-Jean/grpc-go-course/greet/proto";
+//option go_package = "github.com/Clement-Jean/grpc-go-course/greet/proto";
+
+//option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
+//option go_package = "dgs19.org/resources/iot-c-go/gnmi-common-proto/greet";
+option go_package = "dgs19.org/iot-c-go/gnmi-common-proto/greet";
+//option go_package = "dgs19.org/gnmi-common-proto/greet";
+//option go_package = "./gnmi-common-proto/greet";
+//option go_package = "./greet";
 
 message GreetRequest {
   string first_name = 1;
