@@ -20,6 +20,11 @@ build_docker:
 	echo "iot_c_go_version ${iot_c_go_version}" && export TAG=${iot_c_go_version} && echo "TAG ${TAG}" && \
 	docker compose build
 
+docker_push:
+	@echo "Pushing Docker images..."
+	export TAG=latest docker compose push && \
+	echo "iot_c_go_version ${iot_c_go_version}" && export TAG=${iot_c_go_version} && echo "TAG ${TAG}" && \
+	docker compose push
 
 build_proto:
 	@echo "Building gnmi-common proto..."
