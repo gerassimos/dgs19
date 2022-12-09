@@ -1,9 +1,9 @@
 GNMI_SERVER_SIM_BINARY=gnmi-srv-sim-app
 
-build: build_proto build_gnmi_server_sim
+build: build_gnmi_server_sim
 	@echo "End building all"
 
-clean: clean_proto clean_gnmi_server_sim
+clean: clean_gnmi_server_sim
 	@echo "End cleaning all"
 
 build_gnmi_server_sim:
@@ -17,17 +17,13 @@ run_gnmi_server_sim:
 
 build_proto:
 	@echo "Building gnmi-server-sim binary..."
-	cd gnmi-common-proto &&  \
+	cd gnmi-common/proto &&  \
 	protoc --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-         greet/greet.proto
-
-build_proto_srv:
-	@echo "compiling proto files"
-	cd gnmi-common-proto &&  \
+         greet/greet.proto && \
 	protoc --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-         greet/greet.proto
+         calc/*.proto
 
 clean_gnmi_server_sim:
 	@echo "Deleting gnmi-server-sim binary..."
@@ -36,6 +32,6 @@ clean_gnmi_server_sim:
 
 clean_proto:
 	@echo "Deleting gnmi-server-sim binary..."
-	cd gnmi-common-proto && rm -v greet/*.go
+	cd gnmi-common/proto/ && rm -v greet/*.go && rm -v calc/*.go
 	@echo "Done!"
 

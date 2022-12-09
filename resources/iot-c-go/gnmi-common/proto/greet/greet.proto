@@ -6,7 +6,7 @@ package greet;
 
 //option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
 //option go_package = "dgs19.org/resources/iot-c-go/gnmi-common-proto/greet";
-option go_package = "dgs19.org/iot-c-go/gnmi-common-proto/greet";
+option go_package = "gnmi/common/greet";
 //option go_package = "dgs19.org/gnmi-common-proto/greet";
 //option go_package = "./gnmi-common-proto/greet";
 //option go_package = "./greet";
