@@ -1,4 +1,4 @@
-module gnmi-server-sim
+module gnmi/server-sim
 
 go 1.19
 

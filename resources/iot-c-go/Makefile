@@ -22,6 +22,13 @@ build_proto:
         --go-grpc_out=. --go-grpc_opt=paths=source_relative \
          greet/greet.proto
 
+build_proto_srv:
+	@echo "compiling proto files"
+	cd gnmi-common-proto &&  \
+	protoc --go_out=. --go_opt=paths=source_relative \
+        --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+         greet/greet.proto
+
 clean_gnmi_server_sim:
 	@echo "Deleting gnmi-server-sim binary..."
 	cd gnmi-server-sim && rm -v app
