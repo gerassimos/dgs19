@@ -22,7 +22,7 @@ build_docker:
 
 docker_push:
 	@echo "Pushing Docker images..."
-	export TAG=latest docker compose push && \
+	export TAG=latest && docker compose push && \
 	echo "iot_c_go_version ${iot_c_go_version}" && export TAG=${iot_c_go_version} && echo "TAG ${TAG}" && \
 	docker compose push
 
