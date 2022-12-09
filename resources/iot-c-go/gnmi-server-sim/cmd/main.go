@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"gnmi/common/dto"
 	"gnmi/common/proto/calc"
+	"gnmi/common/proto/greet"
 	"gnmi/server-sim/config"
-	"gnmi/server-sim/greet"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -13,7 +13,7 @@ import (
 
 var addr string = "0.0.0.0:50051"
 
-type server struct {
+type Server struct {
 	greet.GreetServiceServer
 	calc.CalculatorServiceServer
 }
@@ -31,8 +31,8 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	greet.RegisterGreetServiceServer(s, &server{})
-	calc.RegisterCalculatorServiceServer(s, &server{})
+	greet.RegisterGreetServiceServer(s, &Server{})
+	calc.RegisterCalculatorServiceServer(s, &Server{})
 
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
