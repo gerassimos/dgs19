@@ -30,6 +30,8 @@ jobs:
       run: |
         docker version
         cd resources/iot-c
-        ./gradlew :collector-a-to-c:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
-        ./gradlew :collector-ui:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
-        ./gradlew :collector:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=latest
+        source iot-c.properties
+        echo "iot_c_version ${iot_c_version}"
+        ./gradlew :collector-a-to-c:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG="${iot_c_version}"
+        ./gradlew :collector-ui:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG="${iot_c_version}"
+        ./gradlew :collector:dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG="${iot_c_version}"
