@@ -11,7 +11,7 @@ logging:
   ## log format json
   #https://stackoverflow.com/questions/53730449/is-there-a-recommended-way-to-get-spring-boot-to-json-format-logs-with-logback
   pattern:
-    console: "{\"time\": \"%d\", \"level\": \"%p\", \"correlation-id\": \"%X{X-Correlation-Id}\", \"source\": \"%logger{63}:%L\", \"message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\"}%n"
+    console: "{\"app.time\": \"%d\", \"app.level\": \"%p\", \"app.correlation-id\": \"%X{X-Correlation-Id}\", \"app.source\": \"%logger{63}:%L\", \"app.message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\"}%n"
 
 server:
   port: ${TOMCAT_HTTP_PORT_V:8093}
