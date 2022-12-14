@@ -172,3 +172,10 @@
 
 ## TODO 
  - Ask Ziv about the tag. It is confusing the have them in the TargetDTO
+
+streaming network telemetry
+ - snt-gnmi-collector
+ - snt-data-access
+ - common-grpc
+
+stackName: snt 
