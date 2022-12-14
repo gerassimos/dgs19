@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-collector-ui
+  labels:
+    app: iot-collector-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-collector-ui
+  template:
+    metadata:
+      labels:
+        app: iot-collector-ui
+        version: 0.0.2-json-log
+    spec:
+      containers:
+        - image: dgs19/iot-collector-ui:0.0.2-json-log
+          imagePullPolicy: Always
+          name: iot-collector-ui
+          ports:
+            - containerPort: 8093
+          env:
+            - name: LOG_LEVEL
+              value: "DEBUG"
+            - name: JAVA_OPTS
+              value: "-javaagent:/opentelemetry-javaagent.jar"
+              #value: "" # use this to disable JAVA_OPTS
+            - name: COLLECTOR_HOST_NAME
+              value: "iot-collector"
+            - name: COLLECTOR_HOST_NAME_A_TO_C
+              value: "iot-collector-a-to-c"
+            - name: JAEGER_HOST_HTTP_URL
+             #value: "http://jaeger-all-in-one:14268/api/traces"
+              value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
+            - name: JAEGER_SAMPLING_RATE
+              value: "0.0"
+            - name: "OTEL_SERVICE_NAME"
+              value: "collector-ui-otel-name"
+            - name: "OTEL_METRICS_EXPORTER"
+              value: "none"
+            - name: "OTEL_TRACES_EXPORTER"
+              value: "none" # logging # jaeger # none
+            - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
+              value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
+              #value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
+            - name: "OTEL_PROPAGATORS"
+              value: "tracecontext,baggage,b3multi"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-collector-ui
+  labels:
+    app: iot-collector-ui
+spec:
+  selector:
+    app: iot-collector-ui
+  ports:
+    - port: 8093
+      name: http
+      targetPort: 8093
+
