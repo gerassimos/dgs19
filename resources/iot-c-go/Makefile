@@ -37,28 +37,28 @@ build_proto:
          calc/*.proto && \
 	protoc --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-         gnmi_ext/*.proto && \
-	protoc --go_out=. --go_opt=paths=source_relative \
-        --go-grpc_out=. --go-grpc_opt=paths=source_relative \
          gnmi/*.proto
+#	protoc --go_out=. --go_opt=paths=source_relative \
+#        --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+#         gnmi_ext/*.proto && \
 
 clean: clean_gnmi_server_sim clean_gnmi-client-worker
 	@echo "End cleaning all"
 
 clean_gnmi_server_sim:
 	@echo "Deleting gnmi-server-sim binary..."
-	cd gnmi-server-sim && rm -v app
+	cd gnmi-server-sim && rm -rfv app
 	@echo "Done!"
 
 clean_gnmi-client-worker:
 	@echo "Deleting gnmi-client-worker binary..."
-	cd gnmi-client-worker && rm -v app
+	cd gnmi-client-worker && rm -rfv app
 	@echo "Done!"
 
 clean_proto:
 	@echo "Deleting gnmi-server-sim binary..."
-	cd gnmi-common/proto/ && rm -v greet/*.go && rm -v calc/*.go && \
-    rm -v gnmi_ext/*.go && rm -v gnmi/*.go
+	cd gnmi-common/proto/ && rm -rfv greet/*.go && rm -rfv calc/*.go && \
+	rm -rfv gnmi_ext/*.go && rm -rfv gnmi/*.go
 	@echo "Done!"
 
 run_gnmi_server_sim:

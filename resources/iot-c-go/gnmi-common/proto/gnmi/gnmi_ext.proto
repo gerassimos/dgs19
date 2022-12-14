@@ -20,7 +20,7 @@ syntax = "proto3";
 // well-known extensions are defined within this file, along with a registry for
 // extensions defined outside of this package.
 package gnmi_ext;
-option go_package = "gnmi/common/gnmi_ext";
+option go_package = "gnmi/common/gnmi";
 
 // The Extension message contains a single gNMI extension.
 message Extension {
