@@ -40,7 +40,7 @@ jar {
 
 
 dependencies {
-    runtimeOnly 'io.grpc:grpc-netty-shaded:1.48.0'
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.52.1'
     implementation 'io.grpc:grpc-protobuf:1.48.0'
     implementation 'io.grpc:grpc-stub:1.48.0'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
