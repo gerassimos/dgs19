@@ -156,21 +156,6 @@ logging:
     console: "{\"time\": \"%d\", \"level\": \"%p\", \"correlation-id\": \"%X{X-Correlation-Id}\", \"source\": \"%logger{63}:%L\", \"message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\"}%n"
 ```
 
-## gnmi/grpc Subscribe service example
- - Example to collect data via grpc/gnmi from network devices
- - Can be tested with the `jsim-gnmi` project which simulates a dummy gnmi/gRPC server to simulate subscribe gRPC call
- - The proto located in `common-grpc/src/main/proto/gnmi` directory are copied from
- - [openconfig](https://github.com/openconfig/gnmi/blob/master/proto/gnmi/gnmi.proto)
- - endpoints: 
- - `/gnmi/test/start` to start the collection via rpc `subscribe`
- - `/gnmi/test/status` to get (log) the status of the grpc clients
- - `/gnmi/example/dto/subscriptionlist` to get an example SubscriptionList json object 
-
-## gnmi/grpc Subscribe service TODO
- - [TODO Review with Ziv]
-   Connection State Changed. New state: TRANSIENT_FAILURE
-   We keep getting TRANSIENT_FAILURE error if the target is down (softsync is not running)
-
 ## spring boot dev profile 
  - It is now possible to use the spring boot dev profile which will use the `application-dev.yml` file
  - There a number of ways to control which spring boot profile is active
