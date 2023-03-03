@@ -5,15 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "docker" # See documentation for possible values
-    directory: "resources/jsim-gnmi/" # Location of package manifests
-    schedule:
-      interval: "daily"
+#   - package-ecosystem: "docker" # See documentation for possible values
+#     directory: "resources/jsim-gnmi/" # Location of package manifests
+#     schedule:
+#       interval: "daily"
 
-  - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "resources/jsim-gnmi/" # Location of package manifests
-    schedule:
-      interval: "daily"
+#   - package-ecosystem: "gradle" # See documentation for possible values
+#     directory: "resources/jsim-gnmi/" # Location of package manifests
+#     schedule:
+#       interval: "daily"
 
 #  - package-ecosystem: "gradle"
 #      # path to build.gradle
