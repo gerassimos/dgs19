@@ -26,3 +26,4 @@ gradle-app.setting
 /resources/iot-c/collector-a-to-c/build/
 /resources/iot-c-go/gnmi-client-worker/app
 /resources/iot-c-go/gnmi-server-sim/app
+/resources/iot-c/tmp/
