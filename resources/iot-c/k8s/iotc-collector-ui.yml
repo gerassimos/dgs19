@@ -31,11 +31,6 @@ spec:
               value: "iot-collector"
             - name: COLLECTOR_HOST_NAME_A_TO_C
               value: "iot-collector-a-to-c"
-            - name: JAEGER_HOST_HTTP_URL
-             #value: "http://jaeger-all-in-one:14268/api/traces"
-              value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
-            - name: JAEGER_SAMPLING_RATE
-              value: "0.0"
             - name: "OTEL_SERVICE_NAME"
               value: "collector-ui-otel-name"
             - name: "OTEL_METRICS_EXPORTER"

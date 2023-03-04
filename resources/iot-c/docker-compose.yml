@@ -20,23 +20,21 @@ services:
       - db-data:/var/lib/postgresql/data
 
   collector:
-    image: dgs19/iot-collector:0.0.2
+    image: dgs19/iot-collector:latest
     networks:
       - iotc-db
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
       DB_HOST: postgres-db
-      JAEGER_SAMPLING_RATE: 0.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
 
   collector-ui:
-    image: dgs19/iot-collector-ui:0.0.2
+    image: dgs19/iot-collector-ui:latest
     networks:
       - iotc-ui
     environment:
       LOG_LEVEL: DEBUG
       COLLECTOR_HOST_NAME: collector
-      JAEGER_SAMPLING_RATE: 0.0 # # Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
     ports:
       - "8093:8093"
 

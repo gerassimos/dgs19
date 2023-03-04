@@ -29,11 +29,6 @@ spec:
               #value: "" # use this to disable JAVA_OPTS
             - name: DB_HOST
               value: "iot-postgres-db"
-            - name: JAEGER_HOST_HTTP_URL
-              #value: "http://jaeger-all-in-one:14268/api/traces"
-              value: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
-            - name: JAEGER_SAMPLING_RATE
-              value: "0.0"
             - name: "OTEL_SERVICE_NAME"
               value: "collector-otel-name"
             - name: "OTEL_METRICS_EXPORTER"
