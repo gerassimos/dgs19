@@ -46,20 +46,16 @@ docker-compose -f docker-compose-dev.yml up
     4. `DB_NAME`: database name. Default value is *iotc* 
     5. `DB_USER`: username of the database server. Default value is *iotc*   
     6. `DB_PASSWORD`: password of the database server. Default value is *iotc*
-    7. `JAEGER_HOST`: jaeger collector host name 
-    8. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
-    9. `GRPC_SERVER_PORT` : set the port for the grpc server
-    10. `COLLECTOR_SCHEDULER_ENABLED`: boolean flag, if set to `false` the main collector scheduler will NOT start
-    11. `spring_profiles_default`: set the default spring profile. Valid values are: *dev*
-    12. `spring_profiles_active`: set the active spring profile. Valid values are: *dev*
+    7. `GRPC_SERVER_PORT` : set the port for the grpc server
+    8. `COLLECTOR_SCHEDULER_ENABLED`: boolean flag, if set to `false` the main collector scheduler will NOT start
+    9. `spring_profiles_default`: set the default spring profile. Valid values are: *dev*
+    10. `spring_profiles_active`: set the active spring profile. Valid values are: *dev*
 
  - **dgs19/iot-collector-ui**
    1. `LOG_LEVEL`: to set the log level. Valid values are: *INFO*, *DEBUG* and *TRACE*
    2. `COLLECTOR_HOST_NAME`: hostname of the collector (dgs19/iot-collector) server 
    3. `COLLECTOR_HOST_PORT`: TCP port of the collector (dgs19/iot-collector) server. Default value is 8092
-   4. `JAEGER_HOST`: jaeger collector host name
-   5. `JAEGER_SAMPLING_RATE`: Where value is between 0.0 (no sampling) and 1.0 (sampling of every request)
-   6. `COLLECTOR_GRPC_PORT`: set the grpc port for the greeting service implemented in the collector module 
+   4. `COLLECTOR_GRPC_PORT`: set the grpc port for the greeting service implemented in the collector module 
 
 ## TCP ports
  - TCP port 8092 is used from the **dgs19/iot-collector** service to expose the REST Endpoints.  
@@ -83,6 +79,7 @@ docker-compose -f docker-compose-dev.yml up
  - ./gradlew dockerTagTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=0.0.1
  - ./gradlew dockerPushTag1 -P DOCKER_USERNAME=dgs19 -P IOTC_TAG=0.0.1
  - ./gradlew :common-grpc:generateProto
+ - ./gradlew :collector:build
 
 ## Prometheus Integration
  - The default spring boot prometheus metrics are enabled 
@@ -91,13 +88,6 @@ docker-compose -f docker-compose-dev.yml up
    - instanceHostName: ${HOSTNAME:localhost}
    - application: iot-c
    - service: iot-c-collector
-
-## Jaeger Integration
- - The application is configured to send traces to a jaeger collector
- - Use the env variables JAEGER_HOST and JAEGER_SAMPLING_RATE to configure the traces 
- - The traces generation can be disabled if we set JAEGER_SAMPLING_RATE=0.0
- - Do not set JAEGER_ENABLED=false as this will cause an error at start time
-   - `JaegerTracerFactory Service name must not be null or empty`
 
 ## grpc Integration (common-grpc)
  - the common-grpc module has been added that contains the .proto files

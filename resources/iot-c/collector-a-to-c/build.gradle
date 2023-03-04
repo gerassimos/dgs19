@@ -6,8 +6,8 @@ buildscript {
 		//mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.4")
-		classpath ("com.palantir.gradle.docker:gradle-docker:0.32.0")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.9")
+		classpath ("com.palantir.gradle.docker:gradle-docker:0.34.0")
 	}
 }
 
@@ -22,7 +22,7 @@ def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
 
 group = 'com.gmos.iot-c'
 version = "${iotcTAG}"
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()

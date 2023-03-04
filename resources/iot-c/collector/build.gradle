@@ -6,8 +6,8 @@ buildscript {
 		//mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.4")
-		classpath ("com.palantir.gradle.docker:gradle-docker:0.32.0")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.9")
+		classpath ("com.palantir.gradle.docker:gradle-docker:0.34.0")
 	}
 }
 
@@ -22,7 +22,7 @@ def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
 
 group = 'com.gmos.iot-c'
 version = "${iotcTAG}"
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
@@ -44,15 +44,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
 	implementation('io.micrometer:micrometer-registry-prometheus')
-	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-web-starter', version: '3.3.1')
-	implementation(group: 'io.opentracing.contrib', name: 'opentracing-spring-cloud-starter', version: '0.5.9')
 	implementation('org.postgresql:postgresql')
 	runtimeOnly('com.h2database:h2')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation(project(":common"))
 	implementation(project(":common-grpc"))
-	implementation("net.devh:grpc-server-spring-boot-starter:2.13.1.RELEASE")
+	implementation("net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE")
 
 	println("iotcTAG ${iotcTAG}")
 	println("version ${version}")
