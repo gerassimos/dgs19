@@ -24,9 +24,13 @@ spec:
           env:
             - name: LOG_LEVEL
               value: "DEBUG"
+            ## For  opentelemetry
             - name: JAVA_OPTS
               value: "-javaagent:/opentelemetry-javaagent.jar"
               #value: "" # use this to disable JAVA_OPTS
+            ## For remote debug only
+            # - name: JAVA_OPTS
+            #  value: "-Xms256m -Xmx1500m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
             - name: DB_HOST
               value: "iot-postgres-db"
             - name: "OTEL_SERVICE_NAME"
