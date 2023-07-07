@@ -176,4 +176,17 @@ logging:
 
 ## collector-a-to-c
  - acting as a proxy between collector-ui and collector for one endpoint
- - Implemented to test tracing functionality when a request is passing through multiple services 
+ - Implemented to test tracing functionality when a request is passing through multiple services
+
+## spring-boot 3.1
+ - After updated to spring-boot 3.1 the grpc code is not working, the grpc `stub` object is null
+ - most probably is not supported yet
+ - consider replacing the `net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE` library
+ - NOTE: gprc functionality not working 
+
+## openapi
+ - Ref: https://springdoc.org/
+ - Add openapi lib (org.springdoc:springdoc-openapi-starter-webmvc-ui) to enable swagger and 
+ - swagger ui:  http://localhost:8092/swagger-ui/index.html
+ - openapi json: http://localhost:8092/v3/api-docs
+ - openapi yaml: http://localhost:8092/v3/api-docs.yaml
