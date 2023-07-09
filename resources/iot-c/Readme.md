@@ -190,3 +190,4 @@ logging:
  - swagger ui:  http://localhost:8092/swagger-ui/index.html
  - openapi json: http://localhost:8092/v3/api-docs
  - openapi yaml: http://localhost:8092/v3/api-docs.yaml
+ - test
