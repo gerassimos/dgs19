@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "iot-collector")
 public class IotcConfig {
   private boolean collectorSchedulerEnabled;
+  private int grpcServerSimplePort;
 
   public boolean isCollectorSchedulerEnabled() {
     return collectorSchedulerEnabled;
@@ -16,5 +17,13 @@ public class IotcConfig {
 
   public void setCollectorSchedulerEnabled(boolean collectorSchedulerEnabled) {
     this.collectorSchedulerEnabled = collectorSchedulerEnabled;
+  }
+
+  public int getGrpcServerSimplePort() {
+    return grpcServerSimplePort;
+  }
+
+  public void setGrpcServerSimplePort(int grpcServerSimplePort) {
+    this.grpcServerSimplePort = grpcServerSimplePort;
   }
 }

@@ -41,3 +41,4 @@ management:
 iot-collector:
   dev-mode-enabled: ${DEV_MODE_ENABLED:false}
   collector-scheduler-enabled: ${COLLECTOR_SCHEDULER_ENABLED:true}
+  grpc-server-simple-port: ${GRPC_SERVER_SIMPLE_PORT:9092}

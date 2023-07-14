@@ -18,47 +18,16 @@ import java.util.List;
 public class PerformanceDataService extends PerformanceDataServiceGrpc.PerformanceDataServiceImplBase {
 
   private Logger logger = LoggerFactory.getLogger(PerformanceDataService.class);
-  private final DeviceHdrl deviceHdrl;
+  private final PerformanceDataServiceCommon performanceDataServiceCommon;
 
-  public PerformanceDataService(DeviceHdrl deviceHdrl) {
-    this.deviceHdrl = deviceHdrl;
+  public PerformanceDataService(PerformanceDataServiceCommon performanceDataServiceCommon) {
+    this.performanceDataServiceCommon = performanceDataServiceCommon;
   }
 
   @Override
   public void getPerformanceDataStreaming(PerformanceDataDeviceId request, StreamObserver<PerformanceDataMessage> responseObserver) {
-
-    logger.info("Enter getPerformanceDataStreaming for DeviceId: {}", request.getDeviceId());
-    long deviceId = request.getDeviceId();
-    Timestamp endTimestamp = new Timestamp( System.currentTimeMillis()) ;
-    Timestamp startTimestamp = new Timestamp( endTimestamp.getTime() - 10000l);
-    int waitingPeriod = 10000;
-    long timeShift = waitingPeriod;
-    for (int i=0; i<10; i++){
-      List<PerformanceDataEntity> performanceDataEntityList = deviceHdrl.findByTimestampBetweenAndDeviceEntity(startTimestamp,endTimestamp,deviceId);
-      endTimestamp = new Timestamp( endTimestamp.getTime() + timeShift) ;
-      startTimestamp = new Timestamp( startTimestamp.getTime() + timeShift);
-      for(PerformanceDataEntity performanceDataEntity : performanceDataEntityList){
-        PerformanceDataMessage response = toPerformanceDataMessage(performanceDataEntity);
-        responseObserver.onNext(response);
-      }
-      try {
-        Thread.sleep(waitingPeriod);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-    responseObserver.onCompleted();
-    logger.info("Exiting getPerformanceDataStreaming for DeviceId: {}", request.getDeviceId());
+    performanceDataServiceCommon.getPerformanceDataStreaming(request,responseObserver);
   }
 
-  private PerformanceDataMessage toPerformanceDataMessage(PerformanceDataEntity performanceDataEntity) {
-    PerformanceDataMessage result = PerformanceDataMessage.newBuilder()
-            .setHumidity(performanceDataEntity.getHumidity())
-            .setTemperature(performanceDataEntity.getTemperature())
-            .setTimestamp(performanceDataEntity.getTimestamp().getTime())
-            .setDeviceId(performanceDataEntity.getDeviceId())
-            .build();
-    return result;
-  }
 }
 

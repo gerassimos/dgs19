@@ -50,6 +50,7 @@ docker-compose -f docker-compose-dev.yml up
     8. `COLLECTOR_SCHEDULER_ENABLED`: boolean flag, if set to `false` the main collector scheduler will NOT start
     9. `spring_profiles_default`: set the default spring profile. Valid values are: *dev*
     10. `spring_profiles_active`: set the active spring profile. Valid values are: *dev*
+    11. `GRPC_SERVER_SIMPLE_PORT`: set the port for the simple additional code created grpc server != grpc server created from grpc-server-spring-boot-starter  
 
  - **dgs19/iot-collector-ui**
    1. `LOG_LEVEL`: to set the log level. Valid values are: *INFO*, *DEBUG* and *TRACE*
@@ -191,3 +192,8 @@ logging:
  - openapi json: http://localhost:8092/v3/api-docs
  - openapi yaml: http://localhost:8092/v3/api-docs.yaml
  - test
+
+## collector - gRPC server Simple 
+ - A simple additional code created grpc server added 
+ - This is different from the grpc server created from grpc-server-spring-boot-starter lib
+ - The port is defined from `GRPC_SERVER_SIMPLE_PORT` env var 
