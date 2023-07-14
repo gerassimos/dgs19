@@ -8,7 +8,6 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:3.1.0")
 		classpath ("com.palantir.gradle.docker:gradle-docker:0.34.0")
-		classpath ("org.openapitools:openapi-generator-gradle-plugin:6.6.0")
 	}
 }
 
@@ -17,7 +16,6 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
-apply plugin: 'org.openapi.generator'
 
 def iotcTAG = findProperty('IOTC_TAG') ?: 'latest'
 def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
@@ -40,18 +38,6 @@ docker {
 	buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}", 'IOTC_TAG': "${version}"])
 }
 
-openApiGenerate {
-	generatorName.set("spring")
-	inputSpec.set("$rootDir/specs/petstore-v3.0.yaml")
-	outputDir.set("$buildDir/generated")
-	apiPackage.set("org.openapi.example.api")
-	invokerPackage.set("org.openapi.example.invoker")
-	modelPackage.set("org.openapi.example.model")
-	configOptions.set([
-			dateLibrary: "java8"
-	])
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -66,7 +52,6 @@ dependencies {
 	implementation(project(":common-grpc"))
 	implementation("net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE")
 	implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0')
-	implementation('org.openapitools:openapi-generator-gradle-plugin:6.6.0')
 
 	println("iotcTAG ${iotcTAG}")
 	println("version ${version}")
