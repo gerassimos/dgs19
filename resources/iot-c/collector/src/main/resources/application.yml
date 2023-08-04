@@ -5,7 +5,6 @@ spring:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:iotc}
     username: ${DB_USER:iotc}
     password: ${DB_PASSWORD:iotc}
-    continue-on-error: true
   sql.init.continue-on-error: true
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect

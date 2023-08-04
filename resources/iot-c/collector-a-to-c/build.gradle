@@ -1,21 +1,10 @@
-buildscript {
-	repositories {
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-		//mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:3.1.0")
-		classpath ("com.palantir.gradle.docker:gradle-docker:0.34.0")
-	}
+plugins {
+	id "java"
+	id "idea"
+	id "org.springframework.boot" version "${springBootVersion}"
+	id "io.spring.dependency-management" version "${springDepMgmVersion}"
+	id "com.palantir.docker" version "${palantirDockerVersion}"
 }
-
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.palantir.docker'
 
 def iotcTAG = findProperty('IOTC_TAG') ?: 'latest'
 def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
