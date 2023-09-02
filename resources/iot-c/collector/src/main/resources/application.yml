@@ -7,7 +7,6 @@ spring:
     password: ${DB_PASSWORD:iotc}
   sql.init.continue-on-error: true
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate:
       ddl-auto: update
   output:
