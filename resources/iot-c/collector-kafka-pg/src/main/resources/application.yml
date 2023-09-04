@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: collector-kafka-pg
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  level:
+    com.gmos.iotc: ${LOG_LEVEL:DEBUG}
+
+server:
+  port: ${TOMCAT_HTTP_PORT_V:8096}
+
+iot-collector-kafka-pg:
+  key: val1

@@ -5,4 +5,5 @@ include 'common-grpc'
 include 'collector'
 include 'collector-ui'
 include 'collector-a-to-c'
+include 'collector-kafka-pg'
 

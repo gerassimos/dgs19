@@ -196,4 +196,7 @@ logging:
 ## collector - gRPC server Simple 
  - A simple additional code created grpc server added 
  - This is different from the grpc server created from grpc-server-spring-boot-starter lib
- - The port is defined from `GRPC_SERVER_SIMPLE_PORT` env var 
+ - The port is defined from `GRPC_SERVER_SIMPLE_PORT` env var
+
+## collector-kafka-pg
+ - Test kafka integration

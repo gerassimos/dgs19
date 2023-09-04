@@ -1,0 +1,35 @@
+plugins {
+	id "java"
+	id "idea"
+	id "org.springframework.boot" version "${springBootVersion}"
+	id "io.spring.dependency-management" version "${springDepMgmVersion}"
+	id "com.palantir.docker" version "${palantirDockerVersion}"
+}
+
+def iotcTAG = findProperty('IOTC_TAG') ?: 'latest'
+def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
+
+group = 'com.gmos.iot-c'
+version = "${iotcTAG}"
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+docker {
+	dependsOn build
+	name "iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
+	tag 'tag1', "${dockerUsername}/iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
+	tag 'tag2', "anOtherRepository"
+//	files bootJar.archiveFile.get()
+	files bootJar.archiveFile.get(), '../utils/otel/opentelemetry-javaagent.jar'
+	buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}", 'IOTC_TAG': "${version}"])
+}
+
+dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation(project(":common"))
+
+}
