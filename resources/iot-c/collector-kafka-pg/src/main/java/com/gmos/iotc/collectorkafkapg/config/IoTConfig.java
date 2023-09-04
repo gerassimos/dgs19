@@ -8,22 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "iot-collector-kafka-pg")
 public class IoTConfig {
-  private String collectorHostName;
-  private int collectorHostPort;
+  private String kafkaBootstapServers;
 
-  public String getCollectorHostName() {
-    return collectorHostName;
+  public String getKafkaBootstapServers() {
+    return kafkaBootstapServers;
   }
 
-  public void setCollectorHostName(String collectorHostName) {
-    this.collectorHostName = collectorHostName;
-  }
-
-  public int getCollectorHostPort() {
-    return collectorHostPort;
-  }
-
-  public void setCollectorHostPort(int collectorHostPort) {
-    this.collectorHostPort = collectorHostPort;
+  public void setKafkaBootstapServers(String kafkaBootstapServers) {
+    this.kafkaBootstapServers = kafkaBootstapServers;
   }
 }

@@ -42,6 +42,13 @@ public class DataRestController {
     return result;
   }
 
+  @GetMapping("/test-kafka")
+  public String testKafka() {
+    dataHdrl.testKafka();
+
+    return "OK";
+  }
+
 
 }
 

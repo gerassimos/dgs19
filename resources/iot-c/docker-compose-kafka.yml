@@ -1,0 +1,80 @@
+version: '3.6'
+services:
+  zookeeper:
+    image: zookeeper:3.8.0@sha256:a272e4296c7b67ed37132eae95f8bbf3d81d8573fe92b5f08a57305f8d114174
+    container_name: zookeeper
+    networks:
+      - iotc-kafka
+    volumes:
+      - zoo-data:/data
+      - zoo-datalog:/datalog
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: bitnami/kafka:3.3.1-debian-11-r21@sha256:b253c1f1c87498d273781d603b3ac544e66c0b36ab719b7cdadffed65d111803
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    networks:
+      - iotc-kafka
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    environment:
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181/kafka
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_LISTENERS: CLIENT://:9092,EXTERNAL://:9094
+      KAFKA_CFG_ADVERTISED_LISTENERS: CLIENT://kafka:9092,EXTERNAL://localhost:9094
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: CLIENT
+      KAFKA_BROKER_ID: 101
+      KAFKA_CFG_LOG_DIRS: /bitnami/kafka/log
+    #      KAFKA_CFG_LOG_RETENTION_CHECK_INTERVAL_MS:  10000 # (10sec) default value 300000 (5min)
+    #      KAFKA_CFG_SEGMENT_BYTES: 4000 # (4MB) default value 1073741824 (1GB)
+    #      KAFKA_CFG_LOG_RETENTION_MINUTES: 60minutes default value null
+    #      KAFKA_CFG_LOG_RETENTION_MS: 30000 # (30sec) default value null
+    #      KAFKA_CFG_LOG_RETENTION_HOURS: 48 # (2days) default value 168 (7days)
+
+    volumes:
+      - kafka-data:/bitnami
+
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    container_name: kafdrop
+    networks:
+      - iotc-kafka
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:9092"
+#      KAFKA_BROKERCONNECT: "192.168.99.100:9094"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+
+
+
+#  netshoot:
+#    image: nicolaka/netshoot
+#    networks:
+#      - iotc-kafka
+
+#  zoonavigator:
+#    image: elkozmon/zoonavigator:latest
+#    container_name: zoonavigator
+#    networks:
+#      - iotc-kafka
+#    ports:
+#      - "9001:9001"
+#    environment:
+#      HTTP_PORT: 9001
+
+networks:
+  iotc-kafka:
+
+volumes:
+  kafka-data:
+  zoo-data:
+  zoo-datalog:
