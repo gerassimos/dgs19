@@ -174,6 +174,9 @@ logging:
  - The `start-jar.sh` added on each module to test locally the opentelemetry-javaagent.jar
  - The [collector] - `findByDeviceId()` method is updated to log all Headers (logHeaders)
  - The [collector-ui] - `getData()` method is updated to log all Headers (logHeaders)
+ - The env `OTEL_TRACES_EXPORTER=none` and `OTEL_PROPAGATORS=tracecontext,baggage,b3multi` 
+   can be used with the tracing capabilities of istio
+   In this case the application will not send traces to jaeger but will propagate the trace context 
 
 ## collector-a-to-c
  - acting as a proxy between collector-ui and collector for one endpoint
