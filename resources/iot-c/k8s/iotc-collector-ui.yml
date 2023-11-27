@@ -37,9 +37,10 @@ spec:
               value: "none"
             - name: "OTEL_TRACES_EXPORTER"
               value: "none" # logging # jaeger # none
-            - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
-              #value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
-              value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
+          # No need to set jaeger endpoint when istio is enabled
+          # - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
+          #  value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
+          #  value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
             - name: "OTEL_PROPAGATORS"
               value: "tracecontext,baggage,b3multi"
 ---
