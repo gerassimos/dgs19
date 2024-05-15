@@ -20,21 +20,22 @@ services:
       - db-data:/var/lib/postgresql/data
 
   jaeger-all-in-one:
-    image: jaegertracing/all-in-one:1.31
+    image: jaegertracing/all-in-one:1.56
     networks:
       - iotc-db
     environment:
       COLLECTOR_ZIPKIN_HOST_PORT: 9411
     ports:
-      - "5775:5775/udp"
       - "6831:6831/udp"
       - "6832:6832/udp"
       - "5778:5778"
       - "16686:16686" # Web UI
-      - "14250:14250"
-      - "14268:14268"
+      - "4317:4317" # traces - accept OpenTelemetry Protocol (OTLP) over gRPC
+      - "4318:4318" # traces - accept OpenTelemetry Protocol (OTLP) over HTTP
+      - "14268:14268" # accept jaeger.thrift directly from clients
+      - "14250:14250" # accept model.proto
       - "14269:14269"
-      - "9411:9411"
+      - "9411:9411" # Zipkin compatible endpoint (optional)
 
 networks:
   iotc-db:

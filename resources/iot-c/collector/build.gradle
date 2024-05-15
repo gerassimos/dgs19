@@ -49,9 +49,7 @@ dependencies {
 	println("archiveBaseName ${bootJar.archiveBaseName.get()}")
 	println("archiveExtension ${bootJar.archiveExtension.get()}")
 	println("archiveFile jar abs-path ${bootJar.archiveFile.get()}")
-	println("archiveName jar simple-name ${bootJar.archiveName}")
-	println("archiveName jar simple-name ${bootJar.archiveFileName.get()}")
-	println("name1 ${project.name}/${bootJar.baseName}:${iotcTAG}")
+	println("archiveFileName jar simple-name ${bootJar.archiveFileName.get()}")
 	println("name2 ${project.parent.name}")
 	println("name3 iot-${bootJar.archiveBaseName.get()}:${iotcTAG}")
 

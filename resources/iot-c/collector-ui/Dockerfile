@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.6_10-jdk-focal
+FROM eclipse-temurin:17.0.11_9-jdk-focal
 
 ARG JAR_FILE
 ARG IOTC_TAG
