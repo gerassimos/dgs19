@@ -17,6 +17,10 @@ repositories {
 	mavenCentral()
 }
 
+dockerPrepare{
+	dependsOn build
+}
+
 docker {
 	dependsOn build
 	name "iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
