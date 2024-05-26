@@ -11,10 +11,10 @@ spec:
     metadata:
       labels:
         app: jaeger-all-in-one
-        version: "1.31"
+        version: "1.56"
     spec:
       containers:
-        - image: jaegertracing/all-in-one:1.31
+        - image: jaegertracing/all-in-one:1.56
           imagePullPolicy: Always
           name: jaeger-all-in-one
           env:
@@ -47,7 +47,14 @@ spec:
       port: 14250
       targetPort: 14250
       protocol: TCP
-
+    - name: grpc-otpl
+      port: 4317
+      targetPort: 4317
+      protocol: TCP
+    - name: http-otpl
+      port: 4318
+      targetPort: 4318
+      protocol: TCP
 
 ---
 kind: Service

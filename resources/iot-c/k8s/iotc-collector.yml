@@ -33,18 +33,24 @@ spec:
             #  value: "-Xms256m -Xmx1500m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
             - name: DB_HOST
               value: "iot-postgres-db"
+            # OpenTelemetry configuration:
+            # https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md#general-configuration
             - name: "OTEL_SERVICE_NAME"
               value: "collector-otel-name"
             - name: "OTEL_METRICS_EXPORTER"
               value: "none"
+            - name: "OTEL_LOGS_EXPORTER"
+              value: "none"
             - name: "OTEL_TRACES_EXPORTER"
-              value: "none" # logging # jaeger # none
+              value: "otlp" # Default is "otlp". "none" means no autoconfigured exporter.
           # No need to set jaeger endpoint when istio is enabled
-          # - name: "OTEL_EXPORTER_JAEGER_ENDPOINT"
-          #   value: "http://jaeger-all-in-one.default.svc.cluster.local:14250"
+            - name: "OTEL_EXPORTER_OTLP_ENDPOINT"
+              value: "http://jaeger-all-in-one.default.svc.cluster.local:4317"
           #   value: "http://jaeger-collector.istio-system.svc.cluster.local:14250"
             - name: "OTEL_PROPAGATORS"
               value: "tracecontext,baggage,b3multi"
+            - name: "OTEL_EXPORTER_OTLP_PROTOCOL"
+              value: "grpc"
 
 ---
 kind: Service
