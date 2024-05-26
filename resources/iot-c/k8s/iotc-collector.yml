@@ -42,7 +42,7 @@ spec:
             - name: "OTEL_LOGS_EXPORTER"
               value: "none"
             - name: "OTEL_TRACES_EXPORTER"
-              value: "otlp" # Default is "otlp". "none" means no autoconfigured exporter.
+              value: "none" # Default is "otlp". "none" means no autoconfigured exporter.
           # No need to set jaeger endpoint when istio is enabled
             - name: "OTEL_EXPORTER_OTLP_ENDPOINT"
               value: "http://jaeger-all-in-one.default.svc.cluster.local:4317"
