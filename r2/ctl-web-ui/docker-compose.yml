@@ -1,0 +1,14 @@
+#version: '3.8'
+
+services:
+  ctl-web-ui:
+    image: dgs19/ctl-web-ui:latest
+    container_name: ctl-web-ui
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-alpine
+#      target: build-distroless-debian
+
+    ports:
+      - 8080:8080

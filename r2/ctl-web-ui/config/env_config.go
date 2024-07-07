@@ -29,7 +29,7 @@ func init() {
 // New returns a new Config struct
 func createConfig() *Config {
 	return &Config{
-		WebServerPort: getEnvAsInt("WEB_SERVER_PORT", 8104),
+		WebServerPort: getEnvAsInt("WEB_SERVER_PORT", 8080),
 	}
 }
 

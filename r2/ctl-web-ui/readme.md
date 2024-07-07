@@ -10,3 +10,6 @@ go get -u github.com/gin-gonic/gin
 
 ## Dockerfile ref
 https://docs.docker.com/language/golang/build-images/
+
+## TODO
+add Makefile for build `docker compose build --no-cach`
