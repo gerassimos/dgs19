@@ -2,7 +2,48 @@
 
 {{define "content" }}
     <div class="container">
-        <h1>test</h1>
+        <div class="row">
+            <div class="col-1">
+                <h1 class="mt-5">-</h1>
+                <hr>
+                <div>
+
+                </div>
+            </div>
+            <div class="col">
+                <h1 class="mt-5">ctl-web-ui</h1>
+                <hr>
+                <form class="row g-3">
+
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly>cmd output here...</textarea>
+                    <div class="col-md-6">
+                        <label for="inputSubscriptionName" class="form-label">main cmd</label>
+                        <select id="inputSubscriptionName" class="form-select">
+                            <option selected>deploy</option>
+                            <option>status</option>
+                            <option>stop</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputSubscriptionName" class="form-label">cmd</label>
+                        <select id="inputSubscriptionName" class="form-select">
+                            <option selected>gnss</option>
+                            <option>tpa</option>
+                            <option>mnc-common</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <a id="sendSubReqBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Send</a>
+                        <a id="cancelSubReqBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Cancel</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
     </div>
 {{end}}
 
