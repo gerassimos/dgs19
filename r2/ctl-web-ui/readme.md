@@ -6,6 +6,7 @@ mkdir ctl-web-ui
 cd ctl-web-ui
 go mod init gm-dev/ctl-web-ui
 go get -u github.com/gin-gonic/gin
+go get github.com/gorilla/websocket
 ```
 
 ## Dockerfile ref

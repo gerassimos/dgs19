@@ -26,6 +26,7 @@ func StartWebServer() {
 	})
 
 	route.GET("/index.html", RenderTemplates)
+	route.GET("/ws/test", TestWs)
 
 	route.Run(getWebServerAddress())
 }
