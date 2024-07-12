@@ -29,6 +29,22 @@ func TestWs(c *gin.Context) {
 	defer ws.Close()
 	//serverTime := time.Now()
 	for {
+
+		_, message, err := ws.ReadMessage() // Ignore the message type assuming it is always a text message
+		if err != nil {
+			log.Println("Error reading message:", err)
+			continue
+		}
+		log.Printf("receive: %s", message)
+
+		// Convert the JSON data to a Go object
+		//var messageDto dto.TestDTO
+		//err = json.Unmarshal(message, &messageDto)
+		//if err != nil {
+		//	log.Println("Error unmarshaling JSON:", err)
+		//	continue
+		//}
+
 		testDto := dto.TestDTO{
 			Target:   "Test",
 			DataList: []string{"Test1", "Test2"},
