@@ -17,3 +17,8 @@ add Makefile for build `docker compose build --no-cach`
 
 ## html template guide
  - [Grid system](https://getbootstrap.com/docs/5.3/layout/grid/)
+
+## usefull links
+ - [Showing command line output on a html page](https://stackoverflow.com/questions/53860093/showing-command-line-output-on-a-html-page)
+ - [execute long running job and streaming the realtime output](https://gist.github.com/bamoo456/7e21773e8ef742a726c041f5f0019d2e)
+ - [StdoutPipe with colors](https://stackoverflow.com/questions/61113201/io-multiwriter-removes-terminal-colors-from-output)
