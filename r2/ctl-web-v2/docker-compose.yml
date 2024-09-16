@@ -1,0 +1,14 @@
+#version: '3.8'
+
+services:
+  ctl-web-v2:
+    image: dgs19/ctl-web-v2:latest
+    container_name: ctl-web-v2
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-alpine
+#      target: build-distroless-debian
+
+    ports:
+      - 8080:8080
