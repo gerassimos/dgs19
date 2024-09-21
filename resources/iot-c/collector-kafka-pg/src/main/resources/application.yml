@@ -19,3 +19,5 @@ iot-collector-kafka-pg:
   kafka-bootstap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
   kafka-username: ${KAFKA_USERNAME:admin}
   kafka-password: ${KAFKA_PASSWORD:admin}
+  kafka-topic-replica: ${KAFKA_TOPIC_REPLICA:1}
+  kafka-topic-partition: ${KAFKA_TOPIC_PARTITION:3}

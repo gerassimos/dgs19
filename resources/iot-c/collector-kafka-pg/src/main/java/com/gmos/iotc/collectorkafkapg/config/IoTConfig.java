@@ -11,6 +11,8 @@ public class IoTConfig {
   private String kafkaBootstapServers;
   private String kafkaUsername;
   private String kafkaPassword;
+  private int kafkaTopicReplica;
+  private int kafkaTopicPartition;
 
   public String getKafkaBootstapServers() {
     return kafkaBootstapServers;
@@ -34,5 +36,21 @@ public class IoTConfig {
 
   public void setKafkaPassword(String kafkaPassword) {
     this.kafkaPassword = kafkaPassword;
+  }
+
+  public int getKafkaTopicReplica() {
+    return kafkaTopicReplica;
+  }
+
+  public void setKafkaTopicReplica(int kafkaTopicReplica) {
+    this.kafkaTopicReplica = kafkaTopicReplica;
+  }
+
+  public int getKafkaTopicPartition() {
+    return kafkaTopicPartition;
+  }
+
+  public void setKafkaTopicPartition(int kafkaTopicPartition) {
+    this.kafkaTopicPartition = kafkaTopicPartition;
   }
 }

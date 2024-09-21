@@ -39,8 +39,8 @@ public class KafkaTopicConfiguration {
   public KafkaAdmin.NewTopics createTopics() {
     return new KafkaAdmin.NewTopics(
             TopicBuilder.name("iotc-kafka-pg-pm-topic")
-                    .partitions(3)
-                    .replicas(1)
+                    .partitions(ioTConfig.getKafkaTopicPartition())
+                    .replicas(ioTConfig.getKafkaTopicReplica())
                     .build()
 //                ,
 //                TopicBuilder.name(multilingualGreetingsTopic)
