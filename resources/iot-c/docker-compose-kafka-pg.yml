@@ -1,0 +1,12 @@
+services:
+
+  collector:
+    image: dgs19/iot-collector-kafka-pg:latest
+    environment:
+      LOG_LEVEL: DEBUG
+      SPRING_PROFILES_ACTIVE: kafka-sasl
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9094
+      KAFKA_USERNAME: admin
+      KAFKA_PASSWORD: admin
+
+
