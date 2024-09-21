@@ -28,7 +28,7 @@ public class KafkaTopicConfiguration {
     configs.put(SaslConfigs.SASL_JAAS_CONFIG, String.format(
             "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";",
             ioTConfig.getKafkaUsername(),
-            ioTConfig.getKafkaUsername()
+            ioTConfig.getKafkaPassword()
     ));
     configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, ioTConfig.getKafkaBootstapServers());
     return new KafkaAdmin(configs);
