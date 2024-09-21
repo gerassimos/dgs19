@@ -1,12 +1,15 @@
 services:
 
-  collector:
+  collector-kafka-pg:
     image: dgs19/iot-collector-kafka-pg:latest
     environment:
       LOG_LEVEL: DEBUG
+      LOG_LEVEL_KAFKA: INFO
       SPRING_PROFILES_ACTIVE: kafka-sasl
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9094
-      KAFKA_USERNAME: admin
-      KAFKA_PASSWORD: admin
-
-
+      KAFKA_BOOTSTRAP_SERVERS: b-1.mavitestmskcluster.pczqpb.c5.kafka.eu-central-1.amazonaws.com:9096,b-2.mavitestmskcluster.pczqpb.c5.kafka.eu-central-1.amazonaws.com:9096,b-3.mavitestmskcluster.pczqpb.c5.kafka.eu-central-1.amazonaws.com:9096
+      KAFKA_USERNAME: ${KAFKA_USERNAME:admin}
+      KAFKA_PASSWORD: ${KAFKA_PASSWORD:admin}
+      KAFKA_TOPIC_REPLICA: 2
+      KAFKA_TOPIC_PARTITION: 3
+    ports:
+      - "8096:8096"
