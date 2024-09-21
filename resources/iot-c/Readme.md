@@ -204,4 +204,4 @@ logging:
 ## collector-kafka-pg
  - Test kafka integration
  - To test sending and receiving messages from kafka:
-   - `curl http://localhost:8096//test-kafka`
+   - `curl http://localhost:8096/test-kafka`
