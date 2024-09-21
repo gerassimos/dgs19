@@ -1,5 +1,8 @@
 spring:
   kafka:
+    consumer:
+      properties:
+        allow.auto.create.topics: false
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
     properties:
       security:
