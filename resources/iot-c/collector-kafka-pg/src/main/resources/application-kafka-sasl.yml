@@ -6,6 +6,6 @@ spring:
         protocol: SASL_SSL
       sasl:
         jaas:
-          config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${KAFKA_USERNAME}" password="${KAFKA_PASSWORD}"
+          config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${KAFKA_USERNAME}" password="${KAFKA_PASSWORD}";
         mechanism: SCRAM-SHA-512
 

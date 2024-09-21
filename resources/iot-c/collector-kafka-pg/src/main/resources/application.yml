@@ -17,3 +17,5 @@ server:
 iot-collector-kafka-pg:
   key: val1
   kafka-bootstap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+  kafka-username: ${KAFKA_USERNAME:admin}
+  kafka-password: ${KAFKA_PASSWORD:admin}
