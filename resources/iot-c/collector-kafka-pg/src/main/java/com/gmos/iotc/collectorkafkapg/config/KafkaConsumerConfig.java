@@ -55,7 +55,7 @@ public class KafkaConsumerConfig {
     properties.put(SaslConfigs.SASL_JAAS_CONFIG, String.format(
             "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";",
             ioTConfig.getKafkaUsername(),
-            ioTConfig.getKafkaUsername()
+            ioTConfig.getKafkaPassword()
     ));
 
     return new DefaultKafkaConsumerFactory<>(
