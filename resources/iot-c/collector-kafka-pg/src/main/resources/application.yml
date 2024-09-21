@@ -9,6 +9,7 @@ spring:
 logging:
   level:
     com.gmos.iotc: ${LOG_LEVEL:DEBUG}
+    org.springframework.kafka: ${LOG_LEVEL_KAFKA:INFO}
 
 server:
   port: ${TOMCAT_HTTP_PORT_V:8096}
