@@ -1,7 +1,9 @@
 package com.gmos.iotc.collectorkafkapg.config;
 
 import com.gmos.iotc.common.PerformanceDataDTO;
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,14 @@ public class KafkaConsumerConfig {
   public ConsumerFactory<String, PerformanceDataDTO> consumerFactoryPm() {
     Map<String, Object> properties = createCommonConfigProps();
     properties.put( ConsumerConfig.GROUP_ID_CONFIG, "collector-kafka-pg-pm-group");
+
+    properties.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
+    properties.put(SaslConfigs.SASL_MECHANISM, "SCRAM-SHA-512");
+    properties.put(SaslConfigs.SASL_JAAS_CONFIG, String.format(
+            "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";",
+            ioTConfig.getKafkaUsername(),
+            ioTConfig.getKafkaUsername()
+    ));
 
     return new DefaultKafkaConsumerFactory<>(
             properties,
