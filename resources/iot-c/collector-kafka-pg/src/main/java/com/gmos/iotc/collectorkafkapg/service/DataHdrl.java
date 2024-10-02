@@ -42,4 +42,9 @@ public class DataHdrl {
     performanceDataDTO.setTimestamp(timestamp);
     kafkaTemplatePm.send("iotc-kafka-pg-pm-topic", performanceDataDTO);
   }
+
+  public String testEnv()  {
+    logger.info("iot-collector-kafka-pg.kafka-bootstap-servers: {}", ioTConfig.getKafkaBootstapServers());
+    return ioTConfig.getKey1();
+  }
 }

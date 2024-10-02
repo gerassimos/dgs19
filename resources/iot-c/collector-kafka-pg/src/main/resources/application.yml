@@ -15,7 +15,7 @@ server:
   port: ${TOMCAT_HTTP_PORT_V:8096}
 
 iot-collector-kafka-pg:
-  key: val1
+  key1: ${ENV_KEY1:val1}
   kafka-bootstap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
   kafka-username: ${KAFKA_USERNAME:admin}
   kafka-password: ${KAFKA_PASSWORD:admin}

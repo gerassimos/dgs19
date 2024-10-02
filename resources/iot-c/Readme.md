@@ -205,3 +205,9 @@ logging:
  - Test kafka integration
  - To test sending and receiving messages from kafka:
    - `curl http://localhost:8096/test-kafka`
+ - vs code setup 
+   - file `.vscode/launch.json`
+   - ref1: https://spring.io/guides/gs/guides-with-vscode
+   - ref2: https://stackoverflow.com/questions/59687712/how-to-set-java-environment-variable-in-vs-code
+ - Test vs code env var
+   - `curl http://localhost:8096/test-env`

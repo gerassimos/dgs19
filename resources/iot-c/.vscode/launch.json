@@ -1,0 +1,53 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "CollectoruiApplication",
+      "request": "launch",
+      "mainClass": "com.gmos.iotc.collectoratoc.CollectoruiApplication",
+      "projectName": "collector-a-to-c"
+    },
+    {
+      "type": "java",
+      "name": "CollectorKafkaPgApplication",
+      "request": "launch",
+      "mainClass": "com.gmos.iotc.collectorkafkapg.CollectorKafkaPgApplication",
+      "projectName": "collector-kafka-pg",
+      "args": "",
+      "env": {
+        "ENV_KEY1": "VAL from launch.json"
+      }
+    },
+    {
+      "type": "java",
+      "name": "CollectoruiApplication(1)",
+      "request": "launch",
+      "mainClass": "com.gmos.iotc.collectorui.CollectoruiApplication",
+      "projectName": "collector-ui"
+    },
+    {
+      "type": "java",
+      "name": "CollectorApplication",
+      "request": "launch",
+      "mainClass": "com.gmos.iotc.collector.CollectorApplication",
+      "projectName": "collector"
+    },
+    {
+      "type": "java",
+      "name": "BuildDependencies",
+      "request": "launch",
+      "mainClass": "BuildDependencies",
+      "projectName": "common"
+    }
+  ]
+}

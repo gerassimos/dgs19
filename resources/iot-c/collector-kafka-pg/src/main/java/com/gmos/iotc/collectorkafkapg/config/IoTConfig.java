@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "iot-collector-kafka-pg")
 public class IoTConfig {
+  private String key1;
   private String kafkaBootstapServers;
   private String kafkaUsername;
   private String kafkaPassword;
@@ -52,5 +53,13 @@ public class IoTConfig {
 
   public void setKafkaTopicPartition(int kafkaTopicPartition) {
     this.kafkaTopicPartition = kafkaTopicPartition;
+  }
+
+  public String getKey1() {
+    return key1;
+  }
+
+  public void setKey1(String key1) {
+    this.key1 = key1;
   }
 }
