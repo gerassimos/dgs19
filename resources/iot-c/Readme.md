@@ -211,3 +211,4 @@ logging:
    - ref2: https://stackoverflow.com/questions/59687712/how-to-set-java-environment-variable-in-vs-code
  - Test vs code env var
    - `curl http://localhost:8096/test-env`
+ - Test commit
