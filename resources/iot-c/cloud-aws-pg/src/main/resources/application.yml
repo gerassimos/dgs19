@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: cloud-aws-pg
+  output:
+    ansi:
+      enabled: ALWAYS
+  config:
+    # ref:
+    # https://docs.awspring.io/spring-cloud-aws/docs/3.2.0/reference/html/index.html#loading-external-configuration-2
+    import:
+      - "optional:aws-parameterstore:/dev/test/iotc/"
+
+
+logging:
+  level:
+    com.gmos.iotc: ${LOG_LEVEL:DEBUG}
+
+server:
+  port: ${TOMCAT_HTTP_PORT_V:8098}
+
+cloud-aws-pg:
+  key1: "var1"

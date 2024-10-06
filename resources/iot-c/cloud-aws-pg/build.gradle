@@ -1,0 +1,43 @@
+plugins {
+	id "java"
+	id "idea"
+	id "org.springframework.boot" version "${springBootVersion}"
+	id "io.spring.dependency-management" version "${springDepMgmVersion}"
+	id "com.palantir.docker" version "${palantirDockerVersion}"
+}
+
+def iotcTAG = findProperty('IOTC_TAG') ?: 'latest'
+def dockerUsername = findProperty('DOCKER_USERNAME') ?: 'username'
+
+group = 'com.gmos.iot-c'
+version = "${iotcTAG}"
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dockerPrepare{
+	dependsOn build
+}
+
+docker {
+	dependsOn build
+	name "iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
+	tag 'tag1', "${dockerUsername}/iot-${bootJar.archiveBaseName.get()}:${iotcTAG}"
+	tag 'tag2', "anOtherRepository"
+//	files bootJar.archiveFile.get()
+	files bootJar.archiveFile.get(), '../utils/otel/opentelemetry-javaagent.jar'
+	buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}", 'IOTC_TAG': "${version}"])
+}
+
+dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation(project(":common"))
+
+	//ref
+	//https://docs.awspring.io/spring-cloud-aws/docs/3.2.0/reference/html/index.html#bill-of-materials
+	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.2.0")
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
+}

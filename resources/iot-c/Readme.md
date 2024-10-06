@@ -212,3 +212,9 @@ logging:
  - Test vs code env var
    - `curl http://localhost:8096/test-env`
  - Test commit
+
+## cloud-aws-pg
+- It a playground `pg` service to test integration with [Spring Cloud AWS](https://awspring.io/)
+- The `cloud-aws-pg` service is configured to use the aws ssm parameter store to get the `kafka.bs` string
+- To work required access to aws via accessKeyId and secretAccessKey
+   - more: https://docs.awspring.io/spring-cloud-aws/docs/3.2.0/reference/html/index.html#getting-started

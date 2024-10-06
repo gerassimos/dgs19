@@ -28,3 +28,4 @@ gradle-app.setting
 /resources/iot-c-go/gnmi-server-sim/app
 /resources/iot-c/tmp/
 /resources/iot-c/collector-kafka-pg/build/
+/resources/iot-c/cloud-aws-pg/build/
