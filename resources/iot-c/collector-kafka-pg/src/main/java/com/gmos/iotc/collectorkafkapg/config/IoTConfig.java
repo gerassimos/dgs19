@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class IoTConfig {
   private String key1;
   private String kafkaBootstapServers;
+  private String kafkaAuthentication;
   private String kafkaUsername;
   private String kafkaPassword;
   private int kafkaTopicReplica;
@@ -21,6 +22,14 @@ public class IoTConfig {
 
   public void setKafkaBootstapServers(String kafkaBootstapServers) {
     this.kafkaBootstapServers = kafkaBootstapServers;
+  }
+
+  public String getKafkaAuthentication() {
+    return kafkaAuthentication;
+  }
+
+  public void setKafkaAuthentication(String kafkaAuthentication) {
+    this.kafkaAuthentication = kafkaAuthentication;
   }
 
   public String getKafkaUsername() {
@@ -62,4 +71,6 @@ public class IoTConfig {
   public void setKey1(String key1) {
     this.key1 = key1;
   }
+
+
 }
