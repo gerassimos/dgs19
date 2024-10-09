@@ -218,3 +218,12 @@ logging:
 - The `cloud-aws-pg` service is configured to use the aws ssm parameter store to get the `kafka.bs` string
 - To work required access to aws via accessKeyId and secretAccessKey
    - more: https://docs.awspring.io/spring-cloud-aws/docs/3.2.0/reference/html/index.html#getting-started
+- Test endpoints: 
+   - `curl http://localhost:8098/test-aws-ssm`
+
+## Binding From Environment Variables
+- [ref1](https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.relaxed-binding.environment-variables)
+- [ref2](https://stackoverflow.com/questions/70267751/override-spring-boot-yaml-property-via-environment-variable)
+- For example, the configuration property `spring.main.log-startup-info` 
+- would be an environment variable named `SPRING_MAIN_LOGSTARTUPINFO`
+- For example in use `CLOUDAWSPG_KEY1=xyz` to override the value `cloud-aws-pg.key1` in application.yml 

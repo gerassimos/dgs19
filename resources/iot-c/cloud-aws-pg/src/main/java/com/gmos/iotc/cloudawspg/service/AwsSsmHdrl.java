@@ -11,13 +11,21 @@ public class AwsSsmHdrl {
     @Value("${kafka.bs}")
     private String kafkaBs;
 
+
+//    @Value("${cloud-aws-pg.key1}")
+//    private String cloudAwsPgKey1;
+
     public AwsSsmHdrl(IoTConfig ioTConfig) {
         this.ioTConfig = ioTConfig;
         testAwsSsm();
     }
 
     public String testAwsSsm(){
+        String result = "";
+        //concatenate format string with ioTConfig.getKey1() and kafkaBs
+        result = String.format("cloudAwsPgKey1: %s\n, kafkaBs: %s", ioTConfig.getKey1(), kafkaBs);
+        System.out.println("cloudAwsPgKey1: "+ ioTConfig.getKey1());
         System.out.println("kafkaBs: "+ kafkaBs);
-        return "done";
+        return result;
     }
 }

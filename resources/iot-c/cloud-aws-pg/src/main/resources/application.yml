@@ -19,4 +19,5 @@ server:
   port: ${TOMCAT_HTTP_PORT_V:8098}
 
 cloud-aws-pg:
+  ## NOTE can override by using env variable CLOUD-AWS-PG_KEY1, no need to use ${var1:ENV_VAR1} notation
   key1: "var1"
