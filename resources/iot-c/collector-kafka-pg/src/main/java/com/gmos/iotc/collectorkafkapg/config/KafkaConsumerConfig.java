@@ -50,7 +50,7 @@ public class KafkaConsumerConfig {
     Map<String, Object> properties = createCommonConfigProps();
     properties.put( ConsumerConfig.GROUP_ID_CONFIG, "collector-kafka-pg-pm-group");
     String kafkaAuthentication = ioTConfig.getKafkaAuthentication();
-    if ( kafkaAuthentication != "" || kafkaAuthentication != " " ){
+    if ( !kafkaAuthentication.equals("none") ){
       //TODO refactor move logic to common method
       properties.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, kafkaAuthentication);
       properties.put(SaslConfigs.SASL_MECHANISM, ioTConfig.getKafkaSaslMechanism());//SCRAM-SHA-512

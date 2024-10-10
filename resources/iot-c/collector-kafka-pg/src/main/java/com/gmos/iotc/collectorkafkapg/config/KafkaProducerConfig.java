@@ -51,7 +51,7 @@ public class KafkaProducerConfig {
   public ProducerFactory<String, PerformanceDataDTO> producerFactoryPm() {
     Map<String, Object> properties = createCommonConfigProps();
     String kafkaAuthentication = ioTConfig.getKafkaAuthentication();
-    if ( kafkaAuthentication != "" || kafkaAuthentication != " "  ){
+    if ( !kafkaAuthentication.equals("none") ){
       //TODO refactor move logic to common method
       properties.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, kafkaAuthentication);
       properties.put(SaslConfigs.SASL_MECHANISM, ioTConfig.getKafkaSaslMechanism()); //"SCRAM-SHA-512"

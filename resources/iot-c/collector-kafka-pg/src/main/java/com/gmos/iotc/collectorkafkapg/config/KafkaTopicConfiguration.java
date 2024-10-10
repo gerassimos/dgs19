@@ -24,7 +24,7 @@ public class KafkaTopicConfiguration {
   public KafkaAdmin kafkaAdmin() {
     Map<String, Object> configs = new HashMap<>();
     String kafkaAuthentication = ioTConfig.getKafkaAuthentication();
-    if ( kafkaAuthentication != "" || kafkaAuthentication != " "  ){
+    if ( !kafkaAuthentication.equals("none") ){
       //TODO refactor move logic to common method
       configs.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, kafkaAuthentication);
       configs.put(SaslConfigs.SASL_MECHANISM, ioTConfig.getKafkaSaslMechanism());
