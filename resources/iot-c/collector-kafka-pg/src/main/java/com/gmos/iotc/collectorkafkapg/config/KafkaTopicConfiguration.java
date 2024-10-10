@@ -24,10 +24,10 @@ public class KafkaTopicConfiguration {
   public KafkaAdmin kafkaAdmin() {
     Map<String, Object> configs = new HashMap<>();
     String kafkaAuthentication = ioTConfig.getKafkaAuthentication();
-    if ( kafkaAuthentication == "SASL_SCRAM" ){
+    if ( kafkaAuthentication != "" || kafkaAuthentication != " "  ){
       //TODO refactor move logic to common method
-      configs.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
-      configs.put(SaslConfigs.SASL_MECHANISM, "SCRAM-SHA-512");
+      configs.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, kafkaAuthentication);
+      configs.put(SaslConfigs.SASL_MECHANISM, ioTConfig.getKafkaSaslMechanism());
       configs.put(SaslConfigs.SASL_JAAS_CONFIG, String.format(
               "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";",
               ioTConfig.getKafkaUsername(),

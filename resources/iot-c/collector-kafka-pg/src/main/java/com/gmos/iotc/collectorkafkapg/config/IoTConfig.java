@@ -11,6 +11,7 @@ public class IoTConfig {
   private String key1;
   private String kafkaBootstapServers;
   private String kafkaAuthentication;
+  private String kafkaSaslMechanism;
   private String kafkaUsername;
   private String kafkaPassword;
   private int kafkaTopicReplica;
@@ -72,5 +73,11 @@ public class IoTConfig {
     this.key1 = key1;
   }
 
+  public String getKafkaSaslMechanism() {
+    return kafkaSaslMechanism;
+  }
 
+  public void setKafkaSaslMechanism(String kafkaSaslMechanism) {
+    this.kafkaSaslMechanism = kafkaSaslMechanism;
+  }
 }

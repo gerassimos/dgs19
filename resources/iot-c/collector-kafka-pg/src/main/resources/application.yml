@@ -16,8 +16,9 @@ server:
 
 iot-collector-kafka-pg:
   key1: ${ENV_KEY1:val1}
-  kafka-authentication: ${KAFKA_AUTHENTICATION:none} # supported values "NONE", "SASL_SCRAM"
-  # "b-3.mavitestmskcluster.66nfmf.c5.kafka.eu-central-1.amazonaws.com:9098,b-1.mavitestmskcluster.66nfmf.c5.kafka.eu-central-1.amazonaws.com:9098,b-2.mavitestmskcluster.66nfmf.c5.kafka.eu-central-1.amazonaws.com:9098"
+  kafka-authentication: ${KAFKA_AUTHENTICATION:SASL_PLAINTEXT} # supported values "" or " " for none, "SASL_SSL" and "SASL_PLAINTEXT"
+  kafka-sasl-mechanism: ${KAFKA_SASL_MECHANISM:PLAIN} # SCRAM-SHA-512
+  # "b-2.mavitestmskcluster.66nfmf.c5.kafka.eu-central-1.amazonaws.com:9096,b-1.mavitestmskcluster.66nfmf.c5.kafka.eu-central-1.amazonaws.com:9096,b-3.mavitestmskcluster.66nfmf.c5.kafka.eu-central-1.amazonaws.com:9096"
   # 10.130.184.114:30094,10.130.184.115:30095,10.130.184.116:30096
   kafka-bootstap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
   kafka-username: ${KAFKA_USERNAME:admin}
