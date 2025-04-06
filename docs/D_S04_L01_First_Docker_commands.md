@@ -8,27 +8,54 @@ class: center, middle
  - This is the first command to execute on a new system to verify the Docker installation
 
 ---
-## Verify the Docker Install (2)
+## Verify the Docker Install (2a)
 ```console
-# docker version
-Client:
- Version:       18.03.0-ce
- API version:   1.37
- Go version:    go1.9.4
- Git commit:    0520e24302
- Built: Fri Mar 23 08:31:36 2018
- OS/Arch:       windows/amd64
- Experimental:  false
- Orchestrator:  swarm
-
-Server:
+$ docker version
+Client: Docker Engine - Community
+ Version:           27.3.1
+ API version:       1.47
+ Go version:        go1.22.7
+ Git commit:        ce12230
+ Built:             Fri Sep 20 11:41:42 2024
+ OS/Arch:           linux/arm64
+ Context:           default
+Server: Docker Engine - Community
  Engine:
-  Version:      18.05.0-ce
-  API version:  1.37 (minimum version 1.12)
-  Go version:   go1.10.1
-  Git commit:   f150324
-  Built:        Wed May  9 22:20:42 2018
-  OS/Arch:      linux/amd64
+  Version:          27.3.1
+  API version:      1.47 (minimum version 1.24)
+  Go version:       go1.22.7
+  Git commit:       41ca978
+  Built:            Fri Sep 20 11:40:28 2024
+  OS/Arch:          linux/arm64
+  Experimental:     false  
+... <output truncated> ...
+
+```
+
+---
+
+## Verify the Docker Install (2b)
+```console
+$ docker version
+... <output truncated> ...
+Server: Docker Engine - Community
+ Engine:
+  Version:          27.3.1
+  API version:      1.47 (minimum version 1.24)
+  Go version:       go1.22.7
+  Git commit:       41ca978
+  Built:            Fri Sep 20 11:40:28 2024
+  OS/Arch:          linux/arm64
+  Experimental:     false
+ containerd:
+  Version:          1.7.22
+  GitCommit:        7f7fdf5fed64eb6a7caf99b3e12efcf9d60e311c
+ runc:
+  Version:          1.1.14
+  GitCommit:        v1.1.14-0-g2c9f560
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
 ```
 
 ---
@@ -41,10 +68,24 @@ Server:
 >  - We refer to Docker server also as **Docker engine** or **Docker daemon**. 
 >  - The fact that I did get returned information from the server validates that I can talk to the server and that it's working properly.
 
-
 ---
- 
-
+## Docker vs Containerd vs RunC (1)
+![img_width_100](images/D_S4_L1_docker_containerd_runc.png)
+---
+## Docker vs Containerd vs RunC (2)
+ - Runc is a container runtime that provides a low-level interface for creating and running containers according to the Open Container Initiative (OCI) specification.
+ - Containerd, on the other hand, is a higher-level container runtime that provides a complete environment for managing containers, including image management, container execution, and container lifecycle management.
+ - Kubernetes old versions used Docker as a container runtime, but it has since moved to using containerd as the default container runtime.
+ - [ref](https://medium.com/@bibhup_mishra/docker-vs-containerd-vs-runc-c39ffd4156fb) 
+---
+## Docker vs Containerd vs RunC (3)
+![img_width_100](images/D_S4_L1_containerd_crio.png)
+---
+## Docker vs Containerd vs RunC (4)
+ - **Open Container Initiative (OCI)**: a set of standards for containers, describing the image format, runtime, and distribution
+ - **Container Runtime Interface (CRI)** in Kubernetes: An API that allows you to use different container runtimes in Kubernetes.
+ - [ref](https://vineetcic.medium.com/the-differences-between-docker-containerd-cri-o-and-runc-a93ae4c9fdac)
+---
 ## docker info
  - Use the `docker info` command to display system-wide information
 
