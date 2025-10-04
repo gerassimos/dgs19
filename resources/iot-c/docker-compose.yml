@@ -1,15 +1,15 @@
 version: '3.6'
 services:
   postgres-db:
-    image: postgres:14.2
+    image: postgres:14.19
     networks:
       - iotc-db
     environment:
       POSTGRES_USER: ${DB_USER:-iotc}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-iotc}
       POSTGRES_DB: ${DB_NAME:-iotc}
-#    ports:
-#      - "5432:5432"
+    #    ports:
+    #      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-iotc} || exit false"]
       interval: 10s
@@ -38,9 +38,24 @@ services:
     ports:
       - "8093:8093"
 
+  pgadmin:
+    image: dpage/pgadmin4:9.8.0
+    networks:
+      - iotc-db
+    container_name: pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    ports:
+      - "8094:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
 networks:
   iotc-db:
   iotc-ui:
 
 volumes:
   db-data:
+  pgadmin-data:
