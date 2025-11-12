@@ -227,3 +227,16 @@ logging:
 - For example, the configuration property `spring.main.log-startup-info` 
 - would be an environment variable named `SPRING_MAIN_LOGSTARTUPINFO`
 - For example in use `CLOUDAWSPG_KEY1=xyz` to override the value `cloud-aws-pg.key1` in application.yml 
+
+## run amd64 image on an arm64 based MAC os
+- Use the `--platform linux/amd64` flag to run the amd64 image on arm64 MAC host
+- Look also multi-platform build at:
+- [ref1](https://docs.docker.com/build/building/multi-platform/?utm_source=chatgpt.com)
+- 
+```shell
+docker run --platform linux/amd64 -e SPRING_PROFILES_ACTIVE=dev dgs19/iot-collector:latest
+## The simple run command will also work on arm based MAC host
+## will automatically detect that the only available image is for amd64
+## WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+docker run -e SPRING_PROFILES_ACTIVE=dev dgs19/iot-collector:latest
+```
