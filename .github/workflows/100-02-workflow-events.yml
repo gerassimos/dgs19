@@ -1,0 +1,25 @@
+# See 02-workflow-events/README.md for more information
+# about different triggers for GitHub Actions.
+
+name: 02 - Workflow Events
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show the trigger
+        run: echo "I've been triggered by a(n) ${{ github.event_name }} event."
+      - name: Show the trigger 2
+        run: echo "I've been triggered by a(n) ${{ github.event_path }} event_path."
+          
+
+
+
+
+
+
+
